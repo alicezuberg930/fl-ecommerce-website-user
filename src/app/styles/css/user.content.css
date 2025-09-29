@@ -1,0 +1,27 @@
+.user-content-main {
+  max-width: 1240px;
+  margin: auto;
+  margin-top: 84px;
+}
+.user-content-main .user-content-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+@media (min-width: 1024px) {
+  .user-content-main .user-content-wrapper {
+    flex-direction: row;
+  }
+}
+.user-content-main .user-content-wrapper .user-content-body {
+  flex: 1 1 auto;
+  background-color: #D9D9D9;
+  margin-left: 0;
+  margin-top: 12px;
+  height: fit-content;
+}
+@media (min-width: 1024px) {
+  .user-content-main .user-content-wrapper .user-content-body {
+    margin-left: 37px;
+    margin-top: 0;
+  }
+}

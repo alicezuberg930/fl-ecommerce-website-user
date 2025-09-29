@@ -1,0 +1,44 @@
+.user-menu-wrapper {
+    background-color: #D9D9D9;
+    padding: 12px 0;
+    flex: none;
+    height: fit-content;
+
+    .user-info-container {
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        padding: 0 30px;
+        margin-bottom: 30px;
+
+        .user-info-image {
+            width: 77px;
+            height: 77px;
+            box-shadow: 0 4px 4px #00000040;
+            border-radius: 50%;
+        }
+
+        .username {
+            font-size: 16px;
+            color: #F21414;
+            font-weight: 700;
+        }
+
+        .title {
+            font-size: 12px;
+            display: block;
+        }
+    }
+
+    .tab-container {
+        padding: 9px 30px;
+
+        .tab-title {
+            color: #000;
+            font-weight: 400;
+            font-size: 15px;
+            line-height: 18.15px;
+        }
+    }
+}

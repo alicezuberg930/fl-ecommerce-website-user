@@ -1,0 +1,70 @@
+.user-account-wrapper {
+    padding: 0;
+
+    @media (min-width: 768px) {
+        padding: 33px 30px;
+    }
+
+    .user-account-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        margin-top: 14px;
+
+        @media (min-width: 375px) {
+            flex-direction: row;
+        }
+
+        .account-email-container {
+            background-color: #FFFCFC;
+            padding: 8px;
+            display: flex;
+            gap: 44px;
+
+            .account-name {
+                font-size: 13px;
+            }
+
+            .account-email {
+                font-size: 12px;
+            }
+
+            .edit {
+                font-size: 10px;
+                color: #E45757;
+            }
+        }
+
+        .account-notification-container {
+            background-color: #FFFCFC;
+            padding: 8px;
+            display: flex;
+
+            .account-register {
+                font-size: 13px;
+            }
+
+            .account-checkbox-container {
+                display: flex;
+                align-items: center;
+
+                span {
+                    padding-left: 4px;
+                    font-size: 12px;
+                }
+            }
+
+            .save-change-button {
+                margin-left: 8px;
+                width: 109px;
+                height: 27px;
+                color: #fff;
+                background-color: #E45757;
+                border-radius: 13px;
+                outline: none;
+                border: none;
+                font-size: 13px;
+            }
+        }
+    }
+}

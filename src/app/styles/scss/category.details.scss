@@ -1,0 +1,24 @@
+.category-details-wrapper {
+    max-width: 1240px;
+    margin: 47px auto;
+
+    .category-details-info-container {
+        display: table;
+        margin-top: 26px;
+
+        .category-info-button-container {
+            margin-top: 63px;
+
+            .category-info-button {
+                font-size: 12px;
+                display: inline-block;
+                width: 181px;
+                height: 40px;
+                color: #fff;
+                background-color: #1877F7;
+                border-radius: 9px;
+                margin: 0 35px;
+            }
+        }
+    }
+}

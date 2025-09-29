@@ -1,0 +1,228 @@
+.list-header-container {
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  padding: 8px 10px;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  background-color: #f4f4f4;
+}
+.list-header-container .checkbox-wrap {
+  display: flex;
+  align-items: center;
+}
+.list-header-container .checkbox-wrap .list-header-checkbox {
+  margin-right: 16px;
+}
+.list-header-container .list-header-operations {
+  margin-left: auto;
+}
+.list-header-container .list-header-operations .btn-delete {
+  display: flex;
+  align-items: center;
+}
+.list-header-container .list-header-operations .btn-delete .icon-delete {
+  font-size: 18px;
+  margin-right: 10px;
+}
+.list-header-container .list-header-operations .btn-delete .icon-delete svg {
+  vertical-align: middle;
+}
+
+.img-wrap {
+  vertical-align: middle;
+  display: inline-block;
+  width: 80px;
+  height: 80px;
+  margin-right: 12px;
+}
+.img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.content {
+  vertical-align: middle;
+  display: inline-block;
+  width: 70%;
+}
+.content .title {
+  display: block;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  overflow: hidden;
+  -ms-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+  max-height: 32px;
+  overflow: hidden;
+  font-size: 14px;
+  color: #212121;
+  line-height: 16px;
+}
+.content .sku {
+  display: block;
+  margin-top: 6px;
+  font-size: 12px;
+  line-height: 16px;
+  color: #757575;
+}
+
+.quantity-wrapper .quantity-control {
+  display: flex;
+  align-items: center;
+  border: 1px solid #2756a6;
+  width: fit-content;
+}
+.quantity-wrapper .quantity-control .quantity-subtract {
+  color: #fff;
+  background-color: #2756a6;
+}
+.quantity-wrapper .quantity-control .quantity-add {
+  color: #fff;
+  background-color: #2756a6;
+}
+.quantity-wrapper .quantity-control .quantity-input {
+  padding: 0 6px;
+  outline: none;
+  background-color: transparent;
+  border: none;
+  text-align: center;
+  width: 36px;
+}
+
+.checkout-summary-row {
+  font-size: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #fff;
+}
+.checkout-summary-row .location-body {
+  display: table;
+}
+.checkout-summary-row .location-body .location-icon {
+  margin-right: 6px;
+  color: #9e9e9e;
+  display: table-cell;
+}
+.checkout-summary-row .location-body .location-address {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.checkout-summary-row .checkout-summary-total {
+  font-weight: bolder;
+  color: #2056a4;
+}
+.checkout-summary-row .checkout-summary-noline-value {
+  display: block;
+  padding: 4px;
+  border-radius: 12px;
+  border: 1px solid rgb(220, 220, 254);
+}
+
+.voucher-list-box-overlay {
+  display: none;
+  width: 100%;
+  overflow-y: scroll;
+  height: 100vh;
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+}
+.voucher-list-box-overlay .voucher-list-box-overlay-wrapper {
+  display: flex;
+  justify-content: center;
+  min-height: 100vh;
+  text-align: center;
+}
+.voucher-list-box-overlay .voucher-list-box-overlay-wrapper .box-overlay-hidden {
+  position: fixed;
+  inset: 0;
+}
+.voucher-list-box-overlay .voucher-list-box-overlay-wrapper .box-overlay-hidden div {
+  position: absolute;
+  inset: 0;
+  opacity: 0.5;
+  background-color: #000;
+}
+.voucher-list-box-overlay .voucher-list-wrapper {
+  position: absolute;
+  z-index: 10000;
+  width: 100%;
+  border-radius: 12px;
+  max-width: 640px;
+  background: #f4f4f4;
+  height: 90vh;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.voucher-list-box-overlay .voucher-list-wrapper .voucher-list-container .voucher-title {
+  padding: 20px;
+  border-bottom: 1px solid #9d9b9b;
+  text-align: left;
+}
+.voucher-list-box-overlay .voucher-list-wrapper .voucher-list-container .voucher-title span {
+  font-size: 20px;
+  font-weight: 500;
+}
+.voucher-list-box-overlay .voucher-list-wrapper .voucher-list-container .voucher-list {
+  height: calc(90vh - 64px - 56px);
+  overflow: auto;
+}
+.voucher-list-box-overlay .voucher-list-wrapper .voucher-list-container .voucher-list .voucher-item {
+  display: flex;
+  padding: 12px 20px;
+}
+.voucher-list-box-overlay .voucher-list-wrapper .voucher-list-container .voucher-list .voucher-item .voucher-item-left {
+  border-radius: 6px 0 0 6px;
+  background: #1161e8;
+  width: 110px;
+  height: 110px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 10px 15px rgba(0, 0, 0, 0.05);
+  align-content: center;
+}
+.voucher-list-box-overlay .voucher-list-wrapper .voucher-list-container .voucher-list .voucher-item .voucher-item-left span {
+  color: #fff;
+}
+.voucher-list-box-overlay .voucher-list-wrapper .voucher-list-container .voucher-list .voucher-item .voucher-item-right {
+  display: flex;
+  border-radius: 0 6px 6px 0;
+  border: 1px solid #9d9b9b;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 10px 15px rgba(0, 0, 0, 0.05);
+  flex: 1 1 auto;
+}
+.voucher-list-box-overlay .voucher-list-wrapper .voucher-list-container .voucher-list .voucher-item .voucher-item-right .voucher-info {
+  display: table;
+  font-size: 15px;
+  padding-left: 14px;
+  text-align: left;
+  flex: 1 1 auto;
+}
+.voucher-list-box-overlay .voucher-list-wrapper .voucher-list-container .voucher-list .voucher-item .voucher-item-right .voucher-info .voucher-info-cell {
+  vertical-align: middle;
+  display: table-cell;
+}
+.voucher-list-box-overlay .voucher-list-wrapper .voucher-list-container .voucher-list .voucher-item .voucher-item-right .voucher-info .voucher-info-cell .end-date {
+  font-size: 12px;
+}
+.voucher-list-box-overlay .voucher-list-wrapper .voucher-list-container .voucher-list .voucher-item .voucher-item-right .voucher-checkbox {
+  flex: none;
+  align-content: center;
+  padding: 0 12px;
+}
+.voucher-list-box-overlay .voucher-list-wrapper .voucher-list-container .voucher-list .voucher-item .voucher-item-right .voucher-checkbox input {
+  width: 16px;
+  height: 16px;
+}
+.voucher-list-box-overlay .voucher-list-wrapper .voucher-list-container .voucher-button-container {
+  padding: 10px 20px;
+  text-align: end;
+}
+.voucher-list-box-overlay .voucher-list-wrapper .voucher-list-container .voucher-button-container .voucher-button {
+  padding: 10px 16px;
+  border-radius: 12px;
+  background: #2056a4;
+  color: #fff;
+}

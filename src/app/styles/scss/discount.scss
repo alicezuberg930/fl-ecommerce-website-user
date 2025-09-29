@@ -1,0 +1,95 @@
+.discount-wrapper {
+    margin: auto;
+    margin-top: 12rem;
+    margin-bottom: 3rem;
+    width: 100%;
+    max-width: 1240px;
+
+    img {
+        aspect-ratio: auto 1440 / 450;
+        object-fit: cover;
+        object-position: center;
+        width: 100%;
+    }
+
+    .discount-title {
+        font-size: 24px;
+        color: #2756a7;
+        text-transform: uppercase;
+        margin-top: 32px;
+        margin-left: 14px;
+    }
+
+    .discount-container {
+        display: flex;
+        flex-wrap: wrap;
+
+        .discount-item-container {
+            padding: 0 14px;
+            margin-top: 28px;
+            flex: 0 0 auto;
+            width: 100%;
+
+            @media (min-width: 768px) {
+                width: 50%;
+            }
+
+            @media (min-width: 1024px) {
+                width: 33.33333333%;
+            }
+
+            .discount-item {
+                width: 100%;
+                color: black;
+                border-radius: 0.75rem;
+                box-shadow: 0 .2rem .6rem rgba(0, 0, 0, 0.1);
+
+                .discount-item-image-container {
+                    width: 100%;
+                    display: block;
+                    overflow: hidden;
+                    border-radius: .75rem .75rem 0 0;
+
+                    img {
+                        object-fit: cover;
+                        object-position: center;
+                        aspect-ratio: 5 / 3.25;
+                        width: 100%;
+                        transition: all 0.5s ease-in-out;
+
+                        &:hover {
+                            transform: scale(1.05);
+                        }
+                    }
+                }
+
+                .discount-item-description {
+                    padding: 15px;
+
+                    h3 {
+                        font-weight: 500;
+                        font-size: 21px;
+                        line-clamp: 2;
+                        -webkit-line-clamp: 2;
+                        line-height: 28px;
+                        max-height: calc(28px * 2);
+                    }
+
+                    p {
+                        margin-top: 12px;
+                        max-height: calc(20px * 4);
+                        line-clamp: 4;
+                        -webkit-line-clamp: 4;
+                        line-height: 20px;
+                    }
+
+                    h3,
+                    p {
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                    }
+                }
+            }
+        }
+    }
+}

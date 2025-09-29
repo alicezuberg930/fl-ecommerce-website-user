@@ -1,0 +1,224 @@
+.user-content-body {
+  background-color: transparent !important;
+}
+
+.user-order-wrapper {
+  font-size: 15px;
+}
+.user-order-wrapper .user-order-status-container {
+  padding: 33px;
+  padding-bottom: 0;
+  border-radius: 16px;
+  background-color: #D9D9D9;
+}
+.user-order-wrapper .user-order-status-container .user-order-search-input-container {
+  display: flex;
+  gap: 12px;
+  margin-top: 14px;
+}
+.user-order-wrapper .user-order-status-container .user-order-search-input-container input {
+  flex: none;
+  border-radius: 13px;
+  height: 34px;
+  width: 120px;
+  outline: none;
+  border: none;
+  padding: 0 6px;
+}
+@media (min-width: 375px) {
+  .user-order-wrapper .user-order-status-container .user-order-search-input-container input {
+    width: 151px;
+  }
+}
+.user-order-wrapper .user-order-status-container .user-order-statuses {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  margin-top: 31px;
+}
+.user-order-wrapper .user-order-status-container .user-order-statuses span {
+  padding-bottom: 12px;
+}
+.user-order-wrapper .separator {
+  background-color: #FFF;
+  height: 23px;
+}
+.user-order-wrapper .user-order-list-wrapper {
+  padding-top: 29px;
+  padding-bottom: 47px;
+}
+.user-order-wrapper .user-order-list-wrapper .user-order-not-found {
+  text-align: center;
+}
+.user-order-wrapper .user-order-list-wrapper .user-order-not-found .cart-not-found-img {
+  width: 198px;
+  height: 198px;
+}
+.user-order-wrapper .user-order-list-wrapper .user-order-not-found .cart-not-found-title {
+  display: block;
+  font-size: 15px;
+  margin-top: 9px;
+  margin-bottom: 24px;
+}
+.user-order-wrapper .user-order-list-wrapper .user-order-not-found .continue-shopping-button {
+  border-radius: 13px;
+  background-color: #E45757;
+  height: 27px;
+  border: none;
+  outline: none;
+  width: 235px;
+  color: #FFF;
+  font-size: 13px;
+}
+.user-order-wrapper .user-order-list-wrapper .user-order-list-container .user-order-item-container {
+  padding: 22px 19px;
+  background-color: #D9D9D9;
+  margin-bottom: 35px;
+}
+.user-order-wrapper .user-order-list-wrapper .user-order-list-container .user-order-item-container .user-order-shop-info {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #000;
+  padding-bottom: 4px;
+}
+.user-order-wrapper .user-order-list-wrapper .user-order-list-container .user-order-item-container .user-order-shop-info .user-order-chat-button,
+.user-order-wrapper .user-order-list-wrapper .user-order-list-container .user-order-item-container .user-order-shop-info .user-order-shop-info-button {
+  font-size: 15px;
+  border-radius: 8px;
+  width: 90px;
+  height: 26px;
+  display: none;
+}
+@media (min-width: 640px) {
+  .user-order-wrapper .user-order-list-wrapper .user-order-list-container .user-order-item-container .user-order-shop-info .user-order-chat-button,
+  .user-order-wrapper .user-order-list-wrapper .user-order-list-container .user-order-item-container .user-order-shop-info .user-order-shop-info-button {
+    display: block;
+  }
+}
+.user-order-wrapper .user-order-list-wrapper .user-order-list-container .user-order-item-container .user-order-shop-info .user-order-chat-button {
+  margin-left: 28px;
+  margin-right: 12px;
+  background-color: #063DD3;
+  color: #fff;
+}
+.user-order-wrapper .user-order-list-wrapper .user-order-list-container .user-order-item-container .user-order-shop-info .user-order-shop-info-button {
+  background-color: #FFFFFF;
+}
+.user-order-wrapper .user-order-list-wrapper .user-order-list-container .user-order-item-container .user-order-shop-info .title-delivering {
+  flex: 1 1 auto;
+  text-align: end;
+}
+.user-order-wrapper .user-order-list-wrapper .user-order-list-container .user-order-item-container .user-order-product-container {
+  margin: 24px 0;
+  border-bottom: 1px solid #000;
+}
+.user-order-wrapper .user-order-list-wrapper .user-order-list-container .user-order-item-container .user-order-product-container a {
+  color: #000;
+}
+.user-order-wrapper .user-order-list-wrapper .user-order-list-container .user-order-item-container .user-order-product-container .user-order-product-info-container {
+  display: flex;
+  flex-direction: column;
+}
+@media (min-width: 768px) {
+  .user-order-wrapper .user-order-list-wrapper .user-order-list-container .user-order-item-container .user-order-product-container .user-order-product-info-container {
+    flex-direction: row;
+  }
+}
+.user-order-wrapper .user-order-list-wrapper .user-order-list-container .user-order-item-container .user-order-product-container .user-order-product-info-container .user-order-product-info {
+  font-size: 14px;
+  flex: none;
+  width: 100%;
+}
+.user-order-wrapper .user-order-list-wrapper .user-order-list-container .user-order-item-container .user-order-product-container .user-order-product-info-container .user-order-product-info .user-order-product-img {
+  width: 97px;
+  height: 97px;
+  margin-right: 11px;
+}
+.user-order-wrapper .user-order-list-wrapper .user-order-list-container .user-order-item-container .user-order-product-container .user-order-product-info-container .user-order-product-info .user-order-product-title {
+  display: inline-block;
+  vertical-align: top;
+  max-width: 440px;
+}
+.user-order-wrapper .user-order-list-wrapper .user-order-list-container .user-order-item-container .user-order-product-container .user-order-product-info-container .user-order-product-info .user-order-product-title .product-name {
+  line-clamp: 2;
+  overflow: hidden;
+  height: 28px;
+}
+.user-order-wrapper .user-order-list-wrapper .user-order-list-container .user-order-item-container .user-order-product-container .user-order-product-info-container .user-order-product-info .user-order-product-title .product-option {
+  margin: 4px 0;
+  display: block;
+  color: #575656;
+}
+.user-order-wrapper .user-order-list-wrapper .user-order-list-container .user-order-item-container .user-order-product-container .user-order-product-info-container .order-product-price-container {
+  text-align: right;
+  flex: 1 1 0%;
+}
+.user-order-wrapper .user-order-list-wrapper .user-order-list-container .user-order-item-container .user-order-product-container .user-order-product-info-container .order-product-price-container .order-product-price-original {
+  font-size: 13px;
+  font-weight: 100;
+  text-decoration: line-through;
+  padding-right: 6px;
+}
+.user-order-wrapper .user-order-list-wrapper .user-order-list-container .user-order-item-container .user-order-product-container .user-order-product-info-container .order-product-price-container .order-product-price-new {
+  color: #FCA020;
+  font-size: 16px;
+}
+.user-order-wrapper .user-order-list-wrapper .user-order-list-container .user-order-item-container .user-order-product-container .user-order-gift-info-container {
+  margin-top: 12px;
+}
+.user-order-wrapper .user-order-list-wrapper .user-order-list-container .user-order-item-container .user-order-product-container .user-order-gift-info-container .user-order-gift .user-order-gift-img {
+  width: 62px;
+  height: 62px;
+}
+.user-order-wrapper .user-order-list-wrapper .user-order-list-container .user-order-item-container .user-order-product-container .user-order-gift-info-container .user-order-gift .user-order-gift-title {
+  display: inline-block;
+  vertical-align: top;
+  max-width: 440px;
+  padding-left: 11px;
+}
+.user-order-wrapper .user-order-list-wrapper .user-order-list-container .user-order-item-container .user-order-product-container .user-order-gift-info-container .user-order-gift .user-order-gift-title .gift-name {
+  line-clamp: 2;
+  overflow: hidden;
+  height: 28px;
+}
+.user-order-wrapper .user-order-list-wrapper .user-order-list-container .user-order-item-container .user-order-product-container .user-order-gift-info-container .user-order-gift .user-order-gift-title .gift-name .gift-border {
+  padding: 2px;
+  color: #575656;
+  border: 1px solid #E45757;
+}
+.user-order-wrapper .user-order-list-wrapper .user-order-list-container .user-order-item-container .user-order-product-container .user-order-gift-info-container .user-order-gift .user-order-gift-title .gift-option {
+  margin: 4px 0;
+  display: block;
+  color: #575656;
+}
+.user-order-wrapper .user-order-list-wrapper .user-order-list-container .user-order-item-container .user-order-total-amount {
+  text-align: end;
+  padding-top: 11px;
+  padding-bottom: 19px;
+}
+.user-order-wrapper .user-order-list-wrapper .user-order-list-container .user-order-item-container .user-order-total-amount span {
+  font-size: 14px;
+}
+.user-order-wrapper .user-order-list-wrapper .user-order-list-container .user-order-item-container .user-order-total-amount b {
+  font-size: 16px;
+  color: #FCA020;
+}
+.user-order-wrapper .user-order-list-wrapper .user-order-list-container .user-order-item-container .user-order-item-action {
+  text-align: end;
+}
+.user-order-wrapper .user-order-list-wrapper .user-order-list-container .user-order-item-container .user-order-item-action .repurchase-button,
+.user-order-wrapper .user-order-list-wrapper .user-order-list-container .user-order-item-container .user-order-item-action .refund-button {
+  border-radius: 10px;
+  height: 35px;
+  font-size: 15px;
+  color: #FFFFFF;
+}
+.user-order-wrapper .user-order-list-wrapper .user-order-list-container .user-order-item-container .user-order-item-action .repurchase-button {
+  width: 108px;
+  background-color: #E45757;
+}
+.user-order-wrapper .user-order-list-wrapper .user-order-list-container .user-order-item-container .user-order-item-action .refund-button {
+  margin-left: 16px;
+  width: 228px;
+  background-color: #1877F7;
+}

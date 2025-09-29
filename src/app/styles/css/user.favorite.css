@@ -1,0 +1,30 @@
+.user-content-body {
+  background-color: transparent !important;
+}
+
+.user-favorite-list-wrapper {
+  padding: 34px;
+  background-color: #D9D9D9;
+  border-radius: 16px;
+}
+.user-favorite-list-wrapper .user-title {
+  margin-bottom: 14px;
+}
+.user-favorite-list-wrapper .user-title b {
+  font-size: 15px;
+}
+.user-favorite-list-wrapper .user-title span {
+  font-size: 12px;
+}
+.user-favorite-list-wrapper .user-favorite-list-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 38px;
+}
+.user-favorite-list-wrapper .user-favorite-list-container .user-favorite-item-container {
+  flex: 1 1 0%;
+  aspect-ratio: 1/1;
+  height: 162px;
+  width: 162px;
+  background-color: #F5F5F5;
+}

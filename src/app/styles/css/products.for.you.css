@@ -1,0 +1,36 @@
+.products-for-you-wrapper {
+  width: 100%;
+  margin: 40px 0px;
+}
+.products-for-you-wrapper .products-for-you-title {
+  padding: 10px 0;
+  text-transform: uppercase;
+}
+.products-for-you-wrapper .products-for-you-title h1 {
+  font-size: 18px;
+  color: #000;
+}
+@media (min-width: 1024px) {
+  .products-for-you-wrapper .products-for-you-title h1 {
+    font-size: 22px;
+  }
+}
+.products-for-you-wrapper .loading-wrapper {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.products-for-you-wrapper .loading-wrapper .loading-container img {
+  aspect-ratio: 600/301;
+  width: 100%;
+  object-fit: cover;
+}
+.products-for-you-wrapper .products-container {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+}
+.products-for-you-wrapper .paginator-container {
+  margin-top: 30px;
+}

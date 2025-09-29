@@ -1,0 +1,19 @@
+@keyframes pulse {
+    50% {
+        opacity: .4;
+    }
+}
+
+.animate-pulse {
+    margin: auto;
+    width: 100%;
+    animation: pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+
+    .shimmer-item {
+        margin-bottom: .625rem;
+        height: 2.5rem;
+        border-radius: .25rem;
+        --tw-bg-opacity: 1;
+        background-color: rgb(229 231 235 / var(--tw-bg-opacity, 1));
+    }
+}

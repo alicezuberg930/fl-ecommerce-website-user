@@ -1,0 +1,130 @@
+.introduction-wrapper {
+  margin: 3rem auto;
+  max-width: 1240px;
+}
+.introduction-wrapper img {
+  aspect-ratio: auto 1440/450;
+  object-fit: cover;
+  object-position: center;
+  width: 100%;
+}
+.introduction-wrapper .introduction-details-container {
+  padding: 0 14px;
+}
+.introduction-wrapper .introduction-details-container p {
+  line-height: 28px;
+  margin-bottom: 12px;
+}
+@media (min-width: 1024px) {
+  .introduction-wrapper .introduction-details-container {
+    padding: 0 10%;
+  }
+}
+.introduction-wrapper .introduction-details-container .introduction-details-title {
+  font-size: 24px;
+  color: #2756a7;
+  text-transform: uppercase;
+  margin-top: 32px;
+  margin-bottom: 12px;
+}
+.introduction-wrapper .introduction-utilities-wrapper {
+  padding: 48px;
+  margin-top: 32px;
+  width: 100%;
+  background-color: #2756a6;
+  color: white;
+  box-shadow: 0 0.6rem 1rem rgba(0, 0, 0, 0.1);
+}
+.introduction-wrapper .introduction-utilities-wrapper .introduction-utilities-container {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+}
+.introduction-wrapper .introduction-utilities-wrapper .introduction-utilities-container .introduction-utilities-item {
+  flex: 0 0 auto;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: 20px 0;
+}
+.introduction-wrapper .introduction-utilities-wrapper .introduction-utilities-container .introduction-utilities-item:not(:last-child) {
+  border-bottom: 1px solid white;
+}
+@media (min-width: 1024px) {
+  .introduction-wrapper .introduction-utilities-wrapper .introduction-utilities-container .introduction-utilities-item {
+    padding: 0 1.75rem;
+    width: 33.33333333%;
+  }
+  .introduction-wrapper .introduction-utilities-wrapper .introduction-utilities-container .introduction-utilities-item:not(:last-child) {
+    border-bottom: 0px;
+    border-right: 1px solid white;
+  }
+}
+.introduction-wrapper .introduction-utilities-wrapper .introduction-utilities-container .introduction-utilities-item div {
+  padding-left: 20px;
+}
+.introduction-wrapper .introduction-utilities-wrapper .introduction-utilities-container .introduction-utilities-item div b {
+  font-size: 17px;
+  font-weight: 700;
+}
+.introduction-wrapper .introduction-utilities-wrapper .introduction-utilities-container .introduction-utilities-item div p {
+  font-size: 13px;
+}
+.introduction-wrapper .introduction-utilities-wrapper .introduction-utilities-container .introduction-utilities-item img {
+  object-fit: contain;
+  width: 48px;
+  height: 48px;
+}
+.introduction-wrapper .introduction-extended-wrapper {
+  margin: auto;
+  width: 100%;
+  margin-top: 40px;
+  padding: 0 14px;
+}
+@media (min-width: 1024px) {
+  .introduction-wrapper .introduction-extended-wrapper {
+    width: 80%;
+    padding: 0;
+  }
+}
+.introduction-wrapper .introduction-extended-wrapper .introduction-extended-container {
+  justify-content: space-between;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.introduction-wrapper .introduction-extended-wrapper .introduction-extended-container div {
+  flex: 0 0 auto;
+  width: 100%;
+}
+@media (min-width: 1024px) {
+  .introduction-wrapper .introduction-extended-wrapper .introduction-extended-container div {
+    width: 45%;
+    padding: 0;
+  }
+}
+.introduction-wrapper .introduction-extended-wrapper .introduction-extended-container div h1 {
+  color: #2756a7;
+}
+.introduction-wrapper .introduction-extended-wrapper .introduction-extended-container div p {
+  line-height: 28px;
+}
+.introduction-wrapper .introduction-extended-wrapper .introduction-extended-container .introduction-extended-image-container {
+  width: 100%;
+}
+@media (min-width: 1024px) {
+  .introduction-wrapper .introduction-extended-wrapper .introduction-extended-container .introduction-extended-image-container {
+    width: 45%;
+    padding: 0;
+  }
+}
+.introduction-wrapper .introduction-extended-wrapper .introduction-extended-container .introduction-extended-image-container img {
+  flex: 0 0 auto;
+  width: 100%;
+  aspect-ratio: auto 539/314;
+  object-fit: cover;
+  object-position: center;
+  width: 100%;
+  display: block;
+}

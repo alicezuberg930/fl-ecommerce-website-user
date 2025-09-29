@@ -1,0 +1,64 @@
+.products-filter-wrapper {
+  margin: 3rem auto;
+  max-width: 1240px;
+}
+.products-filter-wrapper .products-filter-container {
+  display: flex;
+  width: 100%;
+  gap: 2rem;
+}
+@media screen and (min-width: 460px) and (max-width: 760px) {
+  .products-filter-wrapper .products-filter-container {
+    margin-top: 100px;
+  }
+}
+.products-filter-wrapper .products-filter-container .products-filter-menu {
+  width: fit-content;
+  flex: none;
+}
+.products-filter-wrapper .products-filter-container .products-filter-menu .separator {
+  margin: 1rem;
+}
+@media screen and (min-width: 320px) and (max-width: 760px) {
+  .products-filter-wrapper .products-filter-container .products-filter-menu {
+    display: none;
+  }
+}
+.products-filter-wrapper .products-filter-container .products-filter-list-container {
+  flex: 1 1 auto;
+}
+.products-filter-wrapper .products-filter-container .products-filter-list-container .products-filter-list {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #fff;
+  border-radius: 5px;
+}
+.products-filter-wrapper .products-filter-container .products-filter-list-container .products-filter-list .products-filter-list-found {
+  font-size: 16px;
+  color: #fff;
+  font-weight: 400;
+  background: rgb(239, 172, 57);
+  border-radius: 1rem;
+  padding: 0.5rem 1.5rem;
+}
+.products-filter-wrapper .products-filter-container .products-filter-list-container .products-filter-list .products-filter-icon {
+  background: rgb(239, 172, 57);
+  border-radius: 1rem;
+  padding: 0.5rem;
+  color: #fff;
+}
+.products-filter-wrapper .products-filter-container .products-filter-list-container .products-loading-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.products-filter-wrapper .products-filter-container .products-filter-list-container .products-loading-container img {
+  aspect-ratio: 600/300;
+  width: 100%;
+  object-fit: cover;
+}
+.products-filter-wrapper .products-filter-container .products-filter-list-container .paginator-container {
+  margin-top: 30px;
+}

@@ -1,0 +1,56 @@
+.fixedpage-wrapper {
+  position: fixed;
+  right: 0.5rem;
+  bottom: 4rem;
+  display: none;
+}
+@media (min-width: 768px) {
+  .fixedpage-wrapper {
+    display: block;
+  }
+}
+.fixedpage-wrapper .fixedpage-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.fixedpage-wrapper .fixedpage-list .fixedpage-item {
+  width: 100%;
+}
+.fixedpage-wrapper .fixedpage-list .fixedpage-item .fixedpage-link {
+  border: 1px solid #168AFF;
+  background-color: white;
+  height: 46px;
+  width: 46px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  box-shadow: 0 0.1rem 0.1rem rgba(33, 37, 41, 0.3);
+}
+.fixedpage-wrapper .fixedpage-list .fixedpage-item .fixedpage-link .fixedpage-item-zalo-icon {
+  width: 32px;
+}
+.fixedpage-wrapper .fixedpage-list .fixedpage-item .fixedpage-link .fixedpage-item-zalo-icon img {
+  max-width: 100%;
+  object-fit: contain;
+  object-position: center;
+}
+.fixedpage-wrapper .fixedpage-list .fixedpage-item .fixedpage-link .fixedpage-item-hotline-icon {
+  mask-image: url("/assets/phone-call-icon.svg");
+  mask-size: contain;
+  background-color: green;
+  width: 20px;
+  height: 20px;
+}
+.fixedpage-wrapper .fixedpage-list .fixedpage-item .fixedpage-link .fixedpage-item-fb-icon {
+  width: 26px;
+  height: 26px;
+}
+.fixedpage-wrapper .fixedpage-list .fixedpage-item .fixedpage-link .fixedpage-item-fb-icon img {
+  max-width: 100%;
+  object-fit: contain;
+  object-position: center;
+}

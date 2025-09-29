@@ -1,0 +1,23 @@
+.list-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 10px 0;
+
+    .product-card {
+
+        // medium screen
+        @media (min-width: 768px) {
+            width: 50% !important;
+        }
+
+        // large screen
+        @media (min-width: 1024px) {
+            width: 33.33333333% !important;
+        }
+
+        // extra large screen
+        @media (min-width: 1280px) {
+            width: 25% !important;
+        }
+    }
+}

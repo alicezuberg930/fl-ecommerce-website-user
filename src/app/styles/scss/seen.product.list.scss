@@ -1,0 +1,30 @@
+.seen-product-list-wrapper {
+    background-color: #D9D9D9;
+    padding: 19px 27px;
+    margin-top: 60px;
+
+    .seen-product-title {
+        font-size: 15px;
+    }
+
+    .seen-product-list-container {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 11px;
+
+        .seen-product-item-container {
+            aspect-ratio: 1/1;
+            width: 106px;
+            height: 106px;
+            cursor: pointer;
+
+            img {
+                border-radius: 12px;
+                object-fit: contain;
+                width: 100%;
+                height: 100%;
+            }
+        }
+    }
+
+}

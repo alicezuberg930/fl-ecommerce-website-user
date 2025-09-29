@@ -1,0 +1,28 @@
+.promotion-bar {
+    position: relative;
+    width: 100%;
+    height: 20px;
+    background-color: #e0e0e0; 
+    border-radius: 10px; 
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+  }
+  
+  .promotion-bar-fill {
+    height: 100%;
+    background-color: #E45757; 
+    transition: width 0.3s ease; 
+    border-radius: 10px 0 0 10px; 
+  }
+  
+  .promotion-percentage {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 14px;
+    font-weight: bold;
+    color: #fff; 
+    pointer-events: none;
+  }
+  

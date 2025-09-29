@@ -1,0 +1,62 @@
+.user-account-wrapper {
+  padding: 0;
+}
+@media (min-width: 768px) {
+  .user-account-wrapper {
+    padding: 33px 30px;
+  }
+}
+.user-account-wrapper .user-account-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-top: 14px;
+}
+@media (min-width: 375px) {
+  .user-account-wrapper .user-account-container {
+    flex-direction: row;
+  }
+}
+.user-account-wrapper .user-account-container .account-email-container {
+  background-color: #FFFCFC;
+  padding: 8px;
+  display: flex;
+  gap: 44px;
+}
+.user-account-wrapper .user-account-container .account-email-container .account-name {
+  font-size: 13px;
+}
+.user-account-wrapper .user-account-container .account-email-container .account-email {
+  font-size: 12px;
+}
+.user-account-wrapper .user-account-container .account-email-container .edit {
+  font-size: 10px;
+  color: #E45757;
+}
+.user-account-wrapper .user-account-container .account-notification-container {
+  background-color: #FFFCFC;
+  padding: 8px;
+  display: flex;
+}
+.user-account-wrapper .user-account-container .account-notification-container .account-register {
+  font-size: 13px;
+}
+.user-account-wrapper .user-account-container .account-notification-container .account-checkbox-container {
+  display: flex;
+  align-items: center;
+}
+.user-account-wrapper .user-account-container .account-notification-container .account-checkbox-container span {
+  padding-left: 4px;
+  font-size: 12px;
+}
+.user-account-wrapper .user-account-container .account-notification-container .save-change-button {
+  margin-left: 8px;
+  width: 109px;
+  height: 27px;
+  color: #fff;
+  background-color: #E45757;
+  border-radius: 13px;
+  outline: none;
+  border: none;
+  font-size: 13px;
+}

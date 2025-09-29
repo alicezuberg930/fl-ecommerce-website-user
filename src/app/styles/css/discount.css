@@ -1,0 +1,85 @@
+.discount-wrapper {
+  margin: auto;
+  margin-top: 12rem;
+  margin-bottom: 3rem;
+  width: 100%;
+  max-width: 1240px;
+}
+.discount-wrapper img {
+  aspect-ratio: auto 1440/450;
+  object-fit: cover;
+  object-position: center;
+  width: 100%;
+}
+.discount-wrapper .discount-title {
+  font-size: 24px;
+  color: #2756a7;
+  text-transform: uppercase;
+  margin-top: 32px;
+  margin-left: 14px;
+}
+.discount-wrapper .discount-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+.discount-wrapper .discount-container .discount-item-container {
+  padding: 0 14px;
+  margin-top: 28px;
+  flex: 0 0 auto;
+  width: 100%;
+}
+@media (min-width: 768px) {
+  .discount-wrapper .discount-container .discount-item-container {
+    width: 50%;
+  }
+}
+@media (min-width: 1024px) {
+  .discount-wrapper .discount-container .discount-item-container {
+    width: 33.33333333%;
+  }
+}
+.discount-wrapper .discount-container .discount-item-container .discount-item {
+  width: 100%;
+  color: black;
+  border-radius: 0.75rem;
+  box-shadow: 0 0.2rem 0.6rem rgba(0, 0, 0, 0.1);
+}
+.discount-wrapper .discount-container .discount-item-container .discount-item .discount-item-image-container {
+  width: 100%;
+  display: block;
+  overflow: hidden;
+  border-radius: 0.75rem 0.75rem 0 0;
+}
+.discount-wrapper .discount-container .discount-item-container .discount-item .discount-item-image-container img {
+  object-fit: cover;
+  object-position: center;
+  aspect-ratio: 5/3.25;
+  width: 100%;
+  transition: all 0.5s ease-in-out;
+}
+.discount-wrapper .discount-container .discount-item-container .discount-item .discount-item-image-container img:hover {
+  transform: scale(1.05);
+}
+.discount-wrapper .discount-container .discount-item-container .discount-item .discount-item-description {
+  padding: 15px;
+}
+.discount-wrapper .discount-container .discount-item-container .discount-item .discount-item-description h3 {
+  font-weight: 500;
+  font-size: 21px;
+  line-clamp: 2;
+  -webkit-line-clamp: 2;
+  line-height: 28px;
+  max-height: 56px;
+}
+.discount-wrapper .discount-container .discount-item-container .discount-item .discount-item-description p {
+  margin-top: 12px;
+  max-height: 80px;
+  line-clamp: 4;
+  -webkit-line-clamp: 4;
+  line-height: 20px;
+}
+.discount-wrapper .discount-container .discount-item-container .discount-item .discount-item-description h3,
+.discount-wrapper .discount-container .discount-item-container .discount-item .discount-item-description p {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

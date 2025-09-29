@@ -1,0 +1,31 @@
+.user-content-body {
+    background-color: transparent !important;
+}
+
+.user-repurchase-wrapper {
+    font-size: 15px;
+    padding: 34px;
+    background-color: #D9D9D9;
+    border-radius: 16px;
+
+    .no-repurchase-found-container {
+        margin-top: 38px;
+        text-align: center;
+
+        b {
+            display: block;
+        }
+
+        .continue-purchase-button {
+            height: 27px;
+            width: 235px;
+            color: #fff;
+            background-color: #E45757;
+            border-radius: 13px;
+            margin-top: 10px;
+            outline: none;
+            border: none;
+            font-size: 13px;
+        }
+    }
+}

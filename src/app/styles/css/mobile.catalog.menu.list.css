@@ -1,0 +1,35 @@
+.mobile-catalog-menu-container .mobile-catalog-menu-title {
+  font-size: 20px;
+  color: #063dd3;
+  display: block;
+  padding: 10px 15px;
+}
+.mobile-catalog-menu-container .mobile-catalog-menu-column {
+  padding: 10px 15px;
+  overflow: hidden;
+  cursor: pointer;
+  color: black;
+}
+.mobile-catalog-menu-container .mobile-catalog-menu-column:hover {
+  background-color: #0056b3;
+  color: white;
+}
+.mobile-catalog-menu-container .mobile-catalog-menu-column.active {
+  background-color: #0056b3;
+  color: white;
+}
+.mobile-catalog-menu-container .mobile-catalog-menu-column .catalog-menu-title {
+  user-select: none;
+  transition: background-color 0.3s ease;
+  word-wrap: break-word;
+  color: inherit;
+}
+.mobile-catalog-menu-container .mobile-catalog-menu-column .catalog-menu-sub-categories {
+  list-style: none;
+  margin: 0;
+  padding: 10px;
+  overflow: hidden;
+  transition: max-height 0.3s ease, opacity 0.3s ease;
+  word-wrap: break-word;
+  white-space: normal;
+}

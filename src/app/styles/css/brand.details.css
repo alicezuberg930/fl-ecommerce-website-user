@@ -1,0 +1,23 @@
+.brand-details-wrapper {
+  max-width: 1240px;
+  margin: 47px auto;
+}
+.brand-details-wrapper .brand-details-info-container {
+  display: table;
+  margin-bottom: 23px;
+}
+.brand-details-wrapper .brand-details-info-container img {
+  object-fit: cover;
+  width: 221px;
+  height: 131px;
+  display: table-cell;
+}
+.brand-details-wrapper .brand-details-info-container .brand-details-info {
+  display: table-cell;
+  vertical-align: top;
+  padding-left: 17px;
+}
+.brand-details-wrapper .brand-details-info-container .brand-details-info .brand-details-description {
+  font-size: 14px;
+  display: block;
+}

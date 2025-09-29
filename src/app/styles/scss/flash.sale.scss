@@ -1,0 +1,111 @@
+.flash-sale-wrapper {
+    margin: 0;
+    background: url("/assets/bgflash.png");
+    padding: 14px;
+    border-radius: 30px;
+    width: 100%;
+    aspect-ratio: 1180/424;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+
+    @media (min-width: 768px) {
+        margin-top: 40px;
+    }
+
+    .flash-sale-timer-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 8px;
+
+        .time_finish {
+            width: 100%;
+            padding: 10px;
+
+            .timer_title {
+                text-transform: uppercase;
+                font-weight: bold;
+                color: #e92f2f;
+                margin-right: 8px;
+            }
+
+            .timer_deal_brand {
+                margin-left: 8px;
+                display: inline-block;
+
+                .item_count_down {
+                    display: inline-block;
+                    padding: 2px 0px;
+                    text-align: center;
+                    width: 26px;
+                    border-radius: 4px;
+                    color: #fff;
+                    background-color: #005eff;
+                    font-weight: 700;
+                    font-size: 12px;
+                }
+            }
+        }
+
+        .see-more {
+            font-size: 16px;
+            font-weight: 400;
+            line-height: 100%;
+            text-align: left;
+            text-underline-position: from-font;
+            text-decoration-skip-ink: none;
+
+            @media (min-width: 375px) {
+                display: block;
+            }
+        }
+    }
+
+    .flash-sale-slider-container {
+        .slick-slider {
+            .slick-list {
+                margin: 0 -4px;
+
+                .slick-slide {
+                    padding: 0 4px;
+
+                    .product-card {
+                        width: 100% !important;
+                    }
+                }
+            }
+
+            .slick-next {
+                width: 50px;
+                height: 50px;
+                background-color: #2756a676;
+                border-top-left-radius: 50%;
+                border-bottom-left-radius: 50%;
+                position: absolute;
+                right: 0px;
+                display: flex;
+                align-items: center;
+            }
+
+            .slick-prev {
+                width: 50px;
+                height: 50px;
+                background-color: #2756a676;
+                border-top-right-radius: 50%;
+                border-bottom-right-radius: 50%;
+                position: absolute;
+                left: 0px;
+                display: flex;
+                align-items: center;
+                z-index: 1;
+            }
+        }
+    }
+}
+
+.time_finish_container {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}

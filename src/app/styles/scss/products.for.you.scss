@@ -1,0 +1,43 @@
+.products-for-you-wrapper {
+    width: 100%;
+    margin: 40px 0px;
+
+    .products-for-you-title {
+        padding: 10px 0;
+        text-transform: uppercase;
+
+        h1 {
+            font-size: 18px;
+            color: #000;
+
+            @media (min-width: 1024px) {
+                font-size: 22px;
+            }
+        }
+    }
+
+    .loading-wrapper {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        .loading-container {
+            img {
+                aspect-ratio: 600/301;
+                width: 100%;
+                object-fit: cover;
+            }
+        }
+    }
+
+    .products-container {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .paginator-container {
+        margin-top: 30px;
+    }
+}
