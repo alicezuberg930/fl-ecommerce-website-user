@@ -1,5 +1,5 @@
 'use client'
-import ProductCard from '@/app/components/ProductCard'
+import ProductCard from '@/sections/product/ProductCard'
 import CustomPaginator from '@/app/components/CustomPaginator'
 import '@/app/styles/css/products.for.you.css'
 import LoadingShimmer from '@/app/components/LoadingShimmer'

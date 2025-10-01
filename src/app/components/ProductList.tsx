@@ -1,7 +1,7 @@
 "use client"
 import React from "react"
 import "@/app/styles/css/products.list.css"
-import ProductCard from "./ProductCard"
+import ProductCard from "@/sections/product/ProductCard"
 
 const ProductList = ({ products }: any) => {
 

@@ -1,19 +1,15 @@
-"use client"
 import React from "react"
-import Slider, { Settings } from "react-slick"
-import { usePathname, useRouter } from "next/navigation"
 import "@/app/styles/css/categories.slider.css"
-import LoadingShimmer from "@/app/components/LoadingShimmer"
-import useQueryString from "@/hooks/useQueryString"
 import { Container, Typography } from "@mui/material"
-import useCategory from "@/hooks/api/useCategory"
+import { ICategory } from "@/@types/category"
+import { APIResponse } from "@/@types/response"
+import { API_ENDPOINT } from "@/routes/api"
+import CarouselList from "./CarouselList"
+import Link from "next/link"
+import { Settings } from "react-slick"
 
 const settings: Settings = {
-  dots: false,
-  infinite: true,
-  speed: 500,
   slidesToShow: 5,
-  slidesToScroll: 1,
   responsive: [
     {
       breakpoint: 1024,
@@ -36,48 +32,40 @@ const settings: Settings = {
   ],
 }
 
-export default function CategorySlider() {
-  const { getCategories } = useCategory()
-  const { data: response, isLoading, isError, error } = getCategories()
-  const router = useRouter()
-  const pathname = usePathname()
-  const createQueryString = useQueryString()
-
-  const setParams = (id: string | null) => {
-    router.push(pathname + 'products?' + createQueryString('category', id))
-  }
+export default async function CategorySlider() {
+  const response = await fetch(`${process.env.BASE_API}${API_ENDPOINT.category}`,
+    { method: "GET", cache: "force-cache", next: { revalidate: 3600 } }
+  )
+  const result: APIResponse<ICategory[]> = await response.json()
 
   return (
     <div className="home-categories-wrapper">
       <div className="home-categories-title">
         <h1>Danh mục sản phẩm</h1>
       </div>
-      {error && (
+      {!response.ok && (
         <Container maxWidth="xl">
           <Typography variant="h4" textAlign="center">
-            {error.message}
+            {result.message || response.statusText}
           </Typography>
         </Container>
       )}
-      {isLoading && !isError ? (
-        <LoadingShimmer />
-      ) : (
-        <>
-          {response?.data && (
-            <Slider {...settings}>
-              {response.data.map(category => (
-                <div className="home-categories-item" key={category._id}>
-                  <div className="home-categories-item-box" onClick={() => setParams(category._id)}>
-                    <div className="home-categories-item-box-img">
-                      <img src={category.logo} style={{ aspectRatio: '1/1' }} />
-                    </div>
-                    <h1 className="home-categories-item-title">{category.name}</h1>
-                  </div>
+      {result?.data && (
+        <CarouselList settings={settings}>
+          {result.data.map(category => (
+            <Link
+              href={{ pathname: '/products', query: { category: category._id } }}
+              className="home-categories-item" key={category._id}
+            >
+              <div className="home-categories-item-box">
+                <div className="home-categories-item-box-img">
+                  <img src={category.logo} style={{ aspectRatio: '1/1' }} />
                 </div>
-              ))}
-            </Slider>
-          )}
-        </>
+                <h1 className="home-categories-item-title" style={{ color: 'black', textAlign: 'center' }}>{category.name}</h1>
+              </div>
+            </Link>
+          ))}
+        </CarouselList>
       )}
     </div>
   )

@@ -1,19 +1,15 @@
-"use client"
 import React from "react"
-import Slider, { Settings } from "react-slick"
-import { usePathname, useRouter } from "next/navigation"
 import "@/app/styles/css/brands.slider.css"
-import LoadingShimmer from "@/app/components/LoadingShimmer"
-import useQueryString from "@/hooks/useQueryString"
-import useBrand from "@/hooks/api/useBrand"
 import { Container, Typography } from "@mui/material"
+import { API_ENDPOINT } from "@/routes/api"
+import { APIResponse } from "@/@types/response"
+import { IBrand } from "@/@types/brand"
+import CarouselList from "./CarouselList"
+import Link from "next/link"
+import { Settings } from "react-slick"
 
 const settings: Settings = {
-  dots: false,
-  infinite: true,
-  speed: 500,
   slidesToShow: 5,
-  slidesToScroll: 1,
   responsive: [
     {
       breakpoint: 1024,
@@ -36,16 +32,11 @@ const settings: Settings = {
   ],
 }
 
-export default function BrandSlider() {
-  const { getBrands } = useBrand()
-  const { data: response, isLoading, isError, error } = getBrands()
-  const router = useRouter()
-  const pathname = usePathname()
-  const createQueryString = useQueryString()
-
-  const setParams = (id: string | null) => {
-    router.push(pathname + 'products?' + createQueryString('brand', id))
-  }
+export default async function BrandSlider() {
+  const response = await fetch(`${process.env.BASE_API}${API_ENDPOINT.brand}`,
+    { method: "GET", cache: "force-cache", next: { revalidate: 3600 } }
+  )
+  const result: APIResponse<IBrand[]> = await response.json()
 
   return (
     <div className="home-brands-wrapper">
@@ -53,32 +44,29 @@ export default function BrandSlider() {
         <h1>Thương hiệu</h1>
       </div>
       <div className="home-brands-slider-container">
-        {error && (
+        {!response.ok && (
           <Container maxWidth="xl">
             <Typography variant="h4" textAlign="center">
-              {error.message}
+              {result.message || response.statusText}
             </Typography>
           </Container>
         )}
-        {isLoading && !isError ? (
-          <LoadingShimmer />
-        ) : (
-          <>
-            {response?.data && (
-              <Slider {...settings}>
-                {response?.data.map(brand => (
-                  <div className="home-brands-item" key={brand._id}>
-                    <div className="home-brands-item-box" onClick={() => setParams(brand._id)}>
-                      <div className="home-brands-item-box-img">
-                        <img src={brand.logo} style={{ aspectRatio: '1/1' }} />
-                      </div>
-                      <h1 className="home-brands-item-title">{brand.name}</h1>
-                    </div>
+        {result?.data && (
+          <CarouselList settings={settings}>
+            {result?.data.map(brand => (
+              <Link
+                href={{ pathname: '/products', query: { brand: brand._id } }}
+                className="home-brands-item" key={brand._id}
+              >
+                <div className="home-brands-item-box">
+                  <div className="home-brands-item-box-img">
+                    <img src={brand.logo} style={{ aspectRatio: '1/1' }} />
                   </div>
-                ))}
-              </Slider>
-            )}
-          </>
+                  <h1 className="home-brands-item-title">{brand.name}</h1>
+                </div>
+              </Link>
+            ))}
+          </CarouselList>
         )}
       </div>
     </div>

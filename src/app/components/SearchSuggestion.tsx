@@ -1,7 +1,7 @@
 import "@/app/styles/css/search.suggestion.css"
 import Link from "next/link"
 import { axiosInstance } from "../../utils/axios"
-import { slugify } from "../common/utils"
+import { slugify } from "@/utils/common"
 
 const SearchSuggestion: React.FC<{ results: { _id: string, name: string }[] }> = ({ results }) => {
     const addToTopSearch = async (name: string) => {

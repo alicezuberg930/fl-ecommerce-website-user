@@ -1,9 +1,10 @@
+import "slick-carousel/slick/slick.css"
+import "slick-carousel/slick/slick-theme.css"
+import 'react-toastify/dist/ReactToastify.css'
 import './globals.css'
 import Footer from '@/layouts/main/footer/Footer'
 import Header from '@/layouts/main/header/Header'
 import { ToastContainer } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css'
-import ReduxStoreProvider from './components/ReduxStoreProvider'
 import React, { Suspense } from 'react'
 import generateMetadaUtils from "../utils/seo"
 import ChatBot from './components/ChatBox'
@@ -13,8 +14,7 @@ import { MotionLazyContainer } from '@/components/animate'
 import SnackbarProvider from '@/components/snackbar'
 import CustomQueryClientProvider from '@/components/query-client/CustomQueryClientProvider'
 import { AuthProvider } from '@/auth/JwtContext'
-import "slick-carousel/slick/slick.css"
-import "slick-carousel/slick/slick-theme.css"
+import ReduxProvider from '@/redux/ReduxProvider'
 
 export const metadata = generateMetadaUtils({})
 
@@ -30,7 +30,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
                   <SnackbarProvider>
                     <CustomQueryClientProvider>
                       <Suspense>
-                        <ReduxStoreProvider>
+                        <ReduxProvider>
                           <Header />
                           <main>{children}</main>
                           {/* <Footer /> */}
@@ -41,7 +41,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
                             pauseOnHover
                             pauseOnFocusLoss
                           />
-                        </ReduxStoreProvider>
+                        </ReduxProvider>
                       </Suspense>
                     </CustomQueryClientProvider>
                   </SnackbarProvider>

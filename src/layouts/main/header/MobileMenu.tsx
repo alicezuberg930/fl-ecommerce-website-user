@@ -2,18 +2,12 @@ import { Box, Link, Stack, Typography } from "@mui/material"
 import React, { Dispatch, useEffect, SetStateAction } from "react"
 import NextLink from 'next/link'
 import Image from "@/components/image"
-import { RootState, useDispatch } from '@/app/api/store'
-import { useSelector } from 'react-redux'
-import { fetchCategoryList } from '@/app/api/Slices/category.slice'
 import { usePathname } from "next/navigation"
 import { useAuthContext } from "@/auth/useAuthContext"
 
 type Props = { isMobileMenuOpen: boolean, setIsMobileMenuOpen: Dispatch<SetStateAction<boolean>>, menu: { path: string, title: string }[] }
 
 export default function MobileMenu({ isMobileMenuOpen, setIsMobileMenuOpen, menu }: Props) {
-    // const categories = useSelector((state: RootState) => state.CategoryList.categories)
-    // const dispatch = useDispatch()
-    // const pathName = usePathname()
     const { user, logout } = useAuthContext()
     const aboutUsItem = [
         {
@@ -52,9 +46,6 @@ export default function MobileMenu({ isMobileMenuOpen, setIsMobileMenuOpen, menu
             path: '/user/orders'
         }
     ]
-    // useEffect(() => {
-    //     dispatch(fetchCategoryList({}))
-    // }, [])
 
     return (
         <>

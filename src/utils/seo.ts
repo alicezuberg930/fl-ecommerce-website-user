@@ -7,6 +7,8 @@ export default function generateMetadaUtils({
     url = "https://futurelifeecom.com",
     image = "/assets/opengraph-image.jpg",
 }): Metadata {
+    const customUrl = `https://futurelifeecom.com${url}`
+
     return {
         title,
         description,
@@ -14,7 +16,7 @@ export default function generateMetadaUtils({
         openGraph: {
             title,
             description,
-            url,
+            url: customUrl,
             images: [{ url: image }],
             type: "website",
         },

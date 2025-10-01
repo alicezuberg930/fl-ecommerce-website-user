@@ -1,7 +1,6 @@
-import Landing from "../sections/home/Landing"
-import { toast } from "react-toastify"
 import { createNotification } from "./common/utils"
 import generateMetadaUtils from "../utils/seo"
+import HomePage from "@/page/HomePage"
 
 export const metadata = generateMetadaUtils({ title: "Trang chủ - Future Life" })
 
@@ -76,5 +75,7 @@ export default function page() {
   //   // }
   // }, [])
 
-  return <Landing />
+  return (
+    <HomePage />
+  )
 }

@@ -3,15 +3,12 @@ import { icons } from "@/app/common/icons"
 import UserContent from "../components/UserContent"
 import Slider, { Settings } from "react-slick"
 import { useSelector } from "react-redux"
-import { RootState, useDispatch } from "@/app/api/store"
 import { useEffect } from "react"
-import { fetchProductList } from "@/app/api/Slices/product.slice"
 import LoadingShimmer from "@/app/components/LoadingShimmer"
 import '@/app/styles/css/user.accumulate.point.css'
 import { fCurrencyVND } from "@/utils/formatNumber"
 
 const UserAccumulatePointPage = () => {
-    const products = useSelector((state: RootState) => state.Products.products)
     const { AiOutlineDollar } = icons
     const settings: Settings = {
         dots: false,
@@ -40,11 +37,6 @@ const UserAccumulatePointPage = () => {
             },
         ],
     }
-    const dispatch = useDispatch()
-
-    useEffect(() => {
-        dispatch(fetchProductList({ page: 1, limit: 8, category: null, brand: null }))
-    }, [])
 
     return (
         <UserContent>
@@ -71,7 +63,7 @@ const UserAccumulatePointPage = () => {
                 <b>Quà nổi bật</b>
                 <div className="feature-gift-container">
                     <div className="feature-gift-slider-container">
-                        {!products ? <LoadingShimmer /> :
+                        {/* {!products ? <LoadingShimmer /> :
                             <Slider {...settings}>
                                 {
                                     products?.map((v, i) => {
@@ -96,7 +88,7 @@ const UserAccumulatePointPage = () => {
                                     })
                                 }
                             </Slider>
-                        }
+                        } */}
                     </div>
                 </div>
             </div>

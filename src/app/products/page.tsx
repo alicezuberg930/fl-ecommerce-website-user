@@ -3,9 +3,7 @@ import { useEffect, useState } from 'react'
 import CategoryFilter from './components/CategoryFilterMenu'
 import ProductList from '../components/ProductList'
 import { FaFilter } from 'react-icons/fa'
-import { RootState, useDispatch } from '../api/store'
 import { useSelector } from 'react-redux'
-import { fetchProductList } from '../api/Slices/product.slice'
 import BrandFilterMenu from './components/BrandFilterMenu'
 import CustomPaginator from '../components/CustomPaginator'
 import '@/app/styles/css/products.filter.css'
@@ -13,19 +11,11 @@ import { useSearchParams } from 'next/navigation'
 import LoadingShimmer from '../components/LoadingShimmer'
 
 const ProductsFilterPage = () => {
-  const dispatch = useDispatch()
-  const products = useSelector((state: RootState) => state.Products.products)
-  const loading = useSelector((state: RootState) => state.Products.loading)
-  const totalProducts = useSelector((state: RootState) => state.Products.totalProducts)
   const [page, setPage] = useState(1)
   const limit = 8
   const searchParams = useSearchParams()
   const brand = searchParams!.get('brand')
   const category = searchParams!.get('category')
-
-  useEffect(() => {
-    dispatch(fetchProductList({ page, limit, category, brand }))
-  }, [page, category, brand])
 
   return (
     <div className='products-filter-wrapper'>
@@ -38,7 +28,7 @@ const ProductsFilterPage = () => {
         <div className='products-filter-list-container'>
           <div className='products-filter-list'>
             <div className='products-filter-list-found'>
-              <p>Tìm Thấy <span>{totalProducts}</span> Sản Phẩm</p>
+              <p>Tìm Thấy <span>{"totalProducts"}</span> Sản Phẩm</p>
             </div>
             <div className='products-filter-icon'>
               <FaFilter size={24} />
@@ -53,10 +43,10 @@ const ProductsFilterPage = () => {
             </div> */}
           </div>
           {
-            loading ? <LoadingShimmer /> : <ProductList products={products} loading={loading} />
+            // loading ? <LoadingShimmer /> : <ProductList products={products} loading={loading} />
           }
           <div className='paginator-container'>
-            <CustomPaginator currentPage={page} totalPage={Math.ceil(totalProducts / limit)} setCurrentPage={setPage} />
+            {/* <CustomPaginator currentPage={page} totalPage={Math.ceil(totalProducts / limit)} setCurrentPage={setPage} /> */}
           </div>
         </div>
       </div>

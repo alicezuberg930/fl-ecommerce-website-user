@@ -2,21 +2,15 @@
 import '@/app/styles/css/support.css'
 import SeenProductList from '../user/components/SeenProductList'
 import React, { useEffect, useState } from 'react'
-import { fetchProductList2 } from '../api/Slices/product.slice'
 import { useSelector } from 'react-redux'
-import { RootState, useDispatch } from '../api/store'
 import NewProducts from '../../sections/home/NewProducts'
-import ProductCard from '../components/ProductCard'
+import ProductCard from "@/sections/product/ProductCard"
 
 const SupportPage: React.FC = () => {
-  const dispatch = useDispatch()
-  const products = useSelector((state: RootState) => state.Products.products2)
-  const totalProducts = useSelector((state: RootState) => state.Products.totalProducts2)
   const [page, setPage] = useState(1)
   const limit = 15
 
   useEffect(() => {
-    dispatch(fetchProductList2({ page, limit, category: null, brand: null }))
   }, [page])
 
   return (
@@ -90,7 +84,7 @@ const SupportPage: React.FC = () => {
           <div className='seen-products-title'>
             <h1>Sản phẩm đã xem</h1>
           </div>
-          {!products ? <></> :
+          {/* {!products ? <></> :
             <div className='seen-products-container'>
               {
                 products.slice(0, 5)?.map((product: Product, index: any) => {
@@ -100,7 +94,7 @@ const SupportPage: React.FC = () => {
                 })
               }
             </div>
-          }
+          } */}
         </div>
       </div>
     </div>

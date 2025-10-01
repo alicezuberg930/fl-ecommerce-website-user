@@ -6,5 +6,6 @@ export const API_ENDPOINT = {
     },
     brand: "/brands",
     category: "/categories",
-    banner: "/banners"
+    banner: "/banners",
+    rating: "/ratings"
 }

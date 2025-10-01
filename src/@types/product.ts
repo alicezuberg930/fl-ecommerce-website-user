@@ -1,6 +1,6 @@
 import { IBrand } from "./brand"
 import { ICategory } from "./category"
-import { Rating } from "./rating"
+import { IRating } from "./rating"
 
 export type IProduct = {
     _id: string
@@ -9,7 +9,7 @@ export type IProduct = {
     price: number
     category: Partial<ICategory>
     brand: IBrand
-    ratings: Rating[]
+    ratings: IRating[]
     weight: number
     height: number
     width: number
@@ -26,15 +26,15 @@ export type IProductDetails = IProduct & {
 }
 
 export type Variation = {
-    name: string
-    values: string[]
-}
-
-export type Attribute = {
     sku: string
     attributeValues: Map<string, string>
     price: string
     stock: string
+}
+
+export type Attribute = {
+    name: string
+    values: string[]
 }
 
 export type QueryProduct = {

@@ -12,26 +12,24 @@ import { Settings } from 'react-slick';
 
 type Props = {
     children: React.ReactNode
-    dots?: boolean
-    slidesToShow?: number
+    settings?: Settings
 };
 
-export default function CarouselList({ children, dots = false, slidesToShow = 1 }: Props) {
+export default function CarouselList({ children, settings = { dots: false, slidesToShow: 1 } }: Props) {
     const theme = useTheme();
 
     const carouselRef = useRef<Carousel | null>(null);
 
     const carouselSettings: Settings = {
-        dots,
         arrows: false,
         autoplay: true,
-        slidesToShow,
         slidesToScroll: 1,
         rtl: Boolean(theme.direction === 'rtl'),
         ...CarouselDots({
             rounded: true,
             sx: { mb: 4 },
         }),
+        ...settings
     }
 
     const handlePrev = () => {

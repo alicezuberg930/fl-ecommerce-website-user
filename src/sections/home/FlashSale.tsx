@@ -1,52 +1,44 @@
 'use client'
-import Slider, { Settings } from 'react-slick'
+import { Settings } from 'react-slick'
 import '@/app/styles/css/flash.sale.css'
 import LoadingShimmer from '@/app/components/LoadingShimmer'
-import ProductCard from '@/app/components/ProductCard'
-import { RootState, useDispatch } from '@/app/api/store'
-import { useEffect, useRef, useState } from 'react'
-import { useSelector } from 'react-redux'
-import { fetchProductList } from '@/app/api/Slices/product.slice'
-import { getHours, getMinutes, getSeconds } from '@/app/common/utils'
+import ProductCard from '@/sections/product/ProductCard'
+import { useEffect, useRef } from 'react'
+import useProduct from '@/hooks/api/useProduct'
+import CarouselList from './CarouselList'
+import { getHours, getMinutes, getSeconds } from '@/utils/common'
 
-const FlashSale = () => {
-  const products = useSelector((state: RootState) => state.Products.products)
-  const limit = 10
-  const dispath = useDispatch()
+const settings: Settings = {
+  slidesToShow: 5,
+  responsive: [
+    {
+      breakpoint: 1024,
+      settings: {
+        slidesToShow: 4,
+      },
+    },
+    {
+      breakpoint: 768,
+      settings: {
+        slidesToShow: 3,
+      },
+    },
+    {
+      breakpoint: 640,
+      settings: {
+        slidesToShow: 2,
+      },
+    },
+  ],
+}
+
+export default function FlashSale() {
   let timeLeft = 7200
   const hoursHTMLRef = useRef<HTMLElement>(null)
   const minutesHTMLRef = useRef<HTMLElement>(null)
   const secondsHTMLRef = useRef<HTMLElement>(null)
-  const settings: Settings = {
-    dots: false,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 5,
-    slidesToScroll: 1,
-    responsive: [
-      {
-        breakpoint: 1024,
-        settings: {
-          slidesToShow: 4,
-        },
-      },
-      {
-        breakpoint: 768,
-        settings: {
-          slidesToShow: 3,
-        },
-      },
-      {
-        breakpoint: 640,
-        settings: {
-          slidesToShow: 2,
-        },
-      },
-    ],
-  }
 
   useEffect(() => {
-    dispath(fetchProductList({ page: 1, limit, category: null, brand: null }))
     const a = setInterval(() => {
       if (timeLeft > 0) {
         timeLeft -= 1
@@ -65,6 +57,9 @@ const FlashSale = () => {
       if (a) clearInterval(a)
     }
   }, [])
+
+  const { getProducts } = useProduct()
+  const { data: response, isLoading, isError, error } = getProducts()
 
   return (
     <div className='flash-sale-wrapper'>
@@ -93,18 +88,20 @@ const FlashSale = () => {
         </div>
       </div>
       <div className='flash-sale-slider-container'>
-        {!products ? (
+        {isLoading && !isError ? (
           <LoadingShimmer />
         ) : (
-          <Slider {...settings}>
-            {products && (products as any[])?.filter(product => product!.isDel != true)?.map((v, i) => {
-              return <ProductCard key={i} product={v} aspectRatio={'1/1'} showRatingCart={false} />
-            })}
-          </Slider>
+          <>
+            {response?.data && (
+              <CarouselList settings={settings}>
+                {response?.data.map(product => (
+                  <ProductCard key={product._id} product={product} aspectRatio={'1/1'} showRatingCart={false} />
+                ))}
+              </CarouselList>
+            )}
+          </>
         )}
       </div>
     </div>
   )
 }
-
-export default FlashSale

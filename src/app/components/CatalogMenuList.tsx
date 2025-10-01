@@ -1,6 +1,5 @@
 'use client'
 import { useSelector } from 'react-redux'
-import { RootState } from '@/app/api/store'
 import '@/app/styles/css/catalog.menu.list.css'
 import Link from 'next/link'
 import { Container, Grid } from '@mui/material'
@@ -11,7 +10,6 @@ type Props = {
 }
 
 const CatalogMenuList = ({ isHovered }: Props) => {
-  const categories = useSelector((state: RootState) => state.CategoryList.categories)
   const { themeStretch } = useSettingsContext();
 
   return (
@@ -26,16 +24,16 @@ const CatalogMenuList = ({ isHovered }: Props) => {
       <Grid container sx={{ boxShadow: (theme) => theme.customShadows.dropdown }}>
         <div className='catalog-menu-container'>
           {
-            categories?.map(category => {
-              return (
-                <Link className='catalog-menu-item' key={category._id} href={{ pathname: '/products', query: { 'category': category._id } }}>
-                  <div className='catalog-menu-title'>
-                    <img src={category.thumbnail ?? './public/assets/foryou1.png'} />
-                    {category.name}
-                  </div>
-                </Link>
-              )
-            })
+            // categories?.map(category => {
+            //   return (
+            //     <Link className='catalog-menu-item' key={category._id} href={{ pathname: '/products', query: { 'category': category._id } }}>
+            //       <div className='catalog-menu-title'>
+            //         <img src={category.thumbnail ?? './public/assets/foryou1.png'} />
+            //         {category.name}
+            //       </div>
+            //     </Link>
+            //   )
+            // })
           }
         </div>
       </Grid>

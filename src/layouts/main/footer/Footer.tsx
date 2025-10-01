@@ -1,21 +1,12 @@
 'use client'
 import { useSelector } from 'react-redux'
 import NextLink from 'next/link'
-import { RootState, useDispatch } from '@/app/api/store'
 import React, { useEffect } from 'react'
-import { fetchSiteConfigs } from '@/app/api/Slices/footer.slice'
 import { Box, Container, Grid, Link, Stack, Typography } from '@mui/material'
 import { useTheme } from "@mui/material/styles"
 import Image from '@/components/image'
 
 const Footer: React.FC = () => {
-  const configs = useSelector((state: RootState) => state.footer.config)
-  const dispatch = useDispatch()
-
-  useEffect(() => {
-    dispatch(fetchSiteConfigs())
-  }, [])
-
   const footerData = {
     footerNavList: [
       {

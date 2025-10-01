@@ -5,6 +5,7 @@ import { API_ENDPOINT } from "@/routes/api"
 import { handleErrorResponse } from "./common"
 import { IBrand } from "@/@types/brand"
 import { ICategory } from "@/@types/category"
+import { IRating, QueryRating } from "@/@types/rating"
 
 export const fetchProducts = async ({ query }: { query: QueryProduct }): Promise<APIResponse<IProduct[]> | undefined> => {
     try {
@@ -50,6 +51,20 @@ export const fetchCategories = async (): Promise<APIResponse<ICategory[]>> => {
         const response = await axiosInstance<APIResponse<ICategory[]>>({
             url: API_ENDPOINT.category,
             method: 'GET'
+        })
+        return response.data
+    } catch (error) {
+        handleErrorResponse(error)
+        throw error
+    }
+}
+
+export const fetchRatings = async ({ query }: { query: QueryRating }): Promise<APIResponse<IRating[]>> => {
+    try {
+        const response = await axiosInstance<APIResponse<IRating[]>>({
+            url: API_ENDPOINT.rating,
+            method: 'GET',
+            params: query
         })
         return response.data
     } catch (error) {

@@ -1,27 +1,38 @@
 import ProductDetailsPage from "@/page/ProductDetailsPage"
-import React from "react"
+import React, { Suspense } from "react"
 import generateMetadaUtils from "@/utils/seo"
-import { axiosInstance } from "@/utils/axios"
-import ENDPOINT from "@/app/common/api"
+import { API_ENDPOINT } from "@/routes/api"
+import { APIResponse } from "@/@types/response"
+import { IProductDetails } from "@/@types/product"
+import LoadingShimmer from "@/app/components/LoadingShimmer"
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
-    const slug = (await params).slug
+    const { slug } = await params
     const id = slug.split('-').at(-1)
-    const response = await axiosInstance({ url: `${ENDPOINT.PRODUCT_DETAILS}/${id}`, method: "GET", params: { id } })
-    const product = response.data.product as Product
+    const response = await fetch(`${process.env.BASE_API}${API_ENDPOINT.product}/${id}`, {
+        method: "GET", cache: "force-cache", next: { revalidate: 3600 }
+    })
+    const result: APIResponse<IProductDetails> = await response.json()
 
     return generateMetadaUtils({
-        title: `${product.name}`,
-        description: product.description || "Find the best products here.",
-        image: product.images[0] ?? "/assets/opengraph-image.jpg",
-        url: `https://futurelifeecom.com/product/${slug}`,
+        title: result.data.name,
+        description: result.data.description,
+        image: result.data.images[0],
+        url: `/product/${slug}`,
     })
 }
 
 export default async function page({ params }: { params: Promise<{ slug: string }> }) {
-    const slug = (await params).slug
+    const { slug } = await params
+    const id = slug.split('-').at(-1)
+    const response = await fetch(`${process.env.BASE_API}${API_ENDPOINT.product}/${id}`, {
+        method: "GET", cache: "force-cache", next: { revalidate: 3600 }
+    })
+    const result: APIResponse<IProductDetails> = await response.json()
 
     return (
-        <ProductDetailsPage slug={slug} />
+        <Suspense fallback={<LoadingShimmer />}>
+            <ProductDetailsPage product={result.data} />
+        </Suspense>
     )
 }

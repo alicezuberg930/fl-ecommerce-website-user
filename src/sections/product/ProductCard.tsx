@@ -1,14 +1,13 @@
 "use client"
 import React from "react"
 import { TiShoppingCart } from "react-icons/ti"
-import { slugify } from "@/app/common/utils"
 import "@/app/styles/css/product.card.css"
 import Link from "next/link"
-import { icons } from "../common/icons"
-import PromotionBar from "../../sections/home/PromotionalBar"
+import { icons } from "../../app/common/icons"
 import { Typography } from "@mui/material"
 import { fCurrencyVND } from "@/utils/formatNumber"
 import { IProduct } from "@/@types/product"
+import { slugify } from "@/utils/common"
 
 const ProductCard: React.FC<{ product: IProduct, aspectRatio: string, showRatingCart?: boolean }> = ({ product, aspectRatio, showRatingCart = true }) => {
     let slug = `${slugify(product.name!)}-${product._id}`
@@ -47,9 +46,6 @@ const ProductCard: React.FC<{ product: IProduct, aspectRatio: string, showRating
                         >
                             {product.name}
                         </Typography>
-                        {/* <div className="product-card-action">
-                            <PromotionBar percentage={percent} />
-                        </div> */}
                         {
                             showRatingCart && <div className="product-card-action">
                                 <div className="product-card-rating-container">

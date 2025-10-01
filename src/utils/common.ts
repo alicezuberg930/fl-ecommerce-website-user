@@ -1,5 +1,4 @@
 import { AxiosError } from "axios"
-import { toast } from "react-toastify"
 
 export const handleErrorResponse = (error: any) => {
     if (error instanceof AxiosError) {
@@ -15,3 +14,38 @@ export const handleErrorResponse = (error: any) => {
         throw new Error(`Unexpected error while fetching data: ${(error instanceof Error ? error.message : String(error))}`)
     }
 }
+
+export const slugify = (str: string): string => {
+    if (!str) return ""
+    return str.trim()
+        .normalize('NFD') // Normalize to decompose combined letters (e.g., ấ → a + ̂)
+        .replace(/[\u0300-\u036f]/g, '') // Remove diacritics (accents)
+        .replace(/[^A-Za-z0-9\s-đ]/g, '') // Allow Vietnamese characters, numbers, spaces, and hyphens
+        // .replace(/[^A-Za-z0-9\s-]/g, '') // Remove special characters except spaces and hyphens
+        .replace(/\s+/g, '-') // Replace spaces with hyphens
+        .replace(/-+/g, '-') // Collapse multiple hyphens into one
+}
+
+export const getHours = (seconds: number) => {
+    return String(Math.floor(seconds / 3600)).padStart(2, "0")
+}
+
+export const getMinutes = (seconds: number) => {
+    return String(Math.floor((seconds % 3600) / 60)).padStart(2, "0")
+}
+
+export const getSeconds = (seconds: number) => {
+    return String(seconds % 60).padStart(2, "0")
+}
+
+export const createNotification = ({ title, icon, body }: { title: string, icon: string, body: string }) => {
+    return new Notification(title, { body, icon });
+}
+
+export const generateSecureRandomString = (length: number): string => {
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    const array = new Uint32Array(length);
+    crypto.getRandomValues(array);
+    return Array.from(array, (value) => characters[value % characters.length]).join('');
+}
+
