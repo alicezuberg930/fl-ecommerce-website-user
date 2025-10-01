@@ -1,12 +1,15 @@
+import { cookies } from 'next/headers'
 import { NextResponse } from 'next/server'
 
-export async function POST() {
-    const response = NextResponse.json({ message: 'Cookie cleared' })
-
-    response.headers.set(
-        'Set-Cookie',
-        `token=; Path=/; Max-Age=0; HttpOnly; Secure; SameSite=Lax`
-    )
-
-    return response
+export async function POST(req: Request) {
+    try {
+        const cookieStore = await cookies()
+        cookieStore.delete('accessToken')
+        return NextResponse.json({ message: 'Logged out successfully' })
+    } catch (error) {
+        return NextResponse.json(
+            { error: error instanceof Error ? error.message : 'Logout failed' },
+            { status: 500 }
+        )
+    }
 }

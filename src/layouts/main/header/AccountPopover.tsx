@@ -46,19 +46,8 @@ export default function AccountPopover() {
   };
 
   const handleLogout = async () => {
-    try {
-      await fetch('/api/logout', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', },
-        credentials: 'include'
-      });
-      logout();
-      navigate.replace(PATH_AUTH.login);
-      handleClosePopover();
-    } catch (error) {
-      console.error(error);
-      enqueueSnackbar('Unable to logout!', { variant: 'error' });
-    }
+    await logout()
+    handleClosePopover();
   };
 
   const handleClickItem = (path: string) => {

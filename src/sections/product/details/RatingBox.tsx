@@ -1,5 +1,5 @@
 'use client'
-import { icons } from "@/app/common/icons";
+import { icons } from "@/utils/icons";
 import { FormEvent, RefObject, useState } from "react";
 
 export default function RatingBox({ commentRef, productId }: { commentRef: RefObject<HTMLDivElement>, productId: string }) {

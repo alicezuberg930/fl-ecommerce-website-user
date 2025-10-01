@@ -1,27 +1,16 @@
-export type CartItem = {
-    productId?: string
-    name?: string
-    quantity?: number
-    price?: number
-    total?: string
-    options?: {
-        id?: string
-        value: {
-            id?: string
-            price?: number
-            quantity?: number
-        }[]
-    }[]
+import { IProduct, Variation } from "./product"
+import { IUser } from "./user"
+
+export type ICartAdd = {
+    product: string
+    variation: Variation
+    quantity: number
 }
 
-export type Cart = {
-    _id?: string
-    userId?: string
-    items?: CartItem[]
-    totalPrice?: number
-    discountedPrice?: number
-    promotions?: {
-        code?: string
-        discount?: number
-    }[]
+export type ICartItem = {
+    _id: string
+    product: Partial<IProduct>
+    variation: Variation
+    user: Partial<IUser>
+    quantity: number
 }

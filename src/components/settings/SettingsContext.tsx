@@ -14,26 +14,26 @@ import { defaultPreset, getPresets, presetsOption } from './presets';
 const initialState: SettingsContextProps = {
   ...defaultSettings,
   // Mode
-  onToggleMode: () => {},
-  onChangeMode: () => {},
+  onToggleMode: () => { },
+  onChangeMode: () => { },
   // Direction
-  onToggleDirection: () => {},
-  onChangeDirection: () => {},
-  onChangeDirectionByLang: () => {},
+  onToggleDirection: () => { },
+  onChangeDirection: () => { },
+  onChangeDirectionByLang: () => { },
   // Layout
-  onToggleLayout: () => {},
-  onChangeLayout: () => {},
+  onToggleLayout: () => { },
+  onChangeLayout: () => { },
   // Contrast
-  onToggleContrast: () => {},
-  onChangeContrast: () => {},
+  onToggleContrast: () => { },
+  onChangeContrast: () => { },
   // Color
-  onChangeColorPresets: () => {},
+  onChangeColorPresets: () => { },
   presetsColor: defaultPreset,
   presetsOption: [],
   // Stretch
-  onToggleStretch: () => {},
+  onToggleStretch: () => { },
   // Reset
-  onResetSetting: () => {},
+  onResetSetting: () => { },
 };
 
 // ----------------------------------------------------------------------

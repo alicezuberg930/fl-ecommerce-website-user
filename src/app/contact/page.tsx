@@ -1,5 +1,5 @@
 import "@/app/styles/css/contact.css"
-import { icons } from "../common/icons";
+import { icons } from "../../utils/icons";
 
 const ContactPage = () => {
     const { FaPhoneVolume, MdOutlineAlternateEmail } = icons

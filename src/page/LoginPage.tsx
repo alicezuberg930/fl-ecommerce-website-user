@@ -6,30 +6,24 @@ import { useForm } from 'react-hook-form'
 import FormProvider, { RHFTextField } from '@/components/hook-form'
 import { Card, Container, Grid, Link, Stack, Typography } from '@mui/material'
 import { LoadingButton } from '@mui/lab'
-import { useSettingsContext } from '@/components/settings'
 import NextLink from 'next/link'
 import { useAuthContext } from '@/auth/useAuthContext'
-import { useRouter } from 'next/navigation'
-import { useSnackbar } from '@/components/snackbar'
 
 type FormValuesProps = {
-    phone: string
+    username: string
     password: string
 }
 
 export default function LoginPage() {
     const { login } = useAuthContext()
-    const { themeStretch } = useSettingsContext()
-    const { enqueueSnackbar } = useSnackbar()
-    const navigate = useRouter()
 
     const LoginSchema = Yup.object().shape({
-        phone: Yup.string().required('Nhập số điện thoại').matches(/^0\d{9}$/, 'Số điện thoại không hợp lệ'),
+        username: Yup.string().required('Nhập số điện thoại'),
         password: Yup.string().required('Nhập mật khẩu').min(6, 'Mật khẩu cần ít nhất 6 ký tự')
     })
 
     const defaultValues = useMemo(() => ({
-        phone: '',
+        username: '',
         password: '',
     }), [])
 
@@ -44,34 +38,17 @@ export default function LoginPage() {
     } = methods
 
     const onSubmit = async (data: FormValuesProps) => {
-        await fetch('/api/login', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json', },
-            body: JSON.stringify({
-                phone: data.phone,
-                password: data.password,
-            }),
-            credentials: 'include', // ✅ This is required to accept cookies from server
-        });
-        try {
-            await login(data.phone, data.password);
-            enqueueSnackbar('Đăng nhập thành công')
-            navigate.push('/')
-        } catch (error) {
-            enqueueSnackbar('Sai thông tin hoặc lỗi server', { variant: 'error' })
-        }
+        await login(data.username, data.password)
     }
 
     return (
-        <Container maxWidth={themeStretch ? false : 'md'}>
+        <Container maxWidth='md'>
             <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
-                <Card sx={{
-                    py: 3, my: 8, px: { xs: 2, lg: 12 }
-                }}>
+                <Card sx={{ py: 3, my: 8, px: { xs: 2, lg: 12 } }}>
                     <Typography variant='h3' textAlign='center'>Đăng nhập</Typography>
                     <Grid container rowGap={6} mt={8}>
                         <Grid size={12}>
-                            <RHFTextField name='phone' label='Số điện thoại' />
+                            <RHFTextField name='username' label='Tên người dùng' />
                         </Grid>
                         <Grid size={12}>
                             <RHFTextField name='password' type='password' label='Mật khẩu' />

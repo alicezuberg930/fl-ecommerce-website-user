@@ -1,3 +1,4 @@
+'use client'
 import "@/app/styles/css/search.suggestion.css"
 import Link from "next/link"
 import { axiosInstance } from "../../utils/axios"

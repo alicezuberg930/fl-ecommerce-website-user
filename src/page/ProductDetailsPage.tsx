@@ -1,8 +1,8 @@
 "use client"
-import React, { FormEvent, useEffect, useRef, useState } from "react"
+import React, { useRef } from "react"
 import "@/app/styles/css/product.details.css"
 import LoadingShimmer from "../app/components/LoadingShimmer"
-import { generateSecureRandomString, getHours, getMinutes, getSeconds, slugify } from "@/utils/common"
+import { slugify } from "@/utils/common"
 import { Settings } from "react-slick"
 import ProductCard from "@/sections/product/ProductCard"
 import Link from "next/link"
@@ -57,7 +57,6 @@ export default function ProductDetailsPage({ product }: { product: IProductDetai
     const contentTabRef = useRef<HTMLDivElement>(null)
     const { getProducts } = useProduct()
     const { data: response, isLoading, isError, error } = getProducts()
-
     const handleScroll = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
         e.preventDefault()
         let links = contentTabRef.current!.children

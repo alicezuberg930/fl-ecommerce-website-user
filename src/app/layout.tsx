@@ -22,12 +22,12 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
   return (
     <html lang='en'>
       <body>
-        <AuthProvider>
-          <SettingsProvider>
-            <MotionLazyContainer>
-              <ThemeProvider>
-                <ThemeSettings>
-                  <SnackbarProvider>
+        <SettingsProvider>
+          <MotionLazyContainer>
+            <ThemeProvider>
+              <ThemeSettings>
+                <SnackbarProvider>
+                  <AuthProvider>
                     <CustomQueryClientProvider>
                       <Suspense>
                         <ReduxProvider>
@@ -44,12 +44,12 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
                         </ReduxProvider>
                       </Suspense>
                     </CustomQueryClientProvider>
-                  </SnackbarProvider>
-                </ThemeSettings>
-              </ThemeProvider>
-            </MotionLazyContainer>
-          </SettingsProvider>
-        </AuthProvider>
+                  </AuthProvider>
+                </SnackbarProvider>
+              </ThemeSettings>
+            </ThemeProvider>
+          </MotionLazyContainer>
+        </SettingsProvider>
       </body>
     </html>
   )

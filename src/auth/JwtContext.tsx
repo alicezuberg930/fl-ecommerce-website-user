@@ -1,12 +1,15 @@
 'use client'
 import { useRouter } from 'next/navigation'
-import { createContext, useEffect, useReducer, useCallback, useMemo } from 'react';
+import { createContext, useEffect, useReducer, useCallback, useMemo } from 'react'
 // utils
-import { axiosInstance } from '@/utils/axios';
-import localStorageAvailable from '@/utils/localStorageAvailable';
+import { axiosInstance } from '@/utils/axios'
+import localStorageAvailable from '@/utils/localStorageAvailable'
 //
-import { isValidToken, setSession } from './utils';
-import { ActionMapType, AuthStateType, AuthUserType, JWTContextType } from './types';
+import { isValidToken, setSession } from './utils'
+import { ActionMapType, AuthStateType, AuthUserType, JWTContextType } from './types'
+import { API_ENDPOINT } from '@/routes/api'
+import { useSnackbar } from '@/components/snackbar'
+import { PATH_AUTH } from '@/routes/paths'
 
 // ----------------------------------------------------------------------
 
@@ -25,19 +28,19 @@ enum Types {
 
 type Payload = {
   [Types.INITIAL]: {
-    isAuthenticated: boolean;
-    user: AuthUserType;
-  };
+    isAuthenticated: boolean
+    user: AuthUserType
+  }
   [Types.LOGIN]: {
-    user: AuthUserType;
-  };
+    user: AuthUserType
+  }
   [Types.REGISTER]: {
-    user: AuthUserType;
-  };
-  [Types.LOGOUT]: undefined;
-};
+    user: AuthUserType
+  }
+  [Types.LOGOUT]: undefined
+}
 
-type ActionsType = ActionMapType<Payload>[keyof ActionMapType<Payload>];
+type ActionsType = ActionMapType<Payload>[keyof ActionMapType<Payload>]
 
 // ----------------------------------------------------------------------
 
@@ -45,7 +48,7 @@ const initialState: AuthStateType = {
   isInitialized: false,
   isAuthenticated: false,
   user: null,
-};
+}
 
 const reducer = (state: AuthStateType, action: ActionsType) => {
   if (action.type === Types.INITIAL) {
@@ -53,62 +56,63 @@ const reducer = (state: AuthStateType, action: ActionsType) => {
       isInitialized: true,
       isAuthenticated: action.payload.isAuthenticated,
       user: action.payload.user,
-    };
+    }
   }
   if (action.type === Types.LOGIN) {
     return {
       ...state,
       isAuthenticated: true,
       user: action.payload.user,
-    };
+    }
   }
   if (action.type === Types.REGISTER) {
     return {
       ...state,
       isAuthenticated: true,
       user: action.payload.user,
-    };
+    }
   }
   if (action.type === Types.LOGOUT) {
     return {
       ...state,
       isAuthenticated: false,
       user: null,
-    };
+    }
   }
-  return state;
-};
+  return state
+}
 
 // ----------------------------------------------------------------------
 
-export const AuthContext = createContext<JWTContextType | null>(null);
+export const AuthContext = createContext<JWTContextType | null>(null)
 
 // ----------------------------------------------------------------------
 
 type AuthProviderProps = {
-  children: React.ReactNode;
-};
+  children: React.ReactNode
+}
 
 export function AuthProvider({ children }: AuthProviderProps) {
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const [state, dispatch] = useReducer(reducer, initialState)
   const navigate = useRouter()
-
-  const storageAvailable = localStorageAvailable();
+  const storageAvailable = localStorageAvailable()
+  const { enqueueSnackbar } = useSnackbar()
 
   const initialize = useCallback(async () => {
     try {
-      const accessToken = storageAvailable ? localStorage.getItem('accessToken') : '';
-      if (accessToken) {
-        setSession(accessToken);
-        const response = await axiosInstance.get("API.Profile");
-        const user = response.data.data;
+      const response = await fetch('/api/token', { method: 'GET' })
+      const accessToken = await response.json()
+      if (accessToken && isValidToken(accessToken)) {
+        await setSession(accessToken)
+        const response = await axiosInstance(API_ENDPOINT.user.profile, { method: "GET" })
+        const user = response.data.data
         dispatch({
           type: Types.INITIAL,
           payload: {
             isAuthenticated: true,
             user,
           },
-        });
+        })
       } else {
         dispatch({
           type: Types.INITIAL,
@@ -116,40 +120,46 @@ export function AuthProvider({ children }: AuthProviderProps) {
             isAuthenticated: false,
             user: null,
           },
-        });
+        })
       }
     } catch (error) {
-      console.error(error);
+      console.error(error)
       dispatch({
         type: Types.INITIAL,
         payload: {
           isAuthenticated: false,
           user: null,
         },
-      });
+      })
     }
-  }, [storageAvailable]);
+  }, [storageAvailable])
 
   useEffect(() => {
-    initialize();
-  }, [initialize]);
+    initialize()
+  }, [initialize])
 
   // LOGIN
-  const login = useCallback(async (phone: string, password: string) => {
-    const response = await axiosInstance.post("API.Login", { phone, password });
-    const { token } = response.data;
-    const userResponse = await axiosInstance.get("API.Profile", {
-      headers: { 'Authorization': `Bearer ${token}` }
-    });
-    const user = userResponse.data.data;
-    setSession(token);
-    dispatch({
-      type: Types.LOGIN,
-      payload: {
-        user,
-      },
-    });
-  }, []);
+  const login = useCallback(async (username: string, password: string) => {
+    try {
+      const response = await fetch('/api/login', {
+        method: 'POST',
+        body: JSON.stringify({ username, password }),
+        credentials: 'include'
+      })
+      const result = await response.json()
+      const { message, data } = result
+      enqueueSnackbar(message || "Đăng nhập thành công")
+      navigate.replace(PATH_AUTH.root)
+      dispatch({
+        type: Types.LOGIN,
+        payload: {
+          user: data.user,
+        },
+      })
+    } catch (error) {
+      enqueueSnackbar(error instanceof Error ? error.message : 'Internal Server Error', { variant: 'error' })
+    }
+  }, [])
 
   // REGISTER
   const register = useCallback(
@@ -159,45 +169,47 @@ export function AuthProvider({ children }: AuthProviderProps) {
         password,
         firstName,
         lastName,
-      });
-      const { accessToken, user } = response.data;
+      })
+      const { accessToken, user } = response.data
 
-      localStorage.setItem('accessToken', accessToken);
+      localStorage.setItem('accessToken', accessToken)
 
       dispatch({
         type: Types.REGISTER,
         payload: {
           user,
         },
-      });
+      })
     },
     []
-  );
+  )
 
   // LOGOUT
-  const logout = useCallback(() => {
-    setSession(null);
-    navigate.push('/')
-    dispatch({
-      type: Types.LOGOUT,
-    });
-  }, []);
+  const logout = useCallback(async () => {
+    try {
+      await setSession(null)
+      navigate.replace(PATH_AUTH.login);
+      dispatch({
+        type: Types.LOGOUT
+      })
+    } catch (error) {
+      console.error(error);
+      enqueueSnackbar(error instanceof Error ? error.message : 'Internal Server Error', { variant: 'error' })
+    }
+  }, [])
 
-  const memoizedValue = useMemo(
-    () => ({
-      isInitialized: state.isInitialized,
-      isAuthenticated: state.isAuthenticated,
-      user: state.user,
-      method: 'jwt',
-      login,
-      loginWithGoogle: () => { },
-      loginWithGithub: () => { },
-      loginWithTwitter: () => { },
-      register,
-      logout,
-    }),
-    [state.isAuthenticated, state.isInitialized, state.user, login, logout, register]
-  );
+  const memoizedValue = useMemo(() => ({
+    isInitialized: state.isInitialized,
+    isAuthenticated: state.isAuthenticated,
+    user: state.user,
+    method: 'jwt',
+    login,
+    loginWithGoogle: () => { },
+    loginWithGithub: () => { },
+    loginWithTwitter: () => { },
+    register,
+    logout,
+  }), [state.isAuthenticated, state.isInitialized, state.user, login, logout, register])
 
-  return <AuthContext.Provider value={memoizedValue}>{children}</AuthContext.Provider>;
+  return <AuthContext.Provider value={memoizedValue}>{children}</AuthContext.Provider>
 }

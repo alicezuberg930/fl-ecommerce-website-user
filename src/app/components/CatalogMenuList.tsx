@@ -10,10 +10,8 @@ type Props = {
 }
 
 const CatalogMenuList = ({ isHovered }: Props) => {
-  const { themeStretch } = useSettingsContext();
-
   return (
-    <Container maxWidth={themeStretch ? false : 'xl'}
+    <Container maxWidth='xl'
       sx={{
         transition: '.3s ease-in-out', zIndex: 999,
         position: 'absolute', top: '100%', left: 0, right: 0,

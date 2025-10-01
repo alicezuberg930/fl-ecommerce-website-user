@@ -10,7 +10,7 @@ const ROOTS_DASHBOARD = '/cms'
 export const PATH_AUTH = {
     root: ROOTS_HOME,
     login: path(ROOTS_HOME, 'login'),
-    // register: path(ROOTS_AUTH, '/register'),
+    register: path(ROOTS_HOME, '/register'),
     // loginUnprotected: path(ROOTS_AUTH, '/login-unprotected'),
     // registerUnprotected: path(ROOTS_AUTH, '/register-unprotected'),
     // verify: path(ROOTS_AUTH, '/verify'),

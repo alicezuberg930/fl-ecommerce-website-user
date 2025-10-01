@@ -2,7 +2,7 @@
 import React, { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import '@/app/styles/css/brand.menu.filter.css'
-import { icons } from '@/app/common/icons'
+import { icons } from '@/utils/icons'
 import { usePathname, useRouter } from 'next/navigation'
 import useQueryString from '@/hooks/useQueryString'
 

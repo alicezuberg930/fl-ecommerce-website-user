@@ -1,61 +1,43 @@
 'use client'
-import { IProductDetails } from "@/@types/product"
-import { icons } from "@/app/common/icons"
+import { Attribute, IProductDetails } from "@/@types/product"
+import { icons } from "@/utils/icons"
 import { useAuthContext } from "@/auth/useAuthContext"
 import { useRouter } from "next/navigation"
-import { useEffect, useRef, useState } from "react"
-import { getHours, getMinutes, getSeconds } from "@/utils/common"
+import { useEffect, useMemo, useRef, useState } from "react"
+import { deepObjectComparison, getHours, getMinutes, getSeconds } from "@/utils/common"
 import { fCurrencyVND } from "@/utils/formatNumber"
+import { ICartAdd } from "@/@types/cart"
+import useCart from "@/hooks/api/useCart"
+import { PATH_AUTH } from "@/routes/paths"
+import CountDownTimer from "../CountDownTimer"
 
 export default function ProductVariation({ product }: { product: IProductDetails }) {
-    const { FaStar, IoAdd, RiSubtractFill, IoCartOutline, MdThumbUp, FaRegTrashCan } = icons
-    const [selectedOptions, setSelectionOptions] = useState<{ id: string, value: { id: string, quantity: number, price: number }[] }[]>([])
+    const { FaStar, IoAdd, RiSubtractFill, IoCartOutline } = icons
+    const [variationValues, setVariationValues] = useState<Record<string, string>>({})
     const { user } = useAuthContext()
     const quantityRef = useRef<HTMLInputElement>(null)
     const router = useRouter()
-    let timeLeft = 7200
-    const hoursHTMLRef = useRef<HTMLElement>(null)
-    const minutesHTMLRef = useRef<HTMLElement>(null)
-    const secondsHTMLRef = useRef<HTMLElement>(null)
+    const { addCartItem } = useCart()
+    const addMutate = addCartItem()
+    const price = useMemo(() => {
+        const variation = product.variations.find(v => deepObjectComparison(v.attributeValues, variationValues))
+        return variation ? variation.price : null
+    }, [variationValues])
 
     useEffect(() => {
-        const interval = setInterval(() => {
-            if (timeLeft > 0) {
-                timeLeft -= 1
-                if (hoursHTMLRef.current) hoursHTMLRef.current.innerHTML = String(getHours(timeLeft))
-                if (minutesHTMLRef.current) minutesHTMLRef.current.innerHTML = String(getMinutes(timeLeft))
-                if (secondsHTMLRef.current) secondsHTMLRef.current.innerHTML = String(getSeconds(timeLeft))
-            } else {
-                if (interval) clearInterval(interval)
-            }
-        }, 1000)
-        return () => { if (interval) clearInterval(interval) }
+        let newMap = {}
+        product.attributes.forEach(attribute => newMap = { ...newMap, [attribute.name]: attribute.values[0] })
+        setVariationValues(newMap)
     }, [])
 
-    const onSelectOption = (optionId: string, valueId: string, price: number) => {
-        setSelectionOptions((prevOptions) => {
-            // Clone the previous state
-            let tempOptions = [...prevOptions]
-            let existingOption = tempOptions.find((opt) => opt.id === optionId)
-            if (existingOption !== undefined) {
-                // Replace the value immutably
-                existingOption = {
-                    ...existingOption,
-                    value: [{ id: valueId, quantity: 1, price }],
-                }
-                return tempOptions.map((opt) =>
-                    opt.id === optionId ? existingOption! : opt
-                )
-            } else {
-                return [...tempOptions, { id: optionId, value: [{ id: valueId, quantity: 1, price }] }]
-            }
-        })
-    }
+    const handleSelectVariation = (attribute: Attribute, value: string) => setVariationValues(prev => ({ ...prev, [attribute.name]: value }))
 
     const handleIncreaseQuantity = () => {
         if (quantityRef.current) {
             let quantity = +quantityRef.current.value
-            quantityRef.current.value = String(quantity + 1)
+            const variation = product.variations.find(v => deepObjectComparison(v.attributeValues, variationValues))
+            if (variation && quantity < variation.stock)
+                quantityRef.current.value = String(quantity + 1)
         }
     }
 
@@ -68,13 +50,17 @@ export default function ProductVariation({ product }: { product: IProductDetails
 
     const handleAddCart = async () => {
         if (!user) {
-            router.push("/login")
+            router.push(PATH_AUTH.login)
         } else {
-            const products: any = []
-            let tempOptions = selectedOptions
-
-            tempOptions.forEach(tempOption => { tempOption.value[0].quantity = +(quantityRef.current!.value ?? 1) })
-            products.push({ productId: product?._id!, options: tempOptions })
+            const variation = product.variations.find(v => deepObjectComparison(v.attributeValues, variationValues))
+            if (variation && quantityRef.current) {
+                const cart: ICartAdd = {
+                    product: product._id,
+                    quantity: +quantityRef.current.value,
+                    variation
+                }
+                addMutate.mutate({ cart })
+            }
         }
     }
 
@@ -101,49 +87,35 @@ export default function ProductVariation({ product }: { product: IProductDetails
                     <img src="/assets/flash_deal_title.svg" className="logo_deal_web" />
                     <div className="time_finish">
                         Kết thúc trong
-                        <div className="timer_deal_brand" id="clockdiv">
-                            <div className="item_count_down"><b className="days">00</b></div>
-                            <span> : </span>
-                            <div className="item_count_down"><b className="hour" ref={hoursHTMLRef}></b></div>
-                            <span> : </span>
-                            <div className="item_count_down"><b className="minute" ref={minutesHTMLRef}></b></div>
-                            <span> : </span>
-                            <div className="item_count_down"><b className="second" ref={secondsHTMLRef}></b></div>
-                        </div>
+                        <CountDownTimer />
                     </div>
                 </div>
             </div>
 
             <div className="box_price">
-                <span className="txt_price">{fCurrencyVND(product.price)}</span>
+                <span className="txt_price">{fCurrencyVND(price || product.price)}</span>
                 <span>(Đã bao gồm VAT)</span>
             </div>
 
             {product.attributes && (
                 <div className="product-options-wrapper" id="product-options-wrapper">
-                    {product.attributes.map((attribute, i) => {
-                        return (
-                            <div key={attribute.name} className="product_chose_type">
-                                <span className="txt_variant" id="txt_soluong_capacity">
-                                    <label className="variant-name">{attribute.name}</label>
-                                </span>
-                                {
-                                    attribute.values.map(value => {
-                                        return (
-                                            <div
-                                                key={value} title={`${value}`}
-                                                className={`attribute-option-item`}
-                                                onClick={() => { }}
-                                            >
-                                                <span>{value}</span>
-                                                {/* <img src={val.img} alt={val.val} /> */}
-                                            </div>
-                                        )
-                                    })
-                                }
-                            </div>
-                        )
-                    })}
+                    {product.attributes.map((attribute, i) => (
+                        <div key={attribute.name} className="product_chose_type">
+                            <span className="txt_variant" id="txt_soluong_capacity">
+                                <label className="variant-name">{attribute.name}</label>
+                            </span>
+                            {attribute.values.map(value => (
+                                <div
+                                    key={value} title={`${value}`}
+                                    className={`attribute-option-item`}
+                                    onClick={() => handleSelectVariation(attribute, value)}
+                                >
+                                    <span>{value}</span>
+                                    {/* <img src={val.img} alt={val.val} /> */}
+                                </div>
+                            ))}
+                        </div>
+                    ))}
                 </div>
             )}
 

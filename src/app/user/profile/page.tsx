@@ -1,7 +1,7 @@
 'use client'
 import '@/app/styles/css/user.profile.css'
 import UserContent from "../components/UserContent"
-import { icons } from '@/app/common/icons'
+import { icons } from '@/utils/icons'
 import { useAuthContext } from '@/auth/useAuthContext'
 
 const UserProfilePage = () => {

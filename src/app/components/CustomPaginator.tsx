@@ -1,5 +1,5 @@
 "use client"
-import { icons } from '../common/icons'
+import { icons } from '../../utils/icons'
 import '@/app/styles/css/custom.paginator.css'
 
 type Props = {

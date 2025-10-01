@@ -1,24 +1,24 @@
 import { Box, Link, Stack, Typography } from "@mui/material"
-import React, { Dispatch, useEffect, SetStateAction } from "react"
+import React, { Dispatch, SetStateAction } from "react"
 import NextLink from 'next/link'
 import Image from "@/components/image"
-import { usePathname } from "next/navigation"
 import { useAuthContext } from "@/auth/useAuthContext"
 
 type Props = { isMobileMenuOpen: boolean, setIsMobileMenuOpen: Dispatch<SetStateAction<boolean>>, menu: { path: string, title: string }[] }
 
+const aboutUsItem = [
+    {
+        title: 'Liên hệ',
+        path: '/contact',
+    },
+    {
+        title: 'Giới thiệu',
+        path: '/introduction'
+    },
+]
+
 export default function MobileMenu({ isMobileMenuOpen, setIsMobileMenuOpen, menu }: Props) {
     const { user, logout } = useAuthContext()
-    const aboutUsItem = [
-        {
-            title: 'Liên hệ',
-            path: '/contact',
-        },
-        {
-            title: 'Giới thiệu',
-            path: '/introduction'
-        },
-    ]
     const userItem = [
         {
             isShown: user ? true : false,
@@ -115,13 +115,13 @@ export default function MobileMenu({ isMobileMenuOpen, setIsMobileMenuOpen, menu
                             )
                         })
                     }
-                    {user && (
+                    {/* {user && (
                         <Box py={1} onClick={() => { setIsMobileMenuOpen(false); logout() }}>
                             <Link href='#' component={NextLink} underline="none" color='textSecondary'>
                                 Đăng xuất
                             </Link>
                         </Box>
-                    )}
+                    )} */}
                 </Stack>
             </Box>
         </>

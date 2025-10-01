@@ -1,18 +1,18 @@
-import axios, { AxiosError, AxiosResponse } from "axios"
-import localStorageAvailable from "./localStorageAvailable"
+import axios, { AxiosError, AxiosResponse } from 'axios'
 
 export const axiosInstance = axios.create({
   baseURL: process.env.BASE_API,
-  headers: { Accept: "application/json" }
+  headers: { Accept: 'application/json' }
 })
 
 axiosInstance.interceptors.request.use(async (config) => {
-  if (typeof window !== "undefined") {
-    const accessToken = localStorageAvailable() ? localStorage.getItem('accessToken') : null;
+  if (document !== undefined) {
+    const response = await fetch(`${document.location.origin}/api/token`, { method: 'GET' })
+    const accessToken = await response.json()
     if (accessToken) {
-      config.headers["Authorization"] = `Bearer ${accessToken}`
+      config.headers['Authorization'] = `Bearer ${accessToken}`
     } else {
-      delete config.headers["Authorization"]
+      delete config.headers['Authorization']
     }
   }
   return config
@@ -25,23 +25,23 @@ axiosInstance.interceptors.response.use((response: AxiosResponse) => {
 }, (error: AxiosError) => {
   console.log(error)
   if (!error.response) {
-    console.log("Network err", error.message)
+    console.log('Network err', error.message)
   } else {
     switch (error?.response.status) {
       case 401:
-        // localStorage.removeItem("token")
+        // localStorage.removeItem('token')
         // localStorage.clear()
-        // window.location.href = "/"
+        // window.location.href = '/'
         break
       case 403:
         break
       case 404:
-        console.log("error.response.message", error)
+        console.log('error.response.message', error)
         break
       default:
         console.log(
           `%c ${error.response.status}  :`,
-          "color: red font-weight: bold",
+          'color: red font-weight: bold',
           error.config,
         )
         break

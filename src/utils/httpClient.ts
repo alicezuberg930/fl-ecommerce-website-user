@@ -1,11 +1,12 @@
-import { IProduct, IProductDetails, QueryProduct } from "@/@types/product"
-import { APIResponse } from "@/@types/response"
-import { axiosInstance } from "./axios"
-import { API_ENDPOINT } from "@/routes/api"
-import { handleErrorResponse } from "./common"
-import { IBrand } from "@/@types/brand"
-import { ICategory } from "@/@types/category"
-import { IRating, QueryRating } from "@/@types/rating"
+import { IProduct, IProductDetails, QueryProduct } from '@/@types/product'
+import { APIResponse } from '@/@types/response'
+import { axiosInstance } from './axios'
+import { API_ENDPOINT } from '@/routes/api'
+import { handleErrorResponse } from './common'
+import { IBrand } from '@/@types/brand'
+import { ICategory } from '@/@types/category'
+import { IRating, QueryRating } from '@/@types/rating'
+import { ICartAdd, ICartItem } from '@/@types/cart'
 
 export const fetchProducts = async ({ query }: { query: QueryProduct }): Promise<APIResponse<IProduct[]> | undefined> => {
     try {
@@ -65,6 +66,60 @@ export const fetchRatings = async ({ query }: { query: QueryRating }): Promise<A
             url: API_ENDPOINT.rating,
             method: 'GET',
             params: query
+        })
+        return response.data
+    } catch (error) {
+        handleErrorResponse(error)
+        throw error
+    }
+}
+
+export const fetchCartItems = async (): Promise<APIResponse<ICartItem[]>> => {
+    try {
+        const response = await axiosInstance<APIResponse<ICartItem[]>>({
+            url: API_ENDPOINT.cart,
+            method: 'GET'
+        })
+        return response.data
+    } catch (error) {
+        handleErrorResponse(error)
+        throw error
+    }
+}
+
+export const addCartItem = async ({ cart }: { cart: ICartAdd }): Promise<APIResponse<ICartItem>> => {
+    try {
+        const response = await axiosInstance<APIResponse<ICartItem>>({
+            url: API_ENDPOINT.cart,
+            method: 'POST',
+            data: cart
+        })
+        return response.data
+    } catch (error) {
+        handleErrorResponse(error)
+        throw error
+    }
+}
+
+export const deleteCartItem = async ({ id }: { id: string | string[] }): Promise<APIResponse<ICartItem>> => {
+    try {
+        const response = await axiosInstance<APIResponse<ICartItem>>({
+            url: `${API_ENDPOINT.cart}/${id}`,
+            method: 'DELETE',
+        })
+        return response.data
+    } catch (error) {
+        handleErrorResponse(error)
+        throw error
+    }
+}
+
+export const updateCartItem = async ({ id, cart }: { id: string, cart: ICartAdd }): Promise<APIResponse<ICartItem>> => {
+    try {
+        const response = await axiosInstance<APIResponse<ICartItem>>({
+            url: `${API_ENDPOINT.cart}/${id}`,
+            method: 'PATCH',
+            data: cart
         })
         return response.data
     } catch (error) {

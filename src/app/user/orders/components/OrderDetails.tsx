@@ -4,7 +4,7 @@ import { instance } from "@/utils/axios"
 import { useEffect, useState } from "react"
 import UserContent from "../../components/UserContent"
 import '@/app/styles/css/order.details.css'
-import { icons } from "@/app/common/icons"
+import { icons } from "@/utils/icons"
 import LoadingShimmer from "@/app/components/LoadingShimmer"
 import { fCurrencyVND } from "@/utils/formatNumber"
 

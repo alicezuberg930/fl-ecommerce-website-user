@@ -28,8 +28,8 @@ export type IProductDetails = IProduct & {
 export type Variation = {
     sku: string
     attributeValues: Map<string, string>
-    price: string
-    stock: string
+    price: number
+    stock: number
 }
 
 export type Attribute = {

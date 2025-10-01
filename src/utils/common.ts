@@ -1,4 +1,4 @@
-import { AxiosError } from "axios"
+import { AxiosError } from 'axios'
 
 export const handleErrorResponse = (error: any) => {
     if (error instanceof AxiosError) {
@@ -16,7 +16,7 @@ export const handleErrorResponse = (error: any) => {
 }
 
 export const slugify = (str: string): string => {
-    if (!str) return ""
+    if (!str) return ''
     return str.trim()
         .normalize('NFD') // Normalize to decompose combined letters (e.g., ấ → a + ̂)
         .replace(/[\u0300-\u036f]/g, '') // Remove diacritics (accents)
@@ -27,25 +27,36 @@ export const slugify = (str: string): string => {
 }
 
 export const getHours = (seconds: number) => {
-    return String(Math.floor(seconds / 3600)).padStart(2, "0")
+    return String(Math.floor(seconds / 3600)).padStart(2, '0')
 }
 
 export const getMinutes = (seconds: number) => {
-    return String(Math.floor((seconds % 3600) / 60)).padStart(2, "0")
+    return String(Math.floor((seconds % 3600) / 60)).padStart(2, '0')
 }
 
 export const getSeconds = (seconds: number) => {
-    return String(seconds % 60).padStart(2, "0")
+    return String(seconds % 60).padStart(2, '0')
 }
 
 export const createNotification = ({ title, icon, body }: { title: string, icon: string, body: string }) => {
-    return new Notification(title, { body, icon });
+    return new Notification(title, { body, icon })
 }
 
 export const generateSecureRandomString = (length: number): string => {
-    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    const array = new Uint32Array(length);
-    crypto.getRandomValues(array);
-    return Array.from(array, (value) => characters[value % characters.length]).join('');
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+    const array = new Uint32Array(length)
+    crypto.getRandomValues(array)
+    return Array.from(array, (value) => characters[value % characters.length]).join('')
 }
 
+export const deepObjectComparison = (obj1: any, obj2: any): boolean => {
+    if (obj1 === obj2) return true
+    if (typeof obj1 !== 'object' || obj1 === null || typeof obj2 !== 'object' || obj2 === null) return false
+    const keys1 = Object.keys(obj1)
+    const keys2 = Object.keys(obj2)
+    if (keys1.length !== keys2.length) return false
+    for (let key of keys1) {
+        if (!keys2.includes(key) || !deepObjectComparison(obj1[key], obj2[key])) return false
+    }
+    return true
+}

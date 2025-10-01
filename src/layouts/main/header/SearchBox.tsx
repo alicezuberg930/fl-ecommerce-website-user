@@ -1,3 +1,4 @@
+'use client'
 import SearchSuggestion from "@/app/components/SearchSuggestion"
 import Iconify from "@/components/iconify"
 import { axiosInstance } from "@/utils/axios"

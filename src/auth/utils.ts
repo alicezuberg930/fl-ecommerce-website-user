@@ -1,78 +1,66 @@
 // routes
-import { NextResponse } from 'next/server'
-import { PATH_AUTH } from '../routes/paths';
+import { PATH_AUTH } from '../routes/paths'
 // utils
-import { axiosInstance } from '@/utils/axios';
+import { axiosInstance } from '@/utils/axios'
 // ----------------------------------------------------------------------
 
-function jwtDecode(token: string) {
-  const base64Url = token.split('.')[1];
-  const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+export function jwtDecode(token: string) {
+  const base64Url = token.split('.')[1]
+  const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/')
   const jsonPayload = decodeURIComponent(
     window
       .atob(base64)
       .split('')
       .map((c) => `%${`00${c.charCodeAt(0).toString(16)}`.slice(-2)}`)
       .join('')
-  );
+  )
 
-  return JSON.parse(jsonPayload);
+  return JSON.parse(jsonPayload)
 }
 
 // ----------------------------------------------------------------------
 
 export const isValidToken = (accessToken: string) => {
   if (!accessToken) {
-    return false;
+    return false
   }
 
-  const decoded = jwtDecode(accessToken);
+  const decoded = jwtDecode(accessToken)
 
-  const currentTime = Date.now() / 1000;
+  const currentTime = Date.now() / 1000
 
-  return decoded.exp > currentTime;
-};
+  return decoded.exp > currentTime
+}
 
 // ----------------------------------------------------------------------
 
 export const tokenExpired = (exp: number) => {
   // eslint-disable-next-line prefer-const
-  let expiredTimer;
-  const currentTime = Date.now();
+  let expiredTimer
+  const currentTime = Date.now()
   // Test token expires after 10s
-  // const timeLeft = currentTime + 10000 - currentTime; // ~10s
-  const timeLeft = exp * 1000 - currentTime;
-  clearTimeout(expiredTimer);
-  expiredTimer = setTimeout(() => {
-    alert('Token expired');
-    localStorage.removeItem('accessToken');
-    window.location.href = PATH_AUTH.login;
-  }, timeLeft);
-};
+  // const timeLeft = currentTime + 10000 - currentTime // ~10s
+  const timeLeft = exp * 1000 - currentTime
+  clearTimeout(expiredTimer)
+  expiredTimer = setTimeout(async () => {
+    alert('Token expired')
+    await fetch('/api/logout', { method: "POST" })
+    window.location.href = PATH_AUTH.login
+  }, timeLeft)
+}
 
 // ----------------------------------------------------------------------
 
-export const setSession = (accessToken: string | null) => {
+export const setSession = async (accessToken: string | null) => {
   if (accessToken) {
-    setCookie(accessToken)
-    localStorage.setItem('accessToken', accessToken);
-
-    axiosInstance.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
+    axiosInstance.defaults.headers.common.Authorization = `Bearer ${accessToken}`
     // This function below will handle when token is expired
-    // const { exp } = jwtDecode(accessToken); // ~3 days by minimals server
-    // tokenExpired(exp);
+    const { exp } = jwtDecode(accessToken) // ~3 days by minimals server
+    tokenExpired(exp)
   } else {
-    localStorage.removeItem('accessToken');
-    delete axiosInstance.defaults.headers.common.Authorization;
+    const res = await fetch('/api/logout', { method: "POST" })
+    const result = await res.json()
+    console.log(result)
+    delete axiosInstance.defaults.headers.common.Authorization
   }
-};
-
-export const setCookie = (token: string) => {
-  const response = NextResponse.json({ success: true })
-  response.cookies.set('token', token, {
-    httpOnly: true,
-    path: '/',
-    maxAge: 60 * 60 * 24, // 1 day
-  })
-  return response
 }

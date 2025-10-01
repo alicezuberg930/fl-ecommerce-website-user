@@ -1,7 +1,7 @@
 'use client'
 import { IRating } from "@/@types/rating"
 import { APIResponse } from "@/@types/response"
-import { icons } from "@/app/common/icons"
+import { icons } from "@/utils/icons"
 import useRating from "@/hooks/api/useRating"
 import { API_ENDPOINT } from "@/routes/api"
 import { RefObject, useEffect } from "react"

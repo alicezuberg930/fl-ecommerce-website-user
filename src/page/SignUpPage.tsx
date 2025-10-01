@@ -1,14 +1,13 @@
 'use client'
-import { yupResolver } from '@hookform/resolvers/yup';
+import { yupResolver } from '@hookform/resolvers/yup'
 import * as Yup from 'yup'
 import { useMemo } from 'react'
 import { useForm } from 'react-hook-form'
 import FormProvider, { RHFTextField } from '@/components/hook-form'
 import { Card, Container, Grid, Link, Stack, Typography } from '@mui/material'
 import { LoadingButton } from '@mui/lab'
-import { useSettingsContext } from '@/components/settings'
-import NextLink from 'next/link';
-import useAuth from '@/hooks/useAuth';
+import NextLink from 'next/link'
+import useAuth from '@/hooks/useAuth'
 
 type FormValuesProps = {
     phone: string
@@ -19,7 +18,6 @@ type FormValuesProps = {
 }
 
 export default function SignUpPage() {
-    const { themeStretch } = useSettingsContext()
     const { signUp } = useAuth()
     const signUpMutate = signUp()
 
@@ -54,7 +52,7 @@ export default function SignUpPage() {
     }
 
     return (
-        <Container maxWidth={themeStretch ? false : 'md'}>
+        <Container maxWidth='md'>
             <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
                 <Card sx={{
                     py: 3, my: 8, px: { xs: 2, lg: 12 }

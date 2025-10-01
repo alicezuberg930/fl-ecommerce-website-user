@@ -2,10 +2,14 @@ export const API_ENDPOINT = {
     product: "/products",
     auth: {
         login: "/auth/login",
-        register: "/auth/register"
+        register: "/auth/register",
     },
     brand: "/brands",
     category: "/categories",
     banner: "/banners",
-    rating: "/ratings"
+    rating: "/ratings",
+    user: {
+        profile: '/users/profile'
+    },
+    cart: "/carts"
 }

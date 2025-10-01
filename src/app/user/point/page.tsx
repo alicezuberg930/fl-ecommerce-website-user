@@ -1,5 +1,5 @@
 'use client'
-import { icons } from "@/app/common/icons"
+import { icons } from "@/utils/icons"
 import UserContent from "../components/UserContent"
 import Slider, { Settings } from "react-slick"
 import { useSelector } from "react-redux"
