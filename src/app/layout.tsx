@@ -22,34 +22,32 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
   return (
     <html lang='en'>
       <body>
-        <SettingsProvider>
-          <MotionLazyContainer>
-            <ThemeProvider>
-              <ThemeSettings>
-                <SnackbarProvider>
-                  <AuthProvider>
-                    <CustomQueryClientProvider>
-                      <Suspense>
-                        <ReduxProvider>
-                          <Header />
-                          <main>{children}</main>
-                          {/* <Footer /> */}
-                          <ChatBot />
-                          <ToastContainer
-                            closeOnClick
-                            draggable
-                            pauseOnHover
-                            pauseOnFocusLoss
-                          />
-                        </ReduxProvider>
-                      </Suspense>
-                    </CustomQueryClientProvider>
-                  </AuthProvider>
-                </SnackbarProvider>
-              </ThemeSettings>
-            </ThemeProvider>
-          </MotionLazyContainer>
-        </SettingsProvider>
+        <CustomQueryClientProvider>
+          <SettingsProvider>
+            <MotionLazyContainer>
+              <ThemeProvider>
+                <ThemeSettings>
+                  <SnackbarProvider>
+                    <AuthProvider>
+                      <ReduxProvider>
+                        <Header />
+                        <main>{children}</main>
+                        {/* <Footer /> */}
+                        <ChatBot />
+                        <ToastContainer
+                          closeOnClick
+                          draggable
+                          pauseOnHover
+                          pauseOnFocusLoss
+                        />
+                      </ReduxProvider>
+                    </AuthProvider>
+                  </SnackbarProvider>
+                </ThemeSettings>
+              </ThemeProvider>
+            </MotionLazyContainer>
+          </SettingsProvider>
+        </CustomQueryClientProvider>
       </body>
     </html>
   )

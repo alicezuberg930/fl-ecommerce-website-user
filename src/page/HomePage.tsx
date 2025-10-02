@@ -1,4 +1,4 @@
-import '@/app/styles/css/landing.css'
+'use client'
 import { Container } from '@mui/material'
 import { Suspense } from 'react'
 import LoadingShimmer from '@/app/components/LoadingShimmer'
@@ -12,25 +12,18 @@ import NewProducts from '@/sections/home/NewProducts'
 export default function HomePage() {
     return (
         <Container maxWidth='xl' sx={{ my: 3 }}>
-            <div className='landing-container'>
-                <Suspense fallback={<LoadingShimmer />}>
-                    <BannerSlider />
-                </Suspense>
-                {/* Flash sale */}
-                <FlashSale />
-                {/* Landing page categories slider */}
-                <Suspense fallback={<LoadingShimmer />}>
-                    <CategorySlider />
-                </Suspense>
-                {/* Landing page brands slider */}
-                <Suspense fallback={<LoadingShimmer />}>
-                    <BrandSlider />
-                </Suspense>
-                {/* Landing page best selling product list */}
-                <BestSellingProducts />
-                {/* Landing page news product list*/}
-                <NewProducts />
-            </div>
+            <Suspense fallback={<LoadingShimmer />}>
+                <BannerSlider />
+            </Suspense>
+            <FlashSale />
+            <Suspense fallback={<LoadingShimmer />}>
+                <CategorySlider />
+            </Suspense>
+            <Suspense fallback={<LoadingShimmer />}>
+                <BrandSlider />
+            </Suspense>
+            <BestSellingProducts />
+            <NewProducts />
         </Container>
     )
 }
