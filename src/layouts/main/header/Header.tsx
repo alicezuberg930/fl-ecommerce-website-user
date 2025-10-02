@@ -13,6 +13,7 @@ import { useRouter } from 'next/navigation'
 import useResponsive from '@/hooks/useResponsive'
 import SearchBox from '@/layouts/main/header/SearchBox'
 import MobileMenu from '@/layouts/main/header/MobileMenu'
+import { PATH_AUTH } from '@/routes/paths'
 
 const menu = [
   {
@@ -87,14 +88,14 @@ export default function Header() {
                 <AccountPopover />
               ) : (
                 <>
-                  <Link component={NextLink} hidden={pathName!.includes("/login") ? true : false} href='/login' underline="none" color='inherit'>Đăng nhập</Link>
-                  <Link component={NextLink} hidden={pathName!.includes("/signup") ? true : false} href='/signup' underline="none" color='inherit'>Đăng ký</Link>
+                  <Link component={NextLink} hidden={pathName!.includes(PATH_AUTH.login) ? true : false} href={PATH_AUTH.login} underline="none" color='inherit'>Đăng nhập</Link>
+                  <Link component={NextLink} hidden={pathName!.includes(PATH_AUTH.register) ? true : false} href={PATH_AUTH.register} underline="none" color='inherit'>Đăng ký</Link>
                 </>
               )}
               <IconButton
                 color='inherit'
                 onClick={() => router.push('/cart')}
-                hidden={pathName!.includes("/login") || pathName!.includes("/signup")}
+                hidden={pathName!.includes(PATH_AUTH.login) || pathName!.includes(PATH_AUTH.register)}
               >
                 <Iconify icon='eva:shopping-cart-outline' width={36} height={36} />
               </IconButton>
@@ -120,7 +121,7 @@ export default function Header() {
                 <IconButton
                   color='inherit'
                   onClick={() => setIsMobileMenuOpen(prev => !prev)}
-                  hidden={pathName!.includes("/login") || pathName!.includes("/signup")}
+                  hidden={pathName!.includes(PATH_AUTH.login) || pathName!.includes(PATH_AUTH.register)}
                 >
                   <Iconify icon='eva:menu-outline' width={36} height={36} />
                 </IconButton>

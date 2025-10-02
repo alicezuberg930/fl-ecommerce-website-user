@@ -8,6 +8,7 @@ import { Card, Container, Grid, Link, Stack, Typography } from '@mui/material'
 import { LoadingButton } from '@mui/lab'
 import NextLink from 'next/link'
 import { useAuthContext } from '@/auth/useAuthContext'
+import { PATH_AUTH } from '@/routes/paths'
 
 type FormValuesProps = {
     username: string
@@ -63,7 +64,7 @@ export default function LoginPage() {
 
                     <Stack direction='row' alignItems='center' justifyContent='center' spacing={1} mt={6}>
                         <Typography>Không có tài khoản?</Typography>
-                        <Link component={NextLink} href='/signup' fontWeight='bold' color='info'>
+                        <Link component={NextLink} href={PATH_AUTH.register} fontWeight='bold' color='info'>
                             tạo mới
                         </Link>
                     </Stack>

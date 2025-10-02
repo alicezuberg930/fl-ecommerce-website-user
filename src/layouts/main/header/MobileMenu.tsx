@@ -3,6 +3,7 @@ import React, { Dispatch, SetStateAction } from "react"
 import NextLink from 'next/link'
 import Image from "@/components/image"
 import { useAuthContext } from "@/auth/useAuthContext"
+import { PATH_AUTH } from "@/routes/paths"
 
 type Props = { isMobileMenuOpen: boolean, setIsMobileMenuOpen: Dispatch<SetStateAction<boolean>>, menu: { path: string, title: string }[] }
 
@@ -28,12 +29,12 @@ export default function MobileMenu({ isMobileMenuOpen, setIsMobileMenuOpen, menu
         {
             isShown: !user ? true : false,
             title: 'Đăng nhập',
-            path: '/login'
+            path: PATH_AUTH.login
         },
         {
             isShown: !user ? true : false,
             title: 'Đăng ký',
-            path: '/signup'
+            path: PATH_AUTH.register
         },
         {
             isShown: user ? true : false,
