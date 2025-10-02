@@ -23,7 +23,10 @@ export default function ProductVariation({ product }: { product: IProductDetails
         const variation = product.variations.find(v => deepObjectComparison(v.attributeValues, variationValues))
         return variation ? variation.price : null
     }, [variationValues])
-
+    const isSelected = useMemo(() => (name: string, value: string) => {
+        return Object.entries(variationValues).some(([key, val]) => key === name && val === value);
+    }, [variationValues])
+    console.log(isSelected('size', 'S'))
     useEffect(() => {
         let newMap = {}
         product.attributes.forEach(attribute => newMap = { ...newMap, [attribute.name]: attribute.values[0] })
@@ -99,14 +102,14 @@ export default function ProductVariation({ product }: { product: IProductDetails
 
             {product.attributes && (
                 <div className="product-options-wrapper" id="product-options-wrapper">
-                    {product.attributes.map((attribute, i) => (
+                    {product.attributes.map(attribute => (
                         <div key={attribute.name} className="product_chose_type">
                             <span className="txt_variant" id="txt_soluong_capacity">
                                 <label className="variant-name">{attribute.name}</label>
                             </span>
                             {attribute.values.map(value => (
                                 <div
-                                    key={value} title={`${value}`}
+                                    key={value} title={`${value}`} style={{ border: `${isSelected(attribute.name, value) ? '1px solid #3366FF' : '1px solid gray'}` }}
                                     className={`attribute-option-item`}
                                     onClick={() => handleSelectVariation(attribute, value)}
                                 >

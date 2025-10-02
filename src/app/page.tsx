@@ -1,4 +1,3 @@
-import { createNotification } from "./common/utils"
 import generateMetadaUtils from "../utils/seo"
 import HomePage from "@/page/HomePage"
 

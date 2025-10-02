@@ -27,7 +27,7 @@ export type IProductDetails = IProduct & {
 
 export type Variation = {
     sku: string
-    attributeValues: Map<string, string>
+    attributeValues: Record<string, string>
     price: number
     stock: number
 }

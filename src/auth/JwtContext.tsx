@@ -10,6 +10,8 @@ import { ActionMapType, AuthStateType, AuthUserType, JWTContextType } from './ty
 import { API_ENDPOINT } from '@/routes/api'
 import { useSnackbar } from '@/components/snackbar'
 import { PATH_AUTH } from '@/routes/paths'
+import { register as registerAPI } from '@/utils/httpClient'
+import { AxiosError } from 'axios'
 
 // ----------------------------------------------------------------------
 
@@ -34,9 +36,9 @@ type Payload = {
   [Types.LOGIN]: {
     user: AuthUserType
   }
-  [Types.REGISTER]: {
-    user: AuthUserType
-  }
+  // [Types.REGISTER]: {
+  //   user: AuthUserType
+  // }
   [Types.LOGOUT]: undefined
 }
 
@@ -65,13 +67,13 @@ const reducer = (state: AuthStateType, action: ActionsType) => {
       user: action.payload.user,
     }
   }
-  if (action.type === Types.REGISTER) {
-    return {
-      ...state,
-      isAuthenticated: true,
-      user: action.payload.user,
-    }
-  }
+  // if (action.type === Types.REGISTER) {
+  //   return {
+  //     ...state,
+  //     isAuthenticated: true,
+  //     user: action.payload.user,
+  //   }
+  // }
   if (action.type === Types.LOGOUT) {
     return {
       ...state,
@@ -100,19 +102,33 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   const initialize = useCallback(async () => {
     try {
-      const response = await fetch('/api/token', { method: 'GET' })
-      const accessToken = await response.json()
+      const tokenRes = await fetch('/api/token', { method: 'GET' })
+      const accessToken = await tokenRes.json()
       if (accessToken && isValidToken(accessToken)) {
         await setSession(accessToken)
-        const response = await axiosInstance(API_ENDPOINT.user.profile, { method: "GET" })
-        const user = response.data.data
-        dispatch({
-          type: Types.INITIAL,
-          payload: {
-            isAuthenticated: true,
-            user,
-          },
+        const profileRes = await fetch(`${process.env.BASE_API}${API_ENDPOINT.user.profile}`, {
+          method: "GET",
+          cache: "force-cache", next: { tags: ['/profile'] },
+          headers: { "Authorization": `Bearer ${accessToken}` }
         })
+        const result = await profileRes.json()
+        if (result && result.data) {
+          dispatch({
+            type: Types.INITIAL,
+            payload: {
+              isAuthenticated: true,
+              user: result.data,
+            },
+          })
+        } else {
+          dispatch({
+            type: Types.INITIAL,
+            payload: {
+              isAuthenticated: false,
+              user: null
+            },
+          })
+        }
       } else {
         dispatch({
           type: Types.INITIAL,
@@ -123,7 +139,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
         })
       }
     } catch (error) {
-      console.error(error)
       dispatch({
         type: Types.INITIAL,
         payload: {
@@ -149,40 +164,34 @@ export function AuthProvider({ children }: AuthProviderProps) {
       const result = await response.json()
       const { message, data } = result
       enqueueSnackbar(message || "Đăng nhập thành công")
-      navigate.replace(PATH_AUTH.root)
       dispatch({
         type: Types.LOGIN,
         payload: {
           user: data.user,
         },
       })
+      navigate.replace(PATH_AUTH.root)
     } catch (error) {
       enqueueSnackbar(error instanceof Error ? error.message : 'Internal Server Error', { variant: 'error' })
     }
   }, [])
 
   // REGISTER
-  const register = useCallback(
-    async (email: string, password: string, firstName: string, lastName: string) => {
-      const response = await axiosInstance.post('/api/account/register', {
-        email,
-        password,
-        firstName,
-        lastName,
-      })
-      const { accessToken, user } = response.data
-
-      localStorage.setItem('accessToken', accessToken)
-
-      dispatch({
-        type: Types.REGISTER,
-        payload: {
-          user,
-        },
-      })
-    },
-    []
-  )
+  const register = useCallback(async (email: string, password: string, name: string) => {
+    try {
+      const response = await registerAPI({ user: { email, password, name } })
+      enqueueSnackbar(response?.message || "Đăng ký thành công")
+      navigate.replace(PATH_AUTH.verify)
+    } catch (error) {
+      enqueueSnackbar(error instanceof Error ? error.message : 'Internal Server Error', { variant: 'error' })
+    }
+    // dispatch({
+    //   type: Types.REGISTER,
+    //   payload: {
+    //     user,
+    //   },
+    // })
+  }, [])
 
   // LOGOUT
   const logout = useCallback(async () => {
@@ -193,7 +202,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
         type: Types.LOGOUT
       })
     } catch (error) {
-      console.error(error);
       enqueueSnackbar(error instanceof Error ? error.message : 'Internal Server Error', { variant: 'error' })
     }
   }, [])

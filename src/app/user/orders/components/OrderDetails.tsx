@@ -1,6 +1,4 @@
 'use client'
-import ENDPOINT from "@/app/common/api"
-import { instance } from "@/utils/axios"
 import { useEffect, useState } from "react"
 import UserContent from "../../components/UserContent"
 import '@/app/styles/css/order.details.css'
@@ -11,15 +9,6 @@ import { fCurrencyVND } from "@/utils/formatNumber"
 const OrderDetails: React.FC<{ id: string }> = ({ id }) => {
     const { TiDocumentText, CiMoneyBill, MdOutlineLocalShipping, CiInboxIn, CiStar } = icons
     const [order, setOrder] = useState<Order | null>(null)
-
-    useEffect(() => {
-        const fetchOrderDetails = async () => {
-            const order = await instance.get(`${ENDPOINT.ORDER_DETAILS}/${id}`)
-            setOrder(order.data.order as Order)
-            console.log(order);
-        }
-        fetchOrderDetails()
-    }, [])
 
     return (
         <UserContent>

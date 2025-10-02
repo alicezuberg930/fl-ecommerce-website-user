@@ -4,13 +4,9 @@ import { fUnixToDate } from '@/utils/formatTime'
 // @mui
 import { Button, Stack, Typography, Box, Radio, RadioGroup, FormControlLabel, Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material'
 // hooks
-import useVoucher from '@/hooks/useVoucher'
 import { useState } from 'react'
 
 export default function CartVoucherPicker() {
-    const { getVoucherList, applyVoucher } = useVoucher()
-    const { data: vouchers, isLoading } = getVoucherList()
-    const applyMutate = applyVoucher()
     const [openDialog, setOpenDialog] = useState<boolean>(false)
     const [selectedVoucher, setSelectedVoucher] = useState<string>('')
 
@@ -23,9 +19,6 @@ export default function CartVoucherPicker() {
     }
 
     const handleApplyVoucher = () => {
-        applyMutate.mutate({ voucherCode: selectedVoucher }, {
-            onSuccess(_) { handleCloseDialog() }
-        })
     }
 
     return (
@@ -61,7 +54,7 @@ export default function CartVoucherPicker() {
                         value={selectedVoucher}
                         onChange={(e) => setSelectedVoucher(e.target.value)}
                     >
-                        {vouchers && vouchers.data && (vouchers.data as Voucher[]).map((voucher) => (
+                        {/* {vouchers && vouchers.data && (vouchers.data as any).map((voucher: any) => (
                             <Stack
                                 direction='row'
                                 alignItems='center'
@@ -98,7 +91,7 @@ export default function CartVoucherPicker() {
 
                                 <FormControlLabel value={voucher.voucherCode} control={<Radio />} label='' />
                             </Stack>
-                        ))}
+                        ))} */}
                     </RadioGroup>
                 </DialogContent>
 

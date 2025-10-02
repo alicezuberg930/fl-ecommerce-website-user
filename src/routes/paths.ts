@@ -11,9 +11,9 @@ export const PATH_AUTH = {
     root: ROOTS_HOME,
     login: path(ROOTS_HOME, 'login'),
     register: path(ROOTS_HOME, '/register'),
+    verify: path(ROOTS_HOME, '/verify'),
     // loginUnprotected: path(ROOTS_AUTH, '/login-unprotected'),
     // registerUnprotected: path(ROOTS_AUTH, '/register-unprotected'),
-    // verify: path(ROOTS_AUTH, '/verify'),
     // resetPassword: path(ROOTS_AUTH, '/reset-password'),
     // newPassword: path(ROOTS_AUTH, '/new-password'),
 }
@@ -117,8 +117,3 @@ export const PATH_DASHBOARD = {
         inventory: path(ROOTS_DASHBOARD, '/storage/inventory'),
     }
 }
-
-export const PATH_DOCS = {
-    root: 'https://docs.minimals.cc',
-    changelog: 'https://docs.minimals.cc/changelog',
-};

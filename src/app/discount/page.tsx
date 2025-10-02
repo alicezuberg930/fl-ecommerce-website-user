@@ -1,5 +1,4 @@
 import Link from 'next/link'
-import { slugify } from '../common/utils'
 import '@/app/styles/css/discount.css'
 
 const DiscountPage = () => {

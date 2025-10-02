@@ -6,14 +6,14 @@ import useRating from "@/hooks/api/useRating"
 import { API_ENDPOINT } from "@/routes/api"
 import { RefObject, useEffect } from "react"
 
-export default function RatingList({ commentRef, product }: { commentRef: RefObject<HTMLDivElement>, product: string }) {
+export default function RatingList({ commentRef, productId }: { commentRef: RefObject<HTMLDivElement>, productId: string }) {
     const { FaStar, MdThumbUp, FaRegTrashCan } = icons
     const { getRatings, setQuery } = useRating()
     const { data: response, isLoading, isError, error } = getRatings()
 
     useEffect(() => {
-        setQuery(prev => ({ ...prev, product }))
-    }, [product])
+        setQuery(prev => ({ ...prev, product: productId }))
+    }, [productId])
 
     // const handleDeleteComment = async (id: string) => {
     //     try {

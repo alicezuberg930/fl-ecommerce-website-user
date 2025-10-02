@@ -57,6 +57,7 @@ export default function ProductDetailsPage({ product }: { product: IProductDetai
     const contentTabRef = useRef<HTMLDivElement>(null)
     const { getProducts } = useProduct()
     const { data: response, isLoading, isError, error } = getProducts()
+
     const handleScroll = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
         e.preventDefault()
         let links = contentTabRef.current!.children

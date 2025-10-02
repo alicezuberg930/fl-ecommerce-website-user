@@ -15,7 +15,7 @@ export default function CartPage() {
     const deleteMutate = deleteCartItem()
     const updateMutate = updateCartItem()
     const totalPrice = useMemo(() => {
-        if (!response?.data.length) return 0
+        if (!response || !response.data) return 0
         return response.data.reduce((total, item) => {
             return total + (item.quantity * item.variation.price)
         }, 0)

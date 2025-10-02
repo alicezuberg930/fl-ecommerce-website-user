@@ -7,8 +7,23 @@ import { IBrand } from '@/@types/brand'
 import { ICategory } from '@/@types/category'
 import { IRating, QueryRating } from '@/@types/rating'
 import { ICartAdd, ICartItem } from '@/@types/cart'
+import { IUser, IUserCreate } from '@/@types/user'
 
-export const fetchProducts = async ({ query }: { query: QueryProduct }): Promise<APIResponse<IProduct[]> | undefined> => {
+export const register = async ({ user }: { user: IUserCreate }): Promise<APIResponse<IUser>> => {
+    try {
+        const response = await axiosInstance<APIResponse<IUser>>({
+            url: API_ENDPOINT.auth.register,
+            method: 'POST',
+            data: user
+        })
+        return response?.data
+    } catch (error) {
+        handleErrorResponse(error)
+        throw error
+    }
+}
+
+export const fetchProducts = async ({ query }: { query: QueryProduct }): Promise<APIResponse<IProduct[]>> => {
     try {
         const response = await axiosInstance<APIResponse<IProduct[]>>({
             url: API_ENDPOINT.product,
@@ -18,6 +33,7 @@ export const fetchProducts = async ({ query }: { query: QueryProduct }): Promise
         return response.data
     } catch (error) {
         handleErrorResponse(error)
+        throw error
     }
 }
 
@@ -104,8 +120,9 @@ export const addCartItem = async ({ cart }: { cart: ICartAdd }): Promise<APIResp
 export const deleteCartItem = async ({ id }: { id: string | string[] }): Promise<APIResponse<ICartItem>> => {
     try {
         const response = await axiosInstance<APIResponse<ICartItem>>({
-            url: `${API_ENDPOINT.cart}/${id}`,
+            url: API_ENDPOINT.cart,
             method: 'DELETE',
+            data: { id }
         })
         return response.data
     } catch (error) {

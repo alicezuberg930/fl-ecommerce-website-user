@@ -230,22 +230,18 @@
 
 .product-details-image-container .product-details-info-wrapper .product-options-wrapper .product_chose_type .attribute-option-item {
   display: inline-block;
-  margin-right: 10px;
   border: 1px solid #ccc;
-  border-radius: 2px;
-  width: fit-content;
-  padding: 0 6px;
-  height: 32px;
+  border-radius: 4px;
+  margin: 0 8px 8px 0;
+  padding: 6px;
   position: relative;
-  overflow: hidden;
   color: black;
   align-content: center;
+  cursor: pointer;
 }
 
 .product-details-image-container .product-details-info-wrapper .product-options-wrapper .product_chose_type .attribute-option-item span {
   display: block;
-  margin: auto;
-  width: min-content;
 }
 
 .product-details-image-container .product-details-info-wrapper .product-options-wrapper .product_chose_type .attribute-option-item.active {

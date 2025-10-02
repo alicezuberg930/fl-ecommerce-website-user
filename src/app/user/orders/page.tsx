@@ -2,25 +2,11 @@
 import "@/app/styles/css/user.order.css"
 import UserContent from "../components/UserContent"
 import { useState, useEffect } from 'react'
-import { instance } from "@/utils/axios"
-import ENDPOINT from "@/app/common/api"
 import Link from "next/link"
 import { fCurrencyVND } from "@/utils/formatNumber"
 
 const UserOrderPage = () => {
     const [orders, setOrders] = useState<Order[]>([])
-
-    useEffect(() => {
-        const getOrders = async () => {
-            try {
-                const response = await instance.get(`${ENDPOINT.ORDERS}`)
-                setOrders(response.data.data)
-            } catch (e) {
-                setOrders([])
-            }
-        }
-        getOrders()
-    }, [])
 
     return (
         <UserContent>

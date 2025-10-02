@@ -58,9 +58,7 @@ export const setSession = async (accessToken: string | null) => {
     const { exp } = jwtDecode(accessToken) // ~3 days by minimals server
     tokenExpired(exp)
   } else {
-    const res = await fetch('/api/logout', { method: "POST" })
-    const result = await res.json()
-    console.log(result)
+    await fetch('/api/logout', { method: "POST" })
     delete axiosInstance.defaults.headers.common.Authorization
   }
 }
