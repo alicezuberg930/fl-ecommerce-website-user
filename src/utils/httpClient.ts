@@ -131,12 +131,12 @@ export const deleteCartItem = async ({ id }: { id: string | string[] }): Promise
     }
 }
 
-export const updateCartItem = async ({ id, cart }: { id: string, cart: ICartAdd }): Promise<APIResponse<ICartItem>> => {
+export const updateCartItem = async ({ id, quantity }: { id: string, quantity: number }): Promise<APIResponse<ICartItem>> => {
     try {
         const response = await axiosInstance<APIResponse<ICartItem>>({
             url: `${API_ENDPOINT.cart}/${id}`,
             method: 'PATCH',
-            data: cart
+            data: { quantity }
         })
         return response.data
     } catch (error) {

@@ -97,11 +97,11 @@ export default function ProductDetailsPage({ product }: { product: IProductDetai
                                             <TableBody>
                                                 <TableRow>
                                                     <TableCell width={200}>Danh mục</TableCell>
-                                                    <TableCell>{product.category?.name ?? "Không có"}</TableCell>
+                                                    <TableCell>{product?.category?.name ?? "Không có"}</TableCell>
                                                 </TableRow>
                                                 <TableRow>
                                                     <TableCell width={200}>Thương hiệu</TableCell>
-                                                    <TableCell>{product.brand.name}</TableCell>
+                                                    <TableCell>{product?.brand?.name}</TableCell>
                                                 </TableRow>
                                                 <TableRow>
                                                     <TableCell width={200}>Quy trình đóng gói</TableCell>

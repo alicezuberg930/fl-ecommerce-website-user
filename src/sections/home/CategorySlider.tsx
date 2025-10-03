@@ -59,7 +59,7 @@ export default async function CategorySlider() {
             >
               <div className="home-categories-item-box">
                 <div className="home-categories-item-box-img">
-                  <img src={category.logo} style={{ aspectRatio: '1/1' }} />
+                  <img src={category.logo} style={{ aspectRatio: '1/1', width: '100%' }} />
                 </div>
                 <h1 className="home-categories-item-title" style={{ color: 'black', textAlign: 'center' }}>{category.name}</h1>
               </div>

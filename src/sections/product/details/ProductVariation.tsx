@@ -69,7 +69,7 @@ export default function ProductVariation({ product }: { product: IProductDetails
 
     return (
         <div className="product-details-info-wrapper">
-            <h3 className="product-details-brand-title">{product.brand.name}</h3>
+            <h3 className="product-details-brand-title">{product?.brand?.name}</h3>
             <span className="product-details-title">{product.name}</span>
             <div className="product-brand">
                 <div className="star_container">

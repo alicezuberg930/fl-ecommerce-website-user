@@ -13,4 +13,5 @@ export type ICartItem = {
     variation: Variation
     user: Partial<IUser>
     quantity: number
+    subTotal: number
 }

@@ -1,4 +1,5 @@
 import { IBrand } from "./brand"
+import { ICartItem } from "./cart"
 import { ICategory } from "./category"
 import { IRating } from "./rating"
 
@@ -44,4 +45,23 @@ export type QueryProduct = {
     category?: string
     brand?: string
     isHidden?: boolean
+}
+
+export type ICheckoutBillingAddress = {
+    receiver: string;
+    phoneNumber: string;
+    fullAddress: string;
+    addressType: string;
+    isDefault: boolean;
+};
+
+export type IProductCheckoutState = {
+    activeStep: number
+    cart: ICartItem[]
+    subtotal: number
+    total: number
+    discount: number
+    shipping: number
+    billing: ICheckoutBillingAddress | null
+    totalItems: number
 }

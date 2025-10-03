@@ -1,10 +1,8 @@
 import "slick-carousel/slick/slick.css"
 import "slick-carousel/slick/slick-theme.css"
-import 'react-toastify/dist/ReactToastify.css'
 import './globals.css'
 import Footer from '@/layouts/main/footer/Footer'
 import Header from '@/layouts/main/header/Header'
-import { ToastContainer } from 'react-toastify'
 import React, { Suspense } from 'react'
 import generateMetadaUtils from "../utils/seo"
 import ChatBot from './components/ChatBox'
@@ -34,12 +32,6 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
                         <main>{children}</main>
                         {/* <Footer /> */}
                         <ChatBot />
-                        <ToastContainer
-                          closeOnClick
-                          draggable
-                          pauseOnHover
-                          pauseOnFocusLoss
-                        />
                       </ReduxProvider>
                     </AuthProvider>
                   </SnackbarProvider>

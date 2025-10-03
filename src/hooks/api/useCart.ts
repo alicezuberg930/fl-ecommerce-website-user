@@ -50,9 +50,8 @@ export default function useCart() {
 
     const updateCartItem = useCallback(() => {
         return useMutation({
-            mutationFn: ({ id, cart }: { id: string, cart: ICartAdd }) => updateCartItemAPI({ id, cart }),
-            onSuccess(data) {
-                enqueueSnackbar(data.message)
+            mutationFn: ({ id, quantity }: { id: string, quantity: number }) => updateCartItemAPI({ id, quantity }),
+            onSuccess(_) {
                 queryClient.invalidateQueries({ queryKey: [API_ENDPOINT.cart] })
             },
             onError(error) {
