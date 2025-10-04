@@ -3,7 +3,7 @@ import "@/app/styles/css/categories.slider.css"
 import { Container, Typography } from "@mui/material"
 import { ICategory } from "@/@types/category"
 import { APIResponse } from "@/@types/response"
-import { API_ENDPOINT } from "@/routes/api"
+import { PATH_API } from "@/routes/paths"
 import CarouselList from "./CarouselList"
 import Link from "next/link"
 import { Settings } from "react-slick"
@@ -33,7 +33,7 @@ const settings: Settings = {
 }
 
 export default async function CategorySlider() {
-  const response = await fetch(`${process.env.BASE_API}${API_ENDPOINT.category}`,
+  const response = await fetch(`${process.env.BASE_API}${PATH_API.category}`,
     { method: "GET", cache: "force-cache", next: { revalidate: 3600 } }
   )
   const result: APIResponse<ICategory[]> = await response.json()

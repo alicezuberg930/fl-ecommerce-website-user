@@ -1,9 +1,6 @@
 'use client'
-import { IRating } from "@/@types/rating"
-import { APIResponse } from "@/@types/response"
 import { icons } from "@/utils/icons"
 import useRating from "@/hooks/api/useRating"
-import { API_ENDPOINT } from "@/routes/api"
 import { RefObject, useEffect } from "react"
 
 export default function RatingList({ commentRef, productId }: { commentRef: RefObject<HTMLDivElement>, productId: string }) {

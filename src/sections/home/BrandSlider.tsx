@@ -1,7 +1,7 @@
 import React from "react"
 import "@/app/styles/css/brands.slider.css"
 import { Container, Typography } from "@mui/material"
-import { API_ENDPOINT } from "@/routes/api"
+import { API_ENDPOINT } from ""
 import { APIResponse } from "@/@types/response"
 import { IBrand } from "@/@types/brand"
 import CarouselList from "./CarouselList"

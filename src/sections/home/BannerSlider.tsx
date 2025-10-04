@@ -1,4 +1,4 @@
-import { API_ENDPOINT } from '@/routes/api'
+import { PATH_API } from '@/routes/paths'
 import { APIResponse } from '@/@types/response'
 import { IBanner } from '@/@types/banner'
 import CarouselList from './CarouselList'
@@ -6,7 +6,7 @@ import Image from '@/components/image'
 import { Container, Typography } from '@mui/material'
 
 export default async function BannerSlider() {
-  const response = await fetch(`${process.env.BASE_API}${API_ENDPOINT.banner}`,
+  const response = await fetch(`${process.env.BASE_API}${PATH_API.banner}`,
     { method: "GET", cache: "force-cache", next: { revalidate: 3600 } }
   )
   const result: APIResponse<IBanner[]> = await response.json()
