@@ -2,22 +2,14 @@
 import { useRouter } from 'next/navigation'
 import { createContext, useEffect, useReducer, useCallback, useMemo } from 'react'
 // utils
-import { axiosInstance } from '@/utils/axios'
 import localStorageAvailable from '@/utils/localStorageAvailable'
 //
 import { isValidToken, setSession } from './utils'
 import { ActionMapType, AuthStateType, AuthUserType, JWTContextType } from './types'
-import { API_ENDPOINT } from '@/routes/api'
+import { PATH_API } from '@/routes/paths'
 import { useSnackbar } from '@/components/snackbar'
 import { PATH_AUTH } from '@/routes/paths'
 import { register as registerAPI } from '@/utils/httpClient'
-import { AxiosError } from 'axios'
-
-// ----------------------------------------------------------------------
-
-// NOTE:
-// We only build demo at basic level.
-// Customer will need to do some extra handling yourself if you want to extend the logic and other features...
 
 // ----------------------------------------------------------------------
 
@@ -106,7 +98,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
       const accessToken = await tokenRes.json()
       if (accessToken && isValidToken(accessToken)) {
         await setSession(accessToken)
-        const profileRes = await fetch(`${process.env.BASE_API}${API_ENDPOINT.user.profile}`, {
+        const profileRes = await fetch(`${process.env.BASE_API}${PATH_API.user.profile}`, {
           method: "GET",
           cache: "force-cache", next: { tags: ['/profile'] },
           headers: { "Authorization": `Bearer ${accessToken}` }

@@ -1,12 +1,11 @@
 // @mui
-import { Table, TableBody, TableContainer } from '@mui/material';
+import { Table, TableBody, TableContainer } from '@mui/material'
 // @types
-import { ICartItem } from '@/@types/cart';
+import { ICartItem } from '@/@types/cart'
 // components
-import Scrollbar from '@/components/scrollbar';
-import { TableHeadCustom, useTable } from '@/components/table';
+import { TableHeadCustom } from '@/components/table'
 //
-import CheckoutCartProduct from './CheckoutCartProduct';
+import CheckoutCartProduct from './CheckoutCartProduct'
 
 // ----------------------------------------------------------------------
 
@@ -16,7 +15,7 @@ const TABLE_HEAD = [
     { id: 'quantity', label: 'SL' },
     { id: 'totalPrice', label: 'Giá tổng', align: 'right' },
     { id: '' },
-];
+]
 
 // ----------------------------------------------------------------------
 
@@ -28,7 +27,7 @@ type Props = {
     selected: string[]
     onSelectAllRows: (checked: boolean, newSelecteds: string[]) => void
     onSelectRow: (id: string) => void
-};
+}
 
 export default function CheckoutCartProductList({
     products,
@@ -39,10 +38,8 @@ export default function CheckoutCartProductList({
     onSelectAllRows,
     onSelectRow
 }: Props) {
-
     return (
         <TableContainer sx={{ boxShadow: (theme) => theme.shadows[4], borderRadius: 2 }} >
-            {/* <Scrollbar> */}
             <Table sx={{ minWidth: 720 }}>
                 <TableHeadCustom
                     headLabel={TABLE_HEAD}
@@ -70,7 +67,6 @@ export default function CheckoutCartProductList({
                     ))}
                 </TableBody>
             </Table>
-            {/* </Scrollbar> */}
         </TableContainer>
-    );
+    )
 }

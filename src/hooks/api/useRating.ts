@@ -1,7 +1,7 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query"
 import { useCallback, useState } from "react"
 import { useSnackbar } from '@/components/snackbar';
-import { API_ENDPOINT } from "@/routes/api";
+import { PATH_API } from "@/routes/paths";
 import { fetchRatings } from "@/utils/httpClient";
 import { QueryRating } from "@/@types/rating";
 
@@ -12,7 +12,7 @@ export default function useRating() {
 
     const getRatings = useCallback(() => {
         return useQuery({
-            queryKey: [API_ENDPOINT.rating, query],
+            queryKey: [PATH_API.rating, query],
             queryFn: () => fetchRatings({ query }),
             placeholderData: (previousData, _) => previousData,
         })

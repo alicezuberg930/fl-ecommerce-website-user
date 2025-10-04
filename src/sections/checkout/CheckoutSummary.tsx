@@ -11,24 +11,24 @@ import {
     Typography,
     CardContent,
     InputAdornment,
-} from '@mui/material';
+} from '@mui/material'
 // utils
-import { fCurrency, fCurrencyVND } from '@/utils/formatNumber';
+import { fCurrency, fCurrencyVND } from '@/utils/formatNumber'
 // components
-import Iconify from '@/components/iconify';
+import Iconify from '@/components/iconify'
 
 // ----------------------------------------------------------------------
 
 type Props = {
-    total: number;
-    discount?: number;
-    subtotal: number;
-    shipping?: number;
-    onEdit?: VoidFunction;
-    enableEdit?: boolean;
-    onApplyDiscount?: (discount: number) => void;
-    enableDiscount?: boolean;
-};
+    total: number
+    discount?: number
+    subtotal: number
+    shipping?: number
+    onEdit?: VoidFunction
+    enableEdit?: boolean
+    onApplyDiscount?: (discount: number) => void
+    enableDiscount?: boolean
+}
 
 export default function CheckoutSummary({
     total,
@@ -40,7 +40,7 @@ export default function CheckoutSummary({
     enableEdit = false,
     enableDiscount = false,
 }: Props) {
-    const displayShipping = shipping !== null ? 'Free' : '-';
+    const displayShipping = shipping !== null ? 'Free' : '-'
 
     return (
         <Card sx={{ mb: 3 }}>
@@ -115,5 +115,5 @@ export default function CheckoutSummary({
                 </Stack>
             </CardContent>
         </Card>
-    );
+    )
 }

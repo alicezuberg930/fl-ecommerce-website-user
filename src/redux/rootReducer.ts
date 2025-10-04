@@ -21,7 +21,7 @@ export const productPersistConfig = {
   key: 'product',
   storage,
   keyPrefix: 'redux-',
-  whitelist: ['sortBy', 'checkout'],
+  whitelist: ['activeStep', 'cart', 'subtotal', 'total', 'discount', 'shipping', 'billing', 'totalItems'],
 };
 
 const rootReducer = combineReducers({

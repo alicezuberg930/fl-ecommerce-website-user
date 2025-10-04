@@ -1,12 +1,12 @@
 import { useQuery } from "@tanstack/react-query"
 import { useCallback, useState } from "react"
-import { API_ENDPOINT } from "@/routes/api";
+import { PATH_API } from "@/routes/paths";
 import { fetchCategories } from "@/utils/httpClient";
 
 export default function useCategory() {
     const getCategories = useCallback(() => {
         return useQuery({
-            queryKey: [API_ENDPOINT.category],
+            queryKey: [PATH_API.category],
             queryFn: () => fetchCategories(),
             placeholderData: (previousData, _) => previousData,
         })

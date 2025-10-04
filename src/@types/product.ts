@@ -38,7 +38,7 @@ export type Attribute = {
     values: string[]
 }
 
-export type QueryProduct = {
+export type IProductFilter = {
     page: number
     pageSize: number
     name?: string
@@ -48,12 +48,16 @@ export type QueryProduct = {
 }
 
 export type ICheckoutBillingAddress = {
-    receiver: string;
-    phoneNumber: string;
-    fullAddress: string;
-    addressType: string;
-    isDefault: boolean;
-};
+    _id: string
+    contactName: string
+    contactPhone: string
+    province: string
+    district: string
+    ward: string
+    street: string
+    addressType?: string
+    isDefault?: boolean
+}
 
 export type IProductCheckoutState = {
     activeStep: number

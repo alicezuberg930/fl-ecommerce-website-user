@@ -1,32 +1,79 @@
-import { IProduct, IProductDetails, QueryProduct } from '@/@types/product'
+import { ICheckoutBillingAddress, IProduct, IProductDetails, IProductFilter } from '@/@types/product'
 import { APIResponse } from '@/@types/response'
 import { axiosInstance } from './axios'
-import { API_ENDPOINT } from '@/routes/api'
+import { PATH_API } from '@/routes/paths'
 import { handleErrorResponse } from './common'
 import { IBrand } from '@/@types/brand'
 import { ICategory } from '@/@types/category'
 import { IRating, QueryRating } from '@/@types/rating'
 import { ICartAdd, ICartItem } from '@/@types/cart'
 import { IUser, IUserCreate } from '@/@types/user'
+import { IDistrict, IProvince, IWard } from '@/@types/address'
 
-export const register = async ({ user }: { user: IUserCreate }): Promise<APIResponse<IUser>> => {
+const customFetch = (url: string, init: RequestInit) => {
+    return fetch(`${process.env.BASE_API}${url.startsWith('/') ? url : url.padStart(url.length + 1, '/')}`, {
+        headers: { 'Content-Type': 'application/json' },
+        ...init
+    })
+}
+
+export const fetchProvinces = async (): Promise<APIResponse<IProvince[]>> => {
     try {
-        const response = await axiosInstance<APIResponse<IUser>>({
-            url: API_ENDPOINT.auth.register,
-            method: 'POST',
-            data: user
+        const response = await customFetch(PATH_API.location.province, {
+            method: "GET", cache: "force-cache"
         })
-        return response?.data
+        const result = await response.json()
+        return result
     } catch (error) {
         handleErrorResponse(error)
         throw error
     }
 }
 
-export const fetchProducts = async ({ query }: { query: QueryProduct }): Promise<APIResponse<IProduct[]>> => {
+export const fetchDistricts = async ({ id }: { id: string }): Promise<APIResponse<IDistrict[]>> => {
+    try {
+        const response = await customFetch(PATH_API.location.district(id), {
+            method: "GET", cache: "force-cache"
+        })
+        const result = await response.json()
+        return result
+    } catch (error) {
+        handleErrorResponse(error)
+        throw error
+    }
+}
+
+export const fetchWards = async ({ id }: { id: string }): Promise<APIResponse<IWard[]>> => {
+    try {
+        const response = await customFetch(PATH_API.location.ward(id), {
+            method: "GET", cache: "force-cache"
+        })
+        const result = await response.json()
+        return result
+    } catch (error) {
+        handleErrorResponse(error)
+        throw error
+    }
+}
+
+export const register = async ({ user }: { user: IUserCreate }): Promise<APIResponse<IUser>> => {
+    try {
+        const response = await axiosInstance<APIResponse<IUser>>({
+            url: PATH_API.auth.register,
+            method: 'POST',
+            data: user
+        })
+        return response.data
+    } catch (error) {
+        handleErrorResponse(error)
+        throw error
+    }
+}
+
+export const fetchProducts = async ({ query }: { query: IProductFilter }): Promise<APIResponse<IProduct[]>> => {
     try {
         const response = await axiosInstance<APIResponse<IProduct[]>>({
-            url: API_ENDPOINT.product,
+            url: PATH_API.product,
             method: 'GET',
             params: query
         })
@@ -40,7 +87,7 @@ export const fetchProducts = async ({ query }: { query: QueryProduct }): Promise
 export const fetchProductDetails = async ({ id }: { id: string }): Promise<APIResponse<IProductDetails>> => {
     try {
         const response = await axiosInstance<APIResponse<IProductDetails>>({
-            url: `${API_ENDPOINT.product}/${id}`,
+            url: `${PATH_API.product}/${id}`,
             method: 'GET'
         })
         return response.data
@@ -53,7 +100,7 @@ export const fetchProductDetails = async ({ id }: { id: string }): Promise<APIRe
 export const fetchBrands = async (): Promise<APIResponse<IBrand[]>> => {
     try {
         const response = await axiosInstance<APIResponse<IBrand[]>>({
-            url: API_ENDPOINT.brand,
+            url: PATH_API.brand,
             method: 'GET'
         })
         return response.data
@@ -66,7 +113,7 @@ export const fetchBrands = async (): Promise<APIResponse<IBrand[]>> => {
 export const fetchCategories = async (): Promise<APIResponse<ICategory[]>> => {
     try {
         const response = await axiosInstance<APIResponse<ICategory[]>>({
-            url: API_ENDPOINT.category,
+            url: PATH_API.category,
             method: 'GET'
         })
         return response.data
@@ -79,7 +126,7 @@ export const fetchCategories = async (): Promise<APIResponse<ICategory[]>> => {
 export const fetchRatings = async ({ query }: { query: QueryRating }): Promise<APIResponse<IRating[]>> => {
     try {
         const response = await axiosInstance<APIResponse<IRating[]>>({
-            url: API_ENDPOINT.rating,
+            url: PATH_API.rating,
             method: 'GET',
             params: query
         })
@@ -93,8 +140,8 @@ export const fetchRatings = async ({ query }: { query: QueryRating }): Promise<A
 export const fetchCartItems = async (): Promise<APIResponse<ICartItem[]>> => {
     try {
         const response = await axiosInstance<APIResponse<ICartItem[]>>({
-            url: API_ENDPOINT.cart,
-            method: 'GET'
+            url: PATH_API.cart,
+            method: 'GET',
         })
         return response.data
     } catch (error) {
@@ -106,7 +153,7 @@ export const fetchCartItems = async (): Promise<APIResponse<ICartItem[]>> => {
 export const addCartItem = async ({ cart }: { cart: ICartAdd }): Promise<APIResponse<ICartItem>> => {
     try {
         const response = await axiosInstance<APIResponse<ICartItem>>({
-            url: API_ENDPOINT.cart,
+            url: PATH_API.cart,
             method: 'POST',
             data: cart
         })
@@ -120,7 +167,7 @@ export const addCartItem = async ({ cart }: { cart: ICartAdd }): Promise<APIResp
 export const deleteCartItem = async ({ id }: { id: string | string[] }): Promise<APIResponse<ICartItem>> => {
     try {
         const response = await axiosInstance<APIResponse<ICartItem>>({
-            url: API_ENDPOINT.cart,
+            url: PATH_API.cart,
             method: 'DELETE',
             data: { id }
         })
@@ -134,9 +181,88 @@ export const deleteCartItem = async ({ id }: { id: string | string[] }): Promise
 export const updateCartItem = async ({ id, quantity }: { id: string, quantity: number }): Promise<APIResponse<ICartItem>> => {
     try {
         const response = await axiosInstance<APIResponse<ICartItem>>({
-            url: `${API_ENDPOINT.cart}/${id}`,
+            url: `${PATH_API.cart}/${id}`,
             method: 'PATCH',
             data: { quantity }
+        })
+        return response.data
+    } catch (error) {
+        handleErrorResponse(error)
+        throw error
+    }
+}
+
+// export const fetchProvinces = async (): Promise<APIResponse<IProvince[]>> => {
+//     try {
+//         const response = await axiosInstance<APIResponse<IProvince[]>>({
+//             url: PATH_API.location.province,
+//             method: 'GET'
+//         })
+//         return response.data
+//     } catch (error) {
+//         handleErrorResponse(error)
+//         throw error
+//     }
+// }
+
+// export const fetchDistricts = async ({ id }: { id: string }): Promise<APIResponse<IDistrict[]>> => {
+//     try {
+//         const response = await axiosInstance<APIResponse<IDistrict[]>>({
+//             url: PATH_API.location.district(id),
+//             method: 'GET'
+//         })
+//         return response.data
+//     } catch (error) {
+//         handleErrorResponse(error)
+//         throw error
+//     }
+// }
+
+// export const fetchWards = async ({ id }: { id: string }): Promise<APIResponse<IWard[]>> => {
+//     try {
+//         const response = await axiosInstance<APIResponse<IWard[]>>({
+//             url: PATH_API.location.ward(id),
+//             method: 'GET'
+//         })
+//         return response.data
+//     } catch (error) {
+//         handleErrorResponse(error)
+//         throw error
+//     }
+// }
+
+export const fetchDeliveryAddresses = async (): Promise<APIResponse<ICheckoutBillingAddress[]>> => {
+    try {
+        const response = await axiosInstance<APIResponse<ICheckoutBillingAddress[]>>({
+            url: PATH_API.user.address.list,
+            method: 'GET'
+        })
+        return response.data
+    } catch (error) {
+        handleErrorResponse(error)
+        throw error
+    }
+}
+
+export const createDeliveryAddress = async ({ address }: { address: Omit<ICheckoutBillingAddress, '_id'> }): Promise<APIResponse<ICheckoutBillingAddress>> => {
+    try {
+        const response = await axiosInstance<APIResponse<ICheckoutBillingAddress>>({
+            url: PATH_API.user.address.new,
+            method: 'POST',
+            data: address
+        })
+        return response.data
+    } catch (error) {
+        handleErrorResponse(error)
+        throw error
+    }
+}
+
+export const deleteDeliveryAddress = async ({ id }: { id: string }): Promise<APIResponse<undefined>> => {
+    try {
+        const response = await axiosInstance<APIResponse<undefined>>({
+            url: PATH_API.user.address.delete(id),
+            method: 'DELETE',
         })
         return response.data
     } catch (error) {

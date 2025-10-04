@@ -1,10 +1,10 @@
-import { API_ENDPOINT } from '@/routes/api'
+import { PATH_API } from '@/routes/paths'
 import { NextResponse } from 'next/server'
 
 export async function POST(req: Request) {
     try {
         const { username, password } = await req.json()
-        const response = await fetch(`${process.env.BASE_API}${API_ENDPOINT.auth.login}`, {
+        const response = await fetch(`${process.env.BASE_API}${PATH_API.auth.login}`, {
             method: "POST",
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ username, password })

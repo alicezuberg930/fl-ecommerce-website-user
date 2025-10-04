@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useCallback } from 'react'
 import { useSnackbar } from '@/components/snackbar'
-import { API_ENDPOINT } from '@/routes/api'
+import { PATH_API } from "@/routes/paths";
 import {
     fetchCartItems,
     addCartItem as addCartItemAPI,
@@ -16,7 +16,7 @@ export default function useCart() {
 
     const getCartItems = useCallback(() => {
         return useQuery({
-            queryKey: [API_ENDPOINT.cart],
+            queryKey: [PATH_API.cart],
             queryFn: () => fetchCartItems(),
             placeholderData: (previousData, _) => previousData,
         })
@@ -27,7 +27,7 @@ export default function useCart() {
             mutationFn: ({ cart }: { cart: ICartAdd }) => addCartItemAPI({ cart }),
             onSuccess(data) {
                 enqueueSnackbar(data.message)
-                queryClient.invalidateQueries({ queryKey: [API_ENDPOINT.cart] })
+                queryClient.invalidateQueries({ queryKey: [PATH_API.cart] })
             },
             onError(error) {
                 enqueueSnackbar(error instanceof Error ? error.message : 'Internal Server Error', { variant: 'error' })
@@ -40,7 +40,7 @@ export default function useCart() {
             mutationFn: ({ id }: { id: string | string[] }) => deleteCartItemAPI({ id }),
             onSuccess(data) {
                 enqueueSnackbar(data.message)
-                queryClient.invalidateQueries({ queryKey: [API_ENDPOINT.cart] })
+                queryClient.invalidateQueries({ queryKey: [PATH_API.cart] })
             },
             onError(error) {
                 enqueueSnackbar(error instanceof Error ? error.message : 'Internal Server Error', { variant: 'error' })
@@ -52,7 +52,7 @@ export default function useCart() {
         return useMutation({
             mutationFn: ({ id, quantity }: { id: string, quantity: number }) => updateCartItemAPI({ id, quantity }),
             onSuccess(_) {
-                queryClient.invalidateQueries({ queryKey: [API_ENDPOINT.cart] })
+                queryClient.invalidateQueries({ queryKey: [PATH_API.cart] })
             },
             onError(error) {
                 enqueueSnackbar(error instanceof Error ? error.message : 'Internal Server Error', { variant: 'error' })

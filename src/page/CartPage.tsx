@@ -1,28 +1,32 @@
 'use client'
-import React, { useCallback, useDeferredValue, useEffect, useMemo, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import LoadingShimmer from '@/app/components/LoadingShimmer'
-import { Button, Container, Grid, IconButton, Stack, Tooltip, Typography } from '@mui/material'
+import { Button, Container, Grid } from '@mui/material'
 import useCart from '@/hooks/api/useCart'
 import EmptyContent from '@/components/empty-content'
-import Iconify from '@/components/iconify'
 import CheckoutSummary from '@/sections/checkout/CheckoutSummary'
 import CheckoutCartProductList from '@/sections/checkout/cart/CheckoutCartProductList'
-import { ICartAdd, ICartItem } from '@/@types/cart'
+import { ICartItem } from '@/@types/cart'
 import { useTable } from '@/components/table'
 import { debounce } from 'lodash'
+import { useDispatch } from '@/redux/store'
+import { addToCart } from '@/redux/slices/product'
+import { useRouter } from 'next/navigation'
 
 export default function CartPage() {
-    const { selected, setSelected, onSelectRow, onSelectAllRows } = useTable()
+    const { selected, onSelectRow, onSelectAllRows } = useTable()
     const { getCartItems, deleteCartItem, updateCartItem } = useCart()
     const { data: response, isLoading } = getCartItems()
     const [cart, setCart] = useState<ICartItem[]>([])
     const deleteMutate = deleteCartItem()
     const updateMutate = updateCartItem()
     const isEmptyCart = cart.length == 0
+    const dispatch = useDispatch()
+    const router = useRouter()
 
     const totalPrice = useMemo(() => {
         if (!response || !response.data || selected.length < 1) return 0
-        return response.data.filter(cart => selected.includes(cart._id)).reduce((total, item) => {
+        return cart.filter(cart => selected.includes(cart._id)).reduce((total, item) => {
             return total + (item.quantity * item.variation.price)
         }, 0)
     }, [cart, selected])
@@ -67,6 +71,11 @@ export default function CartPage() {
         deleteMutate.mutate({ id })
     }
 
+    const onNextStep = () => {
+        dispatch(addToCart(cart.filter(cart => selected.includes(cart._id))))
+        router.push('/billing')
+    }
+
     return (
         <Container maxWidth='xl' sx={{ my: 3 }}>
             <Grid container spacing={3}>
@@ -94,7 +103,7 @@ export default function CartPage() {
                     <CheckoutSummary
                         enableDiscount
                         total={totalPrice}
-                        // discount={0}
+                        discount={0}
                         subtotal={totalPrice}
                         onApplyDiscount={(discount) => { }}
                     />
@@ -103,7 +112,7 @@ export default function CartPage() {
                         size="large"
                         type="submit"
                         variant="contained"
-                    // onClick={onNextStep}
+                        onClick={onNextStep}
                     >
                         Tiếp tục
                     </Button>

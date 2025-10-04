@@ -64,7 +64,7 @@ export default function useTable(props?: UseTableProps): ReturnType {
 
   const onSelectAllRows = useCallback((checked: boolean, newSelecteds: string[]) => {
     if (checked) {
-      setSelected(newSelecteds);
+      setSelected(newSelecteds); 
       return;
     }
     setSelected([]);

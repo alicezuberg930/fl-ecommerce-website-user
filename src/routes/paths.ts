@@ -4,16 +4,13 @@ function path(root: string, sublink: string) {
 
 const ROOTS_HOME = '/'
 const ROOTS_DASHBOARD = '/cms'
-
-// ----------------------------------------------------------------------
+const ROOTS_API = ''
 
 export const PATH_AUTH = {
     root: ROOTS_HOME,
     login: path(ROOTS_HOME, 'login'),
-    register: path(ROOTS_HOME, '/register'),
-    verify: path(ROOTS_HOME, '/verify'),
-    // loginUnprotected: path(ROOTS_AUTH, '/login-unprotected'),
-    // registerUnprotected: path(ROOTS_AUTH, '/register-unprotected'),
+    register: path(ROOTS_HOME, 'register'),
+    verify: path(ROOTS_HOME, 'verify'),
     // resetPassword: path(ROOTS_AUTH, '/reset-password'),
     // newPassword: path(ROOTS_AUTH, '/new-password'),
 }
@@ -104,16 +101,32 @@ export const PATH_DASHBOARD = {
         list: path(ROOTS_DASHBOARD, '/banner/list'),
         new: path(ROOTS_DASHBOARD, '/banner/new'),
     },
-    storage: {
-        root: path(ROOTS_DASHBOARD, '/storage'),
-        rootExport: path(ROOTS_DASHBOARD, '/storage/export'),
-        rootImport: path(ROOTS_DASHBOARD, '/storage/import'),
-        listExport: path(ROOTS_DASHBOARD, '/storage/export/list'),
-        newExport: path(ROOTS_DASHBOARD, '/storage/export/new'),
-        editExport: (id: string) => path(ROOTS_DASHBOARD, `/storage/export/edit/${id}`),
-        listImport: path(ROOTS_DASHBOARD, '/storage/import/list'),
-        newImport: path(ROOTS_DASHBOARD, '/storage/import/new'),
-        editImport: (id: string) => path(ROOTS_DASHBOARD, `/storage/import/edit/${id}`),
-        inventory: path(ROOTS_DASHBOARD, '/storage/inventory'),
+}
+
+export const PATH_API = {
+    login: path(ROOTS_API, '/login'),
+    product: path(ROOTS_API, '/products'),
+    auth: {
+        login: path(ROOTS_API, '/auth/login'),
+        register: path(ROOTS_API, '/auth/register'),
+    },
+    brand: path(ROOTS_API, '/brands'),
+    category: path(ROOTS_API, '/categories'),
+    banner: path(ROOTS_API, '/banners'),
+    rating: path(ROOTS_API, '/ratings'),
+    user: {
+        profile: path(ROOTS_API, '/users/profile'),
+        address: {
+            new: path(ROOTS_API, '/users/delivery/address'),
+            list: path(ROOTS_API, '/users/delivery/address'),
+            edit: (id: string) => path(ROOTS_API, `/users/delivery/address/${id}`),
+            delete: (id: string) => path(ROOTS_API, `/users/delivery/address/${id}`),
+        }
+    },
+    cart: path(ROOTS_API, '/carts'),
+    location: {
+        province: path(ROOTS_API, '/locations/provinces'),
+        district: (id: string) => path(ROOTS_API, `/locations/districts/${id}`),
+        ward: (id: string) => path(ROOTS_API, `/locations/wards/${id}`),
     }
 }
