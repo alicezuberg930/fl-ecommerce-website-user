@@ -1,7 +1,7 @@
 import React from "react"
 import "@/app/styles/css/brands.slider.css"
 import { Container, Typography } from "@mui/material"
-import { API_ENDPOINT } from "@/routes/paths"
+import { PATH_API } from "@/routes/paths"
 import { APIResponse } from "@/@types/response"
 import { IBrand } from "@/@types/brand"
 import CarouselList from "./CarouselList"
@@ -33,7 +33,7 @@ const settings: Settings = {
 }
 
 export default async function BrandSlider() {
-  const response = await fetch(`${process.env.BASE_API}${API_ENDPOINT.brand}`,
+  const response = await fetch(`${process.env.BASE_API}${PATH_API.brand}`,
     { method: "GET", cache: "force-cache", next: { revalidate: 3600 } }
   )
   const result: APIResponse<IBrand[]> = await response.json()
