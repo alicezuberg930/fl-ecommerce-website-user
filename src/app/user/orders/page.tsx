@@ -4,9 +4,10 @@ import UserContent from "../components/UserContent"
 import { useState, useEffect } from 'react'
 import Link from "next/link"
 import { fCurrencyVND } from "@/utils/formatNumber"
+import { IOrder } from "@/@types/order"
 
 const UserOrderPage = () => {
-    const [orders, setOrders] = useState<Order[]>([])
+    const [orders, setOrders] = useState<IOrder[]>([])
 
     return (
         <UserContent>
@@ -48,20 +49,20 @@ const UserOrderPage = () => {
                                         {
                                             order.items && order.items.map(item => {
                                                 return (
-                                                    <div key={item.productId?._id} className="user-order-product-container">
+                                                    <div key={item.product?._id} className="user-order-product-container">
                                                         <Link href={`/user/orders/${order._id}`}>
                                                             <div className="user-order-product-info-container">
                                                                 <div className="user-order-product-info">
                                                                     <img src="/assets/facebook.png" className="user-order-product-img" />
                                                                     <div className="user-order-product-title">
-                                                                        <span className="product-name">{item.name}</span>
-                                                                        <span className="product-option">Phân loại sản phẩm: {item.options![0].id}</span>
-                                                                        <span className="bought-amount">x{item!.options![0].quantity ?? 0}</span>
+                                                                        <span className="product-name">{item.variation.sku}</span>
+                                                                        <span className="product-option">Phân loại sản phẩm: {item.variation.attributeValues[0]}</span>
+                                                                        <span className="bought-amount">x{item!.quantity ?? 0}</span>
                                                                     </div>
                                                                 </div>
                                                                 <div className="order-product-price-container">
-                                                                    <span className="order-product-price-original">{fCurrencyVND(order.totalPrice ?? 0)}</span>
-                                                                    <b className="order-product-price-new">{fCurrencyVND(order.discountedPrice ?? 0)}</b>
+                                                                    <span className="order-product-price-original">{fCurrencyVND(order.total ?? 0)}</span>
+                                                                    <b className="order-product-price-new">{fCurrencyVND(order.discount ?? 0)}</b>
                                                                 </div>
                                                             </div>
                                                             <div className="user-order-gift-info-container">
@@ -82,7 +83,7 @@ const UserOrderPage = () => {
 
                                         <div className="user-order-total-amount">
                                             <span>Thành tiền: </span>
-                                            <b>{fCurrencyVND(order.discountedPrice ?? 0)}</b>
+                                            <b>{fCurrencyVND(order.discount ?? 0)}</b>
                                         </div>
 
                                         <div className="user-order-item-action">

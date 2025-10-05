@@ -20,12 +20,6 @@ export default function CheckoutPaymentPage() {
     const { mutate } = createOrder()
 
     const handleNextStep = () => {
-        const items = cart.map(item => ({
-            cartId: item._id,
-            productId: item.product._id!,
-            quantity: item.quantity,
-            variation: item.variation
-        }))
         const order: IOrderNew = {
             subTotal,
             total,
@@ -33,11 +27,16 @@ export default function CheckoutPaymentPage() {
             shipping,
             billing: billing!,
             paymentMethod: paymentMethod!,
-            items
+            items: cart.map(item => ({
+                cartId: item._id,
+                productId: item.product._id!,
+                quantity: item.quantity,
+                variation: item.variation
+            }))
         }
         mutate({ order })
         setOpen(true)
-        dispatch(resetCart())   
+        dispatch(resetCart())
     }
 
     const handleBackStep = () => {

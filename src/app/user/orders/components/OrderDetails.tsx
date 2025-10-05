@@ -5,19 +5,20 @@ import '@/app/styles/css/order.details.css'
 import { icons } from "@/utils/icons"
 import LoadingShimmer from "@/app/components/LoadingShimmer"
 import { fCurrencyVND } from "@/utils/formatNumber"
+import { IOrder } from "@/@types/order"
 
 const OrderDetails: React.FC<{ id: string }> = ({ id }) => {
     const { TiDocumentText, CiMoneyBill, MdOutlineLocalShipping, CiInboxIn, CiStar } = icons
-    const [order, setOrder] = useState<Order | null>(null)
+    const [order, setOrder] = useState<IOrder | null>(null)
 
     return (
         <UserContent>
             {order ?
                 <div className="order-details-wrapper">
                     <div className="order-details-header">
-                        <span className="order-details-id-title">Mã đơn hàng: {order?._id}</span>
+                        <span className="order-details-id-title">Mã đơn hàng: {order._id}</span>
                         <span>|</span>
-                        <span className="order-details-status-title">{order.status}</span>
+                        <span className="order-details-status-title">{order.orderStatus}</span>
                     </div>
                     <div className="order-details-status-container">
                         <div className="order-details-status-item">
@@ -72,7 +73,7 @@ const OrderDetails: React.FC<{ id: string }> = ({ id }) => {
                             <h1>Địa chỉ nhận hàng</h1>
                             <span>Nguyễn vĩnh tiến</span>
                             <span>0932430082</span>
-                            <span>{`${order.address?.street ?? ""}, ${order.address?.wards?.name ?? ""}, ${order.address?.districts?.name ?? ""}, ${order.address?.province?.name ?? ""}`}</span>
+                            <span>{`${order.billing?.street ?? ""}, ${order.billing?.ward ?? ""}, ${order.billing.district ?? ""}, ${order.billing?.province ?? ""}`}</span>
                         </div>
                         <div className="order-details-process-container">
                             <div className="order-details-process-item">
@@ -108,16 +109,16 @@ const OrderDetails: React.FC<{ id: string }> = ({ id }) => {
                         {
                             order.items?.map(item => {
                                 return (
-                                    <div key={item.productId?._id} className="order-details-item-container">
-                                        <img src={'/assets/image-not-found.jpg'} alt={item.productId?.name} />
+                                    <div key={item.product._id} className="order-details-item-container">
+                                        <img src={'/assets/image-not-found.jpg'} alt={item.product?.name} />
                                         <div className="item-details">
-                                            <span className="item-name">{item.name ?? ""}</span>
-                                            <span className="item-variant">Phân loại hàng: {item.options![0].attribute?.value_id ?? ""}</span>
-                                            <span className="item-amount">x{item!.options![0].quantity ?? 0}</span>
+                                            <span className="item-name">{item.variation.sku ?? ""}</span>
+                                            <span className="item-variant">Phân loại hàng: {item.variation.attributeValues[0] ?? ""}</span>
+                                            <span className="item-amount">x{item.quantity ?? 0}</span>
                                         </div>
                                         <div className="item-price">
-                                            <span className="item-price-original">{fCurrencyVND(item.options![0].price ?? 0)}</span>
-                                            <span className="item-price-sale">{fCurrencyVND(item.options![0].price ?? 0)}</span>
+                                            <span className="item-price-original">{fCurrencyVND(item.variation.price ?? 0)}</span>
+                                            <span className="item-price-sale">{fCurrencyVND(item.variation.price ?? 0)}</span>
                                         </div>
                                     </div>
                                 )
@@ -128,7 +129,7 @@ const OrderDetails: React.FC<{ id: string }> = ({ id }) => {
                     <div className="order-details-summary-container">
                         <div className="summary-item-container">
                             <div className="summary-title">Tổng tiền</div>
-                            <div className="summary-price">{fCurrencyVND(order.totalPrice ?? 0)}</div>
+                            <div className="summary-price">{fCurrencyVND(order.total ?? 0)}</div>
                         </div>
                         <div className="summary-item-container">
                             <div className="summary-title">Phí vận chuyển</div>
@@ -136,7 +137,7 @@ const OrderDetails: React.FC<{ id: string }> = ({ id }) => {
                         </div>
                         <div className="summary-item-container">
                             <div className="summary-title">Thành tiền</div>
-                            <div className="summary-price">{fCurrencyVND(order.discountedPrice ?? 0)}</div>
+                            <div className="summary-price">{fCurrencyVND(order.discount ?? 0)}</div>
                         </div>
                         <div className="summary-item-container">
                             <div className="summary-title">Phương thức thanh toán</div>
