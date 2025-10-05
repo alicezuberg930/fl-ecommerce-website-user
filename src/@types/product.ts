@@ -1,6 +1,7 @@
 import { IBrand } from "./brand"
 import { ICartItem } from "./cart"
 import { ICategory } from "./category"
+import { PaymentMethod } from "./order"
 import { IRating } from "./rating"
 
 export type IProduct = {
@@ -47,25 +48,48 @@ export type IProductFilter = {
     isHidden?: boolean
 }
 
+export type AddressType = 'home' | 'office'
+
 export type ICheckoutBillingAddress = {
-    _id: string
     contactName: string
     contactPhone: string
     province: string
     district: string
     ward: string
     street: string
-    addressType?: string
+    addressType?: AddressType
     isDefault?: boolean
 }
 
+export type ICheckoutBillingAddressItem = ICheckoutBillingAddress & {
+    _id: string
+}
+
 export type IProductCheckoutState = {
-    activeStep: number
+    // activeStep: number
     cart: ICartItem[]
-    subtotal: number
+    subTotal: number
     total: number
     discount: number
     shipping: number
     billing: ICheckoutBillingAddress | null
-    totalItems: number
+    paymentMethod: PaymentMethod | null
+}
+
+export type ICheckoutDeliveryOption = {
+    value: number
+    title: string
+    description: string
+}
+
+export type ICheckoutPaymentOption = {
+    value: string
+    title: string
+    description: string
+    icons: string[]
+}
+
+export type ICheckoutCardOption = {
+    value: string
+    label: string
 }

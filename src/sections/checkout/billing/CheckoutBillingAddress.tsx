@@ -2,7 +2,7 @@ import { useState } from 'react'
 // @mui
 import { Grid, Button, Stack } from '@mui/material'
 // @types
-import { ICheckoutBillingAddress, IProductCheckoutState } from '@/@types/product'
+import { ICheckoutBillingAddress, ICheckoutBillingAddressItem, IProductCheckoutState } from '@/@types/product'
 // components
 import Iconify from '@/components/iconify'
 //
@@ -13,14 +13,14 @@ import CheckoutBillingAddressList from './CheckoutBillingAddressList'
 // ----------------------------------------------------------------------
 
 type Props = {
-  addresses?: ICheckoutBillingAddress[]
+  addresses?: ICheckoutBillingAddressItem[]
   checkout: IProductCheckoutState
   onBackStep: VoidFunction
-  onCreateBilling: (address: Omit<ICheckoutBillingAddress, '_id'>) => void
+  onCreateBilling: (address: ICheckoutBillingAddress) => void
 }
 
 export default function CheckoutBillingAddress({ addresses, checkout, onBackStep, onCreateBilling }: Props) {
-  const { total, discount, subtotal } = checkout
+  const { total, discount, subTotal } = checkout
 
   const [open, setOpen] = useState(false)
 
@@ -59,13 +59,17 @@ export default function CheckoutBillingAddress({ addresses, checkout, onBackStep
               onClick={handleOpen}
               startIcon={<Iconify icon="eva:plus-fill" />}
             >
-              Add new address
+              Thêm địa chỉ
             </Button>
           </Stack>
         </Grid>
 
         <Grid size={{ xs: 12, md: 3 }}>
-          <CheckoutSummary subtotal={subtotal} total={total} discount={discount} />
+          <CheckoutSummary
+            subtotal={subTotal}
+            total={total}
+            discount={discount}
+          />
         </Grid>
       </Grid>
 

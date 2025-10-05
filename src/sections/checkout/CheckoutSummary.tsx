@@ -1,4 +1,3 @@
-'use client'
 // @mui
 import {
     Box,
@@ -13,7 +12,7 @@ import {
     InputAdornment,
 } from '@mui/material'
 // utils
-import { fCurrency, fCurrencyVND } from '@/utils/formatNumber'
+import { fCurrencyVND } from '@/utils/formatNumber'
 // components
 import Iconify from '@/components/iconify'
 
@@ -76,7 +75,7 @@ export default function CheckoutSummary({
                             Vận chuyển
                         </Typography>
                         <Typography variant="subtitle2">
-                            {shipping ? fCurrency(shipping) : displayShipping}
+                            {shipping ? fCurrencyVND(shipping) : displayShipping}
                         </Typography>
                     </Stack>
 
@@ -104,7 +103,7 @@ export default function CheckoutSummary({
                                     endAdornment: (
                                         <InputAdornment position="end">
                                             <Button onClick={() => onApplyDiscount(5)} sx={{ mr: -0.5 }}>
-                                                Apply
+                                                Áp dụng
                                             </Button>
                                         </InputAdornment>
                                     )

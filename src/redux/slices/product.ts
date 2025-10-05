@@ -13,14 +13,14 @@ const initialState: IProductCheckoutState = {
   // error: null,
   // products: [],
   // product: null,
-  activeStep: 0,
+  // activeStep: 0,
   cart: [],
-  subtotal: 0,
+  subTotal: 0,
   total: 0,
   discount: 0,
   shipping: 0,
   billing: null,
-  totalItems: 0,
+  paymentMethod: null
 }
 
 const slice = createSlice({
@@ -31,15 +31,13 @@ const slice = createSlice({
     getCart(state, action) {
       const cart: ICartItem[] = action.payload
 
-      const totalItems = sum(cart.map((product) => product.quantity))
-      const subtotal = sum(cart.map((product) => product.variation.price * product.quantity))
+      const subTotal = sum(cart.map((product) => product.variation.price * product.quantity))
       state.cart = cart
       state.discount = state.discount || 0
       state.shipping = state.shipping || 0
       state.billing = state.billing || null
-      state.subtotal = subtotal
-      state.total = subtotal - state.discount
-      state.totalItems = totalItems
+      state.subTotal = subTotal
+      state.total = subTotal - state.discount
     },
 
     addToCart(state, action) {
@@ -61,36 +59,34 @@ const slice = createSlice({
       //   })
       // }
       state.cart = uniqBy(newProducts, '_id')
-      state.totalItems = sum(state.cart.map(product => product.quantity))
     },
 
-    deleteCart(state, action) {
-      const updateCart = state.cart.filter(product => product._id !== action.payload)
-      state.cart = updateCart
-    },
+    // deleteCart(state, action) {
+    //   const updateCart = state.cart.filter(product => product._id !== action.payload)
+    //   state.cart = updateCart
+    // },
 
     resetCart(state) {
       state.cart = []
       state.billing = null
-      state.activeStep = 0
+      // state.activeStep = 0
       state.total = 0
-      state.subtotal = 0
+      state.subTotal = 0
       state.discount = 0
       state.shipping = 0
-      state.totalItems = 0
     },
 
     backStep(state) {
-      state.activeStep -= 1
+      // state.activeStep -= 1
     },
 
     nextStep(state) {
-      state.activeStep += 1
+      // state.activeStep += 1
     },
 
     gotoStep(state, action) {
       const step = action.payload
-      state.activeStep = step
+      // state.activeStep = step
     },
 
     // increaseQuantity(state, action) {
@@ -125,20 +121,27 @@ const slice = createSlice({
     // },
 
     createBilling(state, action) {
+      if (action.payload._id) delete action.payload._id
       state.billing = action.payload
     },
 
     applyDiscount(state, action) {
       const discount = action.payload
       state.discount = discount
-      state.total = state.subtotal - discount
+      state.total = state.subTotal - discount
     },
 
     applyShipping(state, action) {
       const shipping = action.payload
       state.shipping = shipping
-      state.total = state.subtotal - state.discount + shipping
+      state.total = state.subTotal - state.discount + shipping
     },
+
+    applyPaymentMethod(state, action) {
+      const paymentMethod = action.payload
+      state.paymentMethod = paymentMethod
+    },
+
   },
 })
 
@@ -157,6 +160,7 @@ export const {
   createBilling,
   applyShipping,
   applyDiscount,
+  applyPaymentMethod,
   // increaseQuantity,
   // decreaseQuantity,
 } = slice.actions

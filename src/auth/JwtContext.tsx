@@ -98,11 +98,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
       const accessToken = await tokenRes.json()
       if (accessToken && isValidToken(accessToken)) {
         await setSession(accessToken)
-        const profileRes = await fetch(`${process.env.BASE_API}${PATH_API.user.profile}`, {
-          method: "GET",
-          cache: "force-cache", next: { tags: ['/profile'] },
-          headers: { "Authorization": `Bearer ${accessToken}` }
-        })
+        const profileRes = await fetch('/api/profile', { method: "GET" })
         const result = await profileRes.json()
         if (result && result.data) {
           dispatch({

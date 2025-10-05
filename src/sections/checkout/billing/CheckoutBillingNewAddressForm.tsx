@@ -16,7 +16,7 @@ import {
 } from '@mui/material'
 import { LoadingButton } from '@mui/lab'
 // @types
-import { ICheckoutBillingAddress } from '@/@types/product'
+import { ICheckoutBillingAddress, AddressType } from '@/@types/product'
 import { IDistrict, IProvince, IWard } from '@/@types/address'
 // components
 import FormProvider, {
@@ -29,12 +29,12 @@ import { fetchDistricts, fetchProvinces, fetchWards } from '@/utils/httpClient'
 
 // ----------------------------------------------------------------------
 
-interface FormValuesProps extends Omit<ICheckoutBillingAddress, '_id'> { }
+type FormValuesProps = ICheckoutBillingAddress
 
 type Props = {
   open: boolean
   onClose: VoidFunction
-  onCreateBilling: (address: Omit<ICheckoutBillingAddress, '_id'>) => void
+  onCreateBilling: (address: ICheckoutBillingAddress) => void
 }
 
 export default function CheckoutBillingNewAddressForm({ open, onClose, onCreateBilling }: Props) {
@@ -60,7 +60,7 @@ export default function CheckoutBillingNewAddressForm({ open, onClose, onCreateB
     district: '',
     ward: '',
     street: '',
-    addressType: 'Home',
+    addressType: 'home' as AddressType,
     isDefault: true,
   }
 
@@ -72,7 +72,6 @@ export default function CheckoutBillingNewAddressForm({ open, onClose, onCreateB
   const {
     watch,
     handleSubmit,
-    setValue,
     formState: { isSubmitting },
   } = methods
 
@@ -105,7 +104,7 @@ export default function CheckoutBillingNewAddressForm({ open, onClose, onCreateB
   const onSubmit = async (data: FormValuesProps) => {
     try {
       const { contactName, contactPhone, street, ward, district, province, addressType, isDefault } = data
-      const address: Omit<ICheckoutBillingAddress, '_id'> = {
+      const address: ICheckoutBillingAddress = {
         contactName, contactPhone, addressType, isDefault,
         province: provinces.find(p => p.code === province)?.fullName!,
         district: districts.find(d => d.code === district)?.fullName!,

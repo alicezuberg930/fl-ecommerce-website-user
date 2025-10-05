@@ -1,3 +1,4 @@
+'use client'
 export { default as SeoIllustration } from './SeoIllustration';
 export { default as UploadIllustration } from './UploadIllustration';
 export { default as BookingIllustration } from './BookingIllustration';

@@ -3,6 +3,7 @@ import { ICheckoutBillingAddress } from "@/@types/product"
 import useUser from "@/hooks/api/useUser"
 import { createBilling, getCart } from "@/redux/slices/product"
 import { useDispatch, useSelector } from "@/redux/store"
+import { PATH_DASHBOARD } from "@/routes/paths"
 import CheckoutBillingAddress from "@/sections/checkout/billing/CheckoutBillingAddress"
 import { Container } from "@mui/material"
 import { useRouter } from "next/navigation"
@@ -19,13 +20,13 @@ export default function CheckoutBillingPage() {
         dispatch(getCart(checkout.cart))
     }, [dispatch, checkout.cart])
 
-    const handleCreateBilling = (address: Omit<ICheckoutBillingAddress, '_id'>) => {
+    const handleCreateBilling = (address: ICheckoutBillingAddress) => {
         dispatch(createBilling(address))
-        router.push('/checkout')
+        router.push(PATH_DASHBOARD.general.checkout)
     }
 
-    const handleOnBackStep = () => {
-        router.push('/cart')
+    const handleBackStep = () => {
+        router.push(PATH_DASHBOARD.general.cart)
     }
 
     return (
@@ -33,7 +34,7 @@ export default function CheckoutBillingPage() {
             <CheckoutBillingAddress
                 addresses={response?.data}
                 checkout={checkout}
-                onBackStep={() => handleOnBackStep()}
+                onBackStep={() => handleBackStep()}
                 onCreateBilling={(address) => handleCreateBilling(address)}
             />
         </Container>

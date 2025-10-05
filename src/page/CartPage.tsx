@@ -12,6 +12,7 @@ import { debounce } from 'lodash'
 import { useDispatch } from '@/redux/store'
 import { addToCart } from '@/redux/slices/product'
 import { useRouter } from 'next/navigation'
+import { PATH_DASHBOARD } from '@/routes/paths'
 
 export default function CartPage() {
     const { selected, onSelectRow, onSelectAllRows } = useTable()
@@ -73,7 +74,7 @@ export default function CartPage() {
 
     const onNextStep = () => {
         dispatch(addToCart(cart.filter(cart => selected.includes(cart._id))))
-        router.push('/billing')
+        router.push(PATH_DASHBOARD.general.billing)
     }
 
     return (

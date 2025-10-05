@@ -1,14 +1,16 @@
-import { ICheckoutBillingAddress, IProduct, IProductDetails, IProductFilter } from '@/@types/product'
-import { APIResponse } from '@/@types/response'
 import { axiosInstance } from './axios'
 import { PATH_API } from '@/routes/paths'
 import { handleErrorResponse } from './common'
+// types
+import { APIResponse } from '@/@types/response'
+import { ICheckoutBillingAddress, ICheckoutBillingAddressItem, IProduct, IProductDetails, IProductFilter } from '@/@types/product'
 import { IBrand } from '@/@types/brand'
 import { ICategory } from '@/@types/category'
 import { IRating, QueryRating } from '@/@types/rating'
 import { ICartAdd, ICartItem } from '@/@types/cart'
 import { IUser, IUserCreate } from '@/@types/user'
 import { IDistrict, IProvince, IWard } from '@/@types/address'
+import { IOrder, IOrderNew } from '@/@types/order'
 
 const customFetch = (url: string, init: RequestInit) => {
     return fetch(`${process.env.BASE_API}${url.startsWith('/') ? url : url.padStart(url.length + 1, '/')}`, {
@@ -231,9 +233,9 @@ export const updateCartItem = async ({ id, quantity }: { id: string, quantity: n
 //     }
 // }
 
-export const fetchDeliveryAddresses = async (): Promise<APIResponse<ICheckoutBillingAddress[]>> => {
+export const fetchDeliveryAddresses = async (): Promise<APIResponse<ICheckoutBillingAddressItem[]>> => {
     try {
-        const response = await axiosInstance<APIResponse<ICheckoutBillingAddress[]>>({
+        const response = await axiosInstance<APIResponse<ICheckoutBillingAddressItem[]>>({
             url: PATH_API.user.address.list,
             method: 'GET'
         })
@@ -244,7 +246,7 @@ export const fetchDeliveryAddresses = async (): Promise<APIResponse<ICheckoutBil
     }
 }
 
-export const createDeliveryAddress = async ({ address }: { address: Omit<ICheckoutBillingAddress, '_id'> }): Promise<APIResponse<ICheckoutBillingAddress>> => {
+export const createDeliveryAddress = async ({ address }: { address: ICheckoutBillingAddress }): Promise<APIResponse<ICheckoutBillingAddress>> => {
     try {
         const response = await axiosInstance<APIResponse<ICheckoutBillingAddress>>({
             url: PATH_API.user.address.new,
@@ -263,6 +265,20 @@ export const deleteDeliveryAddress = async ({ id }: { id: string }): Promise<API
         const response = await axiosInstance<APIResponse<undefined>>({
             url: PATH_API.user.address.delete(id),
             method: 'DELETE',
+        })
+        return response.data
+    } catch (error) {
+        handleErrorResponse(error)
+        throw error
+    }
+}
+
+export const createOrder = async ({ order }: { order: IOrderNew }): Promise<APIResponse<IOrder>> => {
+    try {
+        const response = await axiosInstance<APIResponse<IOrder>>({
+            url: PATH_API.order.new,
+            method: 'POST',
+            data: order
         })
         return response.data
     } catch (error) {

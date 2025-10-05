@@ -24,18 +24,6 @@ export const slugify = (str: string): string => {
         .replace(/-+/g, '-') // Collapse multiple hyphens into one
 }
 
-export const getHours = (seconds: number) => {
-    return String(Math.floor(seconds / 3600)).padStart(2, '0')
-}
-
-export const getMinutes = (seconds: number) => {
-    return String(Math.floor((seconds % 3600) / 60)).padStart(2, '0')
-}
-
-export const getSeconds = (seconds: number) => {
-    return String(seconds % 60).padStart(2, '0')
-}
-
 export const createNotification = ({ title, icon, body }: { title: string, icon: string, body: string }) => {
     return new Notification(title, { body, icon })
 }

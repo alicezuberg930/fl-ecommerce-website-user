@@ -15,7 +15,7 @@ export default function useUser() {
 
     const createDeliveryAddress = useCallback(() => {
         return useMutation({
-            mutationFn: ({ address }: { address: Omit<ICheckoutBillingAddress, '_id'> }) => createDeliveryAddressAPI({ address }),
+            mutationFn: ({ address }: { address: ICheckoutBillingAddress }) => createDeliveryAddressAPI({ address }),
             onSuccess(data) {
                 enqueueSnackbar(data.message)
                 queryClient.invalidateQueries({ queryKey: [PATH_API.user.address.list] })
@@ -45,7 +45,7 @@ export default function useUser() {
                 enqueueSnackbar(error instanceof Error ? error.message : 'Internal Server Error', { variant: 'error' })
             },
         })
-    }, [])/*  */
+    }, [])
 
     return {
         getDeliveryAddresses,

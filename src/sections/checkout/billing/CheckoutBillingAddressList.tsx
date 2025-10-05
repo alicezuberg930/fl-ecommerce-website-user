@@ -1,8 +1,8 @@
-import { ICheckoutBillingAddress } from "@/@types/product"
+import { ICheckoutBillingAddress, ICheckoutBillingAddressItem } from "@/@types/product"
 import CheckoutBillingAddressItem from "./CheckoutBillingAddressItem"
 
 type AddressListProps = {
-    addresses: ICheckoutBillingAddress[]
+    addresses: ICheckoutBillingAddressItem[]
     onCreateBilling: (address: ICheckoutBillingAddress) => void
 }
 
