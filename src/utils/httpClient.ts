@@ -10,7 +10,7 @@ import { IRating, QueryRating } from '@/@types/rating'
 import { ICartAdd, ICartItem } from '@/@types/cart'
 import { IUser, IUserCreate } from '@/@types/user'
 import { IDistrict, IProvince, IWard } from '@/@types/address'
-import { IOrder, IOrderNew } from '@/@types/order'
+import { IOrder, IOrderNew, PaymentMethod } from '@/@types/order'
 
 const customFetch = (url: string, init: RequestInit) => {
     return fetch(`${process.env.BASE_API}${url.startsWith('/') ? url : url.padStart(url.length + 1, '/')}`, {
@@ -279,6 +279,34 @@ export const createOrder = async ({ order }: { order: IOrderNew }): Promise<APIR
             url: PATH_API.order.new,
             method: 'POST',
             data: order
+        })
+        return response.data
+    } catch (error) {
+        handleErrorResponse(error)
+        throw error
+    }
+}
+
+export const updateOrder = async ({ id, paymentMethod }: { id: string, paymentMethod: PaymentMethod }): Promise<APIResponse<IOrder>> => {
+    try {
+        const response = await axiosInstance<APIResponse<IOrder>>({
+            url: PATH_API.order.edit(id),
+            method: 'PATCH',
+            data: { paymentMethod }
+        })
+        return response.data
+    } catch (error) {
+        handleErrorResponse(error)
+        throw error
+    }
+}
+
+export const verifyUser = async ({ userId, codeId }: { userId: string, codeId: string }): Promise<APIResponse<undefined>> => {
+    try {
+        const response = await axiosInstance<APIResponse<undefined>>({
+            url: PATH_API.auth.verify,
+            method: 'POST',
+            data: { userId, codeId },
         })
         return response.data
     } catch (error) {

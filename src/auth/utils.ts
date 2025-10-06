@@ -34,29 +34,27 @@ export const isValidToken = (accessToken: string) => {
 
 // ----------------------------------------------------------------------
 
-export const tokenExpired = (exp: number) => {
-  // eslint-disable-next-line prefer-const
+export const tokenExpired = (exp: number, redirect?: VoidFunction) => {
   let expiredTimer
   const currentTime = Date.now()
   // Test token expires after 10s
-  // const timeLeft = currentTime + 10000 - currentTime // ~10s
+  // const timeLeft = currentTime + 5000 - currentTime // ~10s
   const timeLeft = exp * 1000 - currentTime
   clearTimeout(expiredTimer)
   expiredTimer = setTimeout(async () => {
-    alert('Token expired')
     await fetch('/api/logout', { method: "POST" })
-    window.location.href = PATH_AUTH.login
+    if (redirect) redirect()
   }, timeLeft)
 }
 
 // ----------------------------------------------------------------------
 
-export const setSession = async (accessToken: string | null) => {
+export const setSession = async (accessToken: string | null, redirect?: VoidFunction) => {
   if (accessToken) {
     axiosInstance.defaults.headers.common.Authorization = `Bearer ${accessToken}`
     // This function below will handle when token is expired
-    const { exp } = jwtDecode(accessToken) // ~3 days by minimals server
-    tokenExpired(exp)
+    const { exp } = jwtDecode(accessToken)
+    tokenExpired(exp, redirect)
   } else {
     await fetch('/api/logout', { method: "POST" })
     delete axiosInstance.defaults.headers.common.Authorization

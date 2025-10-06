@@ -6,9 +6,8 @@ import localStorageAvailable from '@/utils/localStorageAvailable'
 //
 import { isValidToken, setSession } from './utils'
 import { ActionMapType, AuthStateType, AuthUserType, JWTContextType } from './types'
-import { PATH_API } from '@/routes/paths'
 import { useSnackbar } from '@/components/snackbar'
-import { PATH_AUTH } from '@/routes/paths'
+import { PATH_AUTH, PATH_DASHBOARD } from '@/routes/paths'
 import { register as registerAPI } from '@/utils/httpClient'
 
 // ----------------------------------------------------------------------
@@ -94,26 +93,27 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   const initialize = useCallback(async () => {
     try {
-      const tokenRes = await fetch('/api/token', { method: 'GET' })
-      const accessToken = await tokenRes.json()
+      const tokenResponse = await fetch('/api/token', { method: 'GET' })
+      const accessToken = await tokenResponse.json()
       if (accessToken && isValidToken(accessToken)) {
-        await setSession(accessToken)
-        const profileRes = await fetch('/api/profile', { method: "GET" })
-        const result = await profileRes.json()
+        await setSession(accessToken, () => {
+          navigate.push(PATH_AUTH.login)
+          dispatch({
+            type: Types.INITIAL,
+            payload: {
+              isAuthenticated: false,
+              user: null
+            },
+          })
+        })
+        const profileResponse = await fetch('/api/profile', { method: 'GET' })
+        const result = await profileResponse.json()
         if (result && result.data) {
           dispatch({
             type: Types.INITIAL,
             payload: {
               isAuthenticated: true,
               user: result.data,
-            },
-          })
-        } else {
-          dispatch({
-            type: Types.INITIAL,
-            payload: {
-              isAuthenticated: false,
-              user: null
             },
           })
         }
@@ -151,7 +151,17 @@ export function AuthProvider({ children }: AuthProviderProps) {
       })
       const result = await response.json()
       const { message, data } = result
-      enqueueSnackbar(message || "Đăng nhập thành công")
+      enqueueSnackbar(message || 'Đăng nhập thành công')
+      await setSession(data.accessToken, () => {
+        navigate.push(PATH_AUTH.login)
+        dispatch({
+          type: Types.INITIAL,
+          payload: {
+            isAuthenticated: false,
+            user: null
+          },
+        })
+      })
       dispatch({
         type: Types.LOGIN,
         payload: {
@@ -168,7 +178,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const register = useCallback(async (email: string, password: string, name: string) => {
     try {
       const response = await registerAPI({ user: { email, password, name } })
-      enqueueSnackbar(response?.message || "Đăng ký thành công")
+      enqueueSnackbar(response?.message || 'Đăng ký thành công')
       navigate.replace(PATH_AUTH.verify)
     } catch (error) {
       enqueueSnackbar(error instanceof Error ? error.message : 'Internal Server Error', { variant: 'error' })
@@ -185,7 +195,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const logout = useCallback(async () => {
     try {
       await setSession(null)
-      navigate.replace(PATH_AUTH.login);
+      navigate.replace(PATH_AUTH.login)
       dispatch({
         type: Types.LOGOUT
       })
@@ -205,7 +215,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     loginWithTwitter: () => { },
     register,
     logout,
-  }), [state.isAuthenticated, state.isInitialized, state.user, login, logout, register])
+  }), [state, login, logout, register])
 
   return <AuthContext.Provider value={memoizedValue}>{children}</AuthContext.Provider>
 }

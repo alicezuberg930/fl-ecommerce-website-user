@@ -17,6 +17,8 @@ export type IOrder = {
     paymentMethod: PaymentMethod
     orderStatus: string
     paymentStatus: string
+    payUrl?: string
+    deeplink?: string
 }
 
 export type IOrderDetails = IOrder & {
@@ -24,10 +26,5 @@ export type IOrderDetails = IOrder & {
 }
 
 export interface IOrderNew extends Omit<IOrder, 'items' | 'orderStatus' | 'paymentStatus' | '_id'> {
-    items: {
-        cartId: string
-        productId: string
-        quantity: number
-        variation: Variation
-    }[]
+    cartIds: string[]
 }

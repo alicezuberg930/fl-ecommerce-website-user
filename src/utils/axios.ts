@@ -2,7 +2,8 @@ import axios, { AxiosError, AxiosResponse } from 'axios'
 
 export const axiosInstance = axios.create({
   baseURL: process.env.BASE_API,
-  headers: { Accept: 'application/json' }
+  headers: { Accept: 'application/json' },
+  validateStatus: (status) => status >= 200 && status < 500
 })
 
 axiosInstance.interceptors.request.use(async (config) => {

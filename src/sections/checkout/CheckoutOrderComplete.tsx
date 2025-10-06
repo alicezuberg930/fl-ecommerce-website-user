@@ -9,11 +9,12 @@ import { OrderCompleteIllustration } from '@/assets/illustrations';
 // ----------------------------------------------------------------------
 
 interface Props extends DialogProps {
+  orderId: string
   onReset: VoidFunction;
   onDownloadPDF: VoidFunction;
 }
 
-export default function CheckoutOrderComplete({ open, onReset, onDownloadPDF }: Props) {
+export default function CheckoutOrderComplete({ orderId, open, onReset, onDownloadPDF }: Props) {
   return (
     <DialogAnimate
       fullScreen
@@ -44,7 +45,7 @@ export default function CheckoutOrderComplete({ open, onReset, onDownloadPDF }: 
           Mã đơn hàng
           <br />
           <br />
-          <Link>01dc1370-3df6-11eb-b378-0242ac130002</Link>
+          <Link>{orderId}</Link>
           <br />
           <br />
           Chúng tôi sẽ gửi bạn thông báo khi đơn hàng bắt đầu được giao.
@@ -81,5 +82,5 @@ export default function CheckoutOrderComplete({ open, onReset, onDownloadPDF }: 
         </Stack>
       </Stack>
     </DialogAnimate>
-  );
+  )
 }

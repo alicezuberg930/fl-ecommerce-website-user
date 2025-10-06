@@ -105,6 +105,7 @@ export const PATH_API = {
     auth: {
         login: path(ROOTS_API, '/auth/login'),
         register: path(ROOTS_API, '/auth/register'),
+        verify: path(ROOTS_API, '/auth/verify'),
     },
     brand: path(ROOTS_API, '/brands'),
     category: path(ROOTS_API, '/categories'),
@@ -127,6 +128,7 @@ export const PATH_API = {
     },
     order: {
         new: path(ROOTS_API, '/orders'),
+        edit: (id: string) => path(ROOTS_API, `/orders/${id}`),
         list: path(ROOTS_API, '/orders')
     }
 }

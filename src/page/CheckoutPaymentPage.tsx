@@ -21,22 +21,17 @@ export default function CheckoutPaymentPage() {
 
     const handleNextStep = () => {
         const order: IOrderNew = {
-            subTotal,
-            total,
-            discount,
-            shipping,
+            subTotal, total, discount, shipping,
             billing: billing!,
             paymentMethod: paymentMethod!,
-            items: cart.map(item => ({
-                cartId: item._id,
-                productId: item.product._id!,
-                quantity: item.quantity,
-                variation: item.variation
-            }))
+            cartIds: cart.map(item => item._id)
         }
-        mutate({ order })
-        setOpen(true)
-        dispatch(resetCart())
+        mutate({ order }, {
+            onSuccess(res) {
+                if (res.data.payUrl) router.push(res.data.payUrl)
+                if (paymentMethod === "cash") router.push(`/checkout/status?orderId=${res.data._id}`)
+            }
+        })
     }
 
     const handleBackStep = () => {
@@ -51,31 +46,27 @@ export default function CheckoutPaymentPage() {
         dispatch(applyPaymentMethod(value))
     }
 
-    const handleReset = () => {
-        // dispatch(resetCart())
-        router.push(PATH_DASHBOARD.root)
-    }
-
     const handleGoToCart = () => {
         router.push(PATH_DASHBOARD.general.cart)
     }
 
     return (
-        <Container maxWidth="xl" sx={{ my: 3 }}>
-            <CheckoutPayment
-                checkout={checkout}
-                onNextStep={handleNextStep}
-                onBackStep={handleBackStep}
-                onGotoStep={handleGoToCart}
-                onApplyShipping={handleApplyShipping}
-                onApplyPaymentMethod={handleApplyPaymentMethod}
-            />
-
-            <CheckoutOrderComplete
+        <>
+            <Container maxWidth="xl" sx={{ my: 3 }}>
+                <CheckoutPayment
+                    checkout={checkout}
+                    onNextStep={handleNextStep}
+                    onBackStep={handleBackStep}
+                    onGotoStep={handleGoToCart}
+                    onApplyShipping={handleApplyShipping}
+                    onApplyPaymentMethod={handleApplyPaymentMethod}
+                />
+            </Container>
+            {/* <CheckoutOrderComplete
                 open={open}
                 onReset={handleReset}
                 onDownloadPDF={() => { }}
-            />
-        </Container>
+            /> */}
+        </>
     )
 }

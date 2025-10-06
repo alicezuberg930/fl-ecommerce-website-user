@@ -74,6 +74,7 @@ const slice = createSlice({
       state.subTotal = 0
       state.discount = 0
       state.shipping = 0
+      state.paymentMethod = null
     },
 
     backStep(state) {

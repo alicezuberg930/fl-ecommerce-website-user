@@ -4,7 +4,8 @@ import { PATH_API } from "@/routes/paths";
 import {
     fetchDeliveryAddresses,
     createDeliveryAddress as createDeliveryAddressAPI,
-    deleteDeliveryAddress as deleteDeliveryAddressAPI
+    deleteDeliveryAddress as deleteDeliveryAddressAPI,
+    verifyUser as verifyUserAPI
 } from "@/utils/httpClient";
 import { ICheckoutBillingAddress } from "@/@types/product";
 import { useSnackbar } from "@/components/snackbar";
@@ -47,10 +48,23 @@ export default function useUser() {
         })
     }, [])
 
+    const verifyUser = useCallback(() => {
+        return useMutation({
+            mutationFn: ({ codeId, userId }: { codeId: string, userId: string }) => verifyUserAPI({ codeId, userId }),
+            onSuccess(data) {
+                enqueueSnackbar(data.message)
+            },
+            onError(error) {
+                enqueueSnackbar(error instanceof Error ? error.message : 'Internal Server Error', { variant: 'error' })
+            },
+        })
+    }, [])
+
     return {
         getDeliveryAddresses,
         createDeliveryAddress,
-        deleteDeliveryAddress
+        deleteDeliveryAddress,
+        verifyUser
     }
 
 }
