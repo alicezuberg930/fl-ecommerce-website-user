@@ -178,8 +178,12 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const register = useCallback(async (email: string, password: string, name: string) => {
     try {
       const response = await registerAPI({ user: { email, password, name } })
-      enqueueSnackbar(response?.message || 'Đăng ký thành công')
-      navigate.replace(PATH_AUTH.verify)
+      if (response.statusCode == 201) {
+        enqueueSnackbar('Kiểm tra email của bạn để xác thực tài khoản')
+        navigate.replace('/')
+      } else {
+        enqueueSnackbar(response.message, { variant: 'error' })
+      }
     } catch (error) {
       enqueueSnackbar(error instanceof Error ? error.message : 'Internal Server Error', { variant: 'error' })
     }
