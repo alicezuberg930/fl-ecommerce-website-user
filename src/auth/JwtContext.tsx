@@ -1,6 +1,6 @@
 'use client'
 import { useRouter } from 'next/navigation'
-import { createContext, useEffect, useReducer, useCallback, useMemo } from 'react'
+import { createContext, useEffect, useReducer, useCallback, useMemo, use } from 'react'
 // utils
 import localStorageAvailable from '@/utils/localStorageAvailable'
 //
@@ -9,6 +9,8 @@ import { ActionMapType, AuthStateType, AuthUserType, JWTContextType } from './ty
 import { useSnackbar } from '@/components/snackbar'
 import { PATH_AUTH, PATH_DASHBOARD } from '@/routes/paths'
 import { register as registerAPI } from '@/utils/httpClient'
+import { Google } from 'arctic'
+import { googleLogin } from './GoogleProvider'
 
 // ----------------------------------------------------------------------
 
@@ -90,6 +92,11 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const navigate = useRouter()
   const storageAvailable = localStorageAvailable()
   const { enqueueSnackbar } = useSnackbar()
+  const google = useMemo(() => {
+    return new Google(process.env.clientId!, process.env.clientSecret!, 'http://localhost:3000/api/auth/callback')
+  }, [])
+
+  console.log(google)
 
   const initialize = useCallback(async () => {
     try {
@@ -187,12 +194,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
     } catch (error) {
       enqueueSnackbar(error instanceof Error ? error.message : 'Internal Server Error', { variant: 'error' })
     }
-    // dispatch({
-    //   type: Types.REGISTER,
-    //   payload: {
-    //     user,
-    //   },
-    // })
   }, [])
 
   // LOGOUT
@@ -208,18 +209,23 @@ export function AuthProvider({ children }: AuthProviderProps) {
     }
   }, [])
 
+  const loginWithGoogle = useCallback(() => {
+    const url = googleLogin(google)
+    navigate.push(url.href)
+  }, [])
+
   const memoizedValue = useMemo(() => ({
     isInitialized: state.isInitialized,
     isAuthenticated: state.isAuthenticated,
     user: state.user,
     method: 'jwt',
     login,
-    loginWithGoogle: () => { },
+    loginWithGoogle,
     loginWithGithub: () => { },
     loginWithTwitter: () => { },
     register,
     logout,
-  }), [state, login, logout, register])
+  }), [state, login, logout, register, loginWithGoogle])
 
   return <AuthContext.Provider value={memoizedValue}>{children}</AuthContext.Provider>
 }

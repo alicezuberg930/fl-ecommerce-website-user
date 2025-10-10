@@ -4,7 +4,7 @@ import * as Yup from 'yup'
 import { useMemo } from 'react'
 import { useForm } from 'react-hook-form'
 import FormProvider, { RHFTextField } from '@/components/hook-form'
-import { Card, Container, Grid, Link, Stack, Typography } from '@mui/material'
+import { Button, Card, Container, Grid, Link, Stack, Typography } from '@mui/material'
 import { LoadingButton } from '@mui/lab'
 import NextLink from 'next/link'
 import { useAuthContext } from '@/auth/useAuthContext'
@@ -16,7 +16,7 @@ type FormValuesProps = {
 }
 
 export default function LoginPage() {
-    const { login } = useAuthContext()
+    const { login, loginWithGoogle } = useAuthContext()
 
     const LoginSchema = Yup.object().shape({
         username: Yup.string().required('Nhập số điện thoại'),
@@ -60,6 +60,12 @@ export default function LoginPage() {
                         <LoadingButton fullWidth type='submit' variant='contained' color='info' loading={isSubmitting}>
                             Đăng nhập
                         </LoadingButton>
+                    </Stack>
+
+                    <Stack sx={{ mt: 3 }}>
+                        <Button fullWidth variant='contained' color='primary' onClick={loginWithGoogle}>
+                            Đăng nhập bằng google
+                        </Button>
                     </Stack>
 
                     <Stack direction='row' alignItems='center' justifyContent='center' spacing={1} mt={6}>

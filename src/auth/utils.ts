@@ -1,5 +1,4 @@
 // routes
-import { PATH_AUTH } from '../routes/paths'
 // utils
 import { axiosInstance } from '@/utils/axios'
 // ----------------------------------------------------------------------

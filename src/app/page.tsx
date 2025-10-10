@@ -1,7 +1,7 @@
-import generateMetadaUtils from "../utils/seo"
+import createSEO from "../utils/seo"
 import HomePage from "@/page/HomePage"
 
-export const metadata = generateMetadaUtils({ title: "Trang chủ - Future Life" })
+export const metadata = createSEO({ title: "Trang chủ - Future Life" })
 
 export default function page() {
   // useEffect(() => {

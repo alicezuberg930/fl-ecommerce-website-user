@@ -12,7 +12,9 @@ const nextConfig: NextConfig = {
     ],
   },
   env: {
-    BASE_API: process.env.BASE_API
+    BASE_API: process.env.BASE_API,
+    clientId: process.env.clientId,
+    clientSecret: process.env.clientSecret
   },
   trailingSlash: false,
   /* config options here */

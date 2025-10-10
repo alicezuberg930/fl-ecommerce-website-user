@@ -1,4 +1,4 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+**Future Life** is an e-commerce platform built as a front-end repo. It includes a **customer-facing storefront**, sharing code for UI, API, and database.
 
 ## Getting Started
 

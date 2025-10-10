@@ -1,6 +1,6 @@
 import ProductDetailsPage from "@/page/ProductDetailsPage"
 import React, { Suspense } from "react"
-import generateMetadaUtils from "@/utils/seo"
+import createSEO from "@/utils/seo"
 import { APIResponse } from "@/@types/response"
 import { IProductDetails } from "@/@types/product"
 import LoadingShimmer from "@/app/components/LoadingShimmer"
@@ -14,7 +14,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     })
     const result: APIResponse<IProductDetails> = await response.json()
 
-    return generateMetadaUtils({
+    return createSEO({
         title: result.data.name,
         description: result.data.description,
         image: result.data.images[0],
