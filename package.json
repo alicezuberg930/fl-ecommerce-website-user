@@ -83,6 +83,6 @@
       "**/*.(t|j)s|x"
     ],
     "coverageDirectory": "../coverage",
-    "testEnvironment": "jsdom"
+    "testEnvironment": "node"
   }
 }
