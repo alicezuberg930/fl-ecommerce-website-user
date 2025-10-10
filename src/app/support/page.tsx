@@ -1,6 +1,6 @@
 'use client'
 import '@/app/styles/css/support.css'
-import SeenProductList from '../user/components/SeenProductList'
+import SeenProductList from '../(main)/user/components/SeenProductList'
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import NewProducts from '../../sections/home/NewProducts'

@@ -1,30 +1,48 @@
 import type { Metadata } from 'next'
+import { getBaseUrl } from './common'
 
-export default function generateMetadaUtils({
-    title = "Future Life",
-    description = "Công ty Cổ phần Thương mại và Phát triển Future Life là thương hiệu tiên phong cung cấp giải pháp và sản phẩm chất lượng, nâng cao sức khỏe và vẻ đẹp cho gia đình bạn. Chúng tôi mang đến các sản phẩm dinh dưỡng, làm đẹp… từ những thương hiệu quốc tế uy tín. Future Life cam kết chất lượng chính hãng, đáp ứng mọi nhu cầu của khách hàng.",
-    keywords = "thực phẩm chức năng, sức khỏe, dinh dưỡng, làm đẹp, e-commerce, sữa bột, chống lão hóa, thuốc mọc tóc",
-    url = "https://futurelifeecom.com",
-    image = "/assets/opengraph-image.jpg",
-}): Metadata {
-    const customUrl = `https://futurelifeecom.com${url}`
+export interface NextMetadata extends Metadata {
+    title?: string
+}
+
+export default function createSEO(override: NextMetadata = {}): NextMetadata {
+    const siteName = 'Future Life'
+    const baseUrl = getBaseUrl()
+
+    const title = override.title ? `${override.title} | ${siteName}` : siteName
+    const description = 'E-commerce Solution'
+    const url = override.openGraph?.url
+        ? `${baseUrl}${override.openGraph.url}`
+        : baseUrl
+
+    const images = [
+        ...(override.openGraph?.images
+            ? Array.isArray(override.openGraph.images)
+                ? override.openGraph.images
+                : [override.openGraph.images]
+            : []),
+        { url: '/api/og', alt: 'Open Graph Image' },
+    ]
 
     return {
+        ...override,
+        metadataBase: new URL(baseUrl),
+        applicationName: siteName,
         title,
         description,
-        keywords,
         openGraph: {
+            ...override.openGraph,
             title,
             description,
-            url: customUrl,
-            images: [{ url: image }],
-            type: "website",
+            siteName,
+            url,
+            images,
         },
         twitter: {
-            card: "summary_large_image",
-            title,
-            description,
-            images: [image],
+            ...override.twitter,
+            card: 'summary_large_image',
         },
+        icons: { icon: '/favicon.ico' },
+        alternates: { ...override.alternates, canonical: url },
     }
 }

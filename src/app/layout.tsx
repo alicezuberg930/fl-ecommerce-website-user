@@ -4,7 +4,7 @@ import './globals.css'
 import Footer from '@/layouts/main/footer/Footer'
 import Header from '@/layouts/main/header/Header'
 import React, { Suspense } from 'react'
-import generateMetadaUtils from "../utils/seo"
+import createSEO from "../utils/seo"
 import ChatBot from './components/ChatBox'
 import ThemeProvider from '@/theme'
 import { SettingsProvider, ThemeSettings } from '@/components/settings'
@@ -14,7 +14,7 @@ import CustomQueryClientProvider from '@/components/query-client/CustomQueryClie
 import { AuthProvider } from '@/auth/JwtContext'
 import ReduxProvider from '@/redux/ReduxProvider'
 
-export const metadata = generateMetadaUtils({})
+export const metadata = createSEO({})
 
 export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (

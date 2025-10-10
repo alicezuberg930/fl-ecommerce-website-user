@@ -27,7 +27,7 @@ export default function CartPage() {
 
     const totalPrice = useMemo(() => {
         if (!response || !response.data || selected.length < 1) return 0
-        return cart.filter(cart => selected.includes(cart._id)).reduce((total, item) => {
+        return cart.filter(cart => selected.includes(cart._id)).reduce((total, item, i) => {
             return total + (item.quantity * item.variation.price)
         }, 0)
     }, [cart, selected])

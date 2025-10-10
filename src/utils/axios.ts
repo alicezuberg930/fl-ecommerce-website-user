@@ -30,12 +30,8 @@ axiosInstance.interceptors.response.use((response: AxiosResponse) => {
   } else {
     switch (error?.response.status) {
       case 401:
-        // localStorage.removeItem('token')
-        // localStorage.clear()
-        // window.location.href = '/'
-        break
-      case 403:
-        break
+      // window.location.href = '/'
+      // break
       case 404:
         console.log('error.response.message', error)
         break
