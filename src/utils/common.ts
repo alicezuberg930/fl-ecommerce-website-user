@@ -49,6 +49,6 @@ export const deepObjectComparison = (obj1: any, obj2: any): boolean => {
 
 export function getBaseUrl(): string {
     if (typeof window !== 'undefined') return window.location.origin
-    else if (process.env.PRODUCTION_URL) return `https://${process.env.PRODUCTION_URL}`
+    if (process.env.PRODUCTION_URL) return process.env.PRODUCTION_URL
     return `http://localhost:${process.env.PORT ?? 3000}`
 }
