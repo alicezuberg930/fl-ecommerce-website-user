@@ -55,7 +55,6 @@ export default class Facebook extends BaseProvider {
 
     const userData: FacebookUserResponse = await userResponse.json()
     return {
-      _id: userData.id,
       email: userData.email,
       name: userData.name,
       avatar: userData.picture.data.url,
