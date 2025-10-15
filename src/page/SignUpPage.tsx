@@ -46,9 +46,9 @@ export default function SignUpPage() {
     }
 
     return (
-        <Container maxWidth='md'>
+        <Container maxWidth='sm'>
             <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
-                <Card sx={{ py: 3, my: 8, px: { xs: 2, lg: 12 } }}>
+                <Card sx={{ py: 3, my: 8, px: { xs: 2, lg: 6 } }}>
                     <Typography variant='h3' textAlign='center'>Đăng ký</Typography>
                     <Grid container rowGap={4} mt={8}>
                         <Grid size={12}>

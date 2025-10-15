@@ -11,7 +11,7 @@ import { SettingsProvider, ThemeSettings } from '@/components/settings'
 import { MotionLazyContainer } from '@/components/animate'
 import SnackbarProvider from '@/components/snackbar'
 import CustomQueryClientProvider from '@/components/query-client/CustomQueryClientProvider'
-import { AuthProvider } from '@/auth/JwtContext'
+import { AuthProvider } from '@/auth/AuthProvider'
 import ReduxProvider from '@/redux/ReduxProvider'
 
 export const metadata = createSEO({})

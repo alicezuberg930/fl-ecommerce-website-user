@@ -3,13 +3,10 @@ import { useRouter } from 'next/navigation';
 // @mui
 import { alpha } from '@mui/material/styles';
 import { Box, Divider, Typography, Stack, MenuItem } from '@mui/material';
-// routes
-import { PATH_DASHBOARD, PATH_AUTH } from '@/routes/paths';
 // auth
 import { useAuthContext } from '@/auth/useAuthContext';
 // components
 import { CustomAvatar } from '@/components/custom-avatar';
-import { useSnackbar } from '@/components/snackbar';
 import MenuPopover from '@/components/menu-popover';
 import { IconButtonAnimate } from '@/components/animate';
 
@@ -33,8 +30,6 @@ export default function AccountPopover() {
 
   const { user, logout } = useAuthContext();
 
-  const { enqueueSnackbar } = useSnackbar();
-
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
 
   const handleOpenPopover = (event: React.MouseEvent<HTMLElement>) => {
@@ -46,7 +41,7 @@ export default function AccountPopover() {
   };
 
   const handleLogout = async () => {
-    await logout()
+    logout()
     handleClosePopover();
   };
 
@@ -74,7 +69,7 @@ export default function AccountPopover() {
           }),
         }}
       >
-        <CustomAvatar alt={user?.name} name={user?.name} />
+        <CustomAvatar alt={user?.name} name={user?.name} src={user?.avatar ?? undefined} />
       </IconButtonAnimate>
 
       <MenuPopover open={openPopover} onClose={handleClosePopover} sx={{ width: 200, p: 0 }}>
