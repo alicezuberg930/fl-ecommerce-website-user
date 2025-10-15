@@ -16,7 +16,7 @@ type FormValuesProps = {
 }
 
 export default function LoginPage() {
-    const { login, loginWithGoogle } = useAuthContext()
+    const { login, loginWithProvider } = useAuthContext()
 
     const LoginSchema = Yup.object().shape({
         username: Yup.string().required('Nhập số điện thoại'),
@@ -43,9 +43,9 @@ export default function LoginPage() {
     }
 
     return (
-        <Container maxWidth='md'>
+        <Container maxWidth='sm'>
             <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
-                <Card sx={{ py: 3, my: 8, px: { xs: 2, lg: 12 } }}>
+                <Card sx={{ py: 3, my: 8, px: { xs: 2, lg: 6 } }}>
                     <Typography variant='h3' textAlign='center'>Đăng nhập</Typography>
                     <Grid container rowGap={6} mt={8}>
                         <Grid size={12}>
@@ -62,20 +62,31 @@ export default function LoginPage() {
                         </LoadingButton>
                     </Stack>
 
-                    <Stack sx={{ mt: 3 }}>
-                        <Button fullWidth variant='contained' color='primary' onClick={loginWithGoogle}>
-                            Đăng nhập bằng google
-                        </Button>
+                    <Grid container mt={3} spacing={2}>
+                        <Grid size={{ xs: 12, md: 6 }}>
+                            <Button fullWidth variant='contained' color='inherit' onClick={() => loginWithProvider('google')}>
+                                Đăng nhập bằng google
+                            </Button>
+                        </Grid>
+                        <Grid size={{ xs: 12, md: 6 }}>
+                            <Button fullWidth variant='contained' color='secondary' onClick={() => loginWithProvider('facebook')}>
+                                Đăng nhập bằng facebook
+                            </Button>
+                        </Grid>
+                    </Grid>
+                    <Stack sx={{ mt: 3, gap: 1, flexWrap: 'wrap' }} alignContent={'space-around'} direction={'row'}>
+
+
                     </Stack>
 
                     <Stack direction='row' alignItems='center' justifyContent='center' spacing={1} mt={6}>
-                        <Typography>Không có tài khoản?</Typography>
-                        <Link component={NextLink} href={PATH_AUTH.register} fontWeight='bold' color='info'>
+                        <Typography variant='caption'>Không có tài khoản? </Typography>
+                        <Link variant='caption' component={NextLink} href={PATH_AUTH.register} fontWeight='bold' color='info'>
                             tạo mới
                         </Link>
                     </Stack>
                 </Card>
             </FormProvider>
-        </Container >
+        </Container>
     )
 }

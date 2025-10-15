@@ -58,20 +58,6 @@ export const fetchWards = async ({ id }: { id: string }): Promise<APIResponse<IW
     }
 }
 
-export const register = async ({ user }: { user: IUserCreate }): Promise<APIResponse<IUser>> => {
-    try {
-        const response = await axiosInstance<APIResponse<IUser>>({
-            url: PATH_API.auth.register,
-            method: 'POST',
-            data: user
-        })
-        return response.data
-    } catch (error) {
-        handleErrorResponse(error)
-        throw error
-    }
-}
-
 export const fetchProducts = async ({ query }: { query: IProductFilter }): Promise<APIResponse<IProduct[]>> => {
     try {
         const response = await axiosInstance<APIResponse<IProduct[]>>({

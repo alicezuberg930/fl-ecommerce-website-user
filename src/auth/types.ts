@@ -1,82 +1,52 @@
+import BaseProvider from "./providers/base"
+
 export type ActionMapType<M extends { [index: string]: any }> = {
-  [Key in keyof M]: M[Key] extends undefined
-  ? { type: Key }
-  : {
-    type: Key
-    payload: M[Key]
-  }
+  [Key in keyof M]: M[Key] extends undefined ? { type: Key } : { type: Key, payload: M[Key] }
 }
 
-export type AuthUserType = null | Record<string, any>
+export type AuthUser = {
+  _id: string
+  name: string
+  email: string
+  phone: string
+  avatar: string | null
+  provider: string
+  isEmailVerified: boolean
+}
 
 export type AuthStateType = {
   isAuthenticated: boolean
   isInitialized: boolean
-  user: AuthUserType
+  user: AuthUser | null
 }
 
 export type JWTContextType = {
-  method: string
   isAuthenticated: boolean
   isInitialized: boolean
-  user: AuthUserType
+  user: AuthUser | null
   login: (username: string, password: string) => Promise<void>
   register: (email: string, password: string, name: string) => Promise<void>
-  logout: () => Promise<void>
-  loginWithGoogle?: () => void
-  loginWithGithub?: () => void
-  loginWithTwitter?: () => void
+  logout: () => void
+  loginWithProvider: (provider: string) => void
 }
 
-export type FirebaseContextType = {
-  method: string
-  isAuthenticated: boolean
-  isInitialized: boolean
-  user: AuthUserType
-  login: (email: string, password: string) => void
-  register: (email: string, password: string, firstName: string, lastName: string) => void
-  logout: () => void
-  loginWithGoogle?: () => void
-  loginWithGithub?: () => void
-  loginWithTwitter?: () => void
+export type GoogleUserResponse = {
+  sub: string
+  email: string
+  name: string
+  picture: string
 }
 
-export type AWSCognitoContextType = {
-  method: string
-  isAuthenticated: boolean
-  isInitialized: boolean
-  user: AuthUserType
-  login: (email: string, password: string) => void
-  register: (email: string, password: string, firstName: string, lastName: string) => void
-  logout: () => void
-  loginWithGoogle?: () => void
-  loginWithGithub?: () => void
-  loginWithTwitter?: () => void
-}
-
-export type Auth0ContextType = {
-  method: string
-  isAuthenticated: boolean
-  isInitialized: boolean
-  user: AuthUserType
-  // login: () => Promise<void>
-  logout: () => void
-  // To avoid conflicts between types this is just a temporary declaration.
-  // Remove below when you choose to authenticate with Auth0.
-  login: (email?: string, password?: string) => Promise<void>
-  register?: (
-    email: string,
-    password: string,
-    firstName: string,
-    lastName: string
-  ) => Promise<void>
-  loginWithGoogle?: () => void
-  loginWithGithub?: () => void
-  loginWithTwitter?: () => void
+export type FacebookUserResponse = {
+  id: string
+  email: string
+  name: string
+  picture: {
+    data: { url: string }
+  }
 }
 
 export type OauthAccount = {
-  _id: string
   email: string
   name: string
   avatar: string
@@ -88,9 +58,24 @@ export type OAuth2Token = {
   expires_in: number
 }
 
-export type GoogleUserResponse = {
-  sub: string
-  email: string
-  name: string
-  picture: string
+export interface CookieOptions {
+  domain?: string
+  expires?: Date | string | number
+  httpOnly?: boolean
+  maxAge?: number
+  path?: string
+  sameSite?: 'Strict' | 'Lax' | 'None'
+  secure?: boolean
+  [key: string]: unknown
+}
+
+export interface AuthOptions {
+  providers: Record<string, BaseProvider>
+  cookieKeys?: {
+    token?: string
+    state?: string
+    code?: string
+    redirect?: string
+  }
+  cookieOptions?: CookieOptions
 }

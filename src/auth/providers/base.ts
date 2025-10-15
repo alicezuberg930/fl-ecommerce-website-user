@@ -1,11 +1,15 @@
 import { getBaseUrl } from "@/utils/common";
-import { OauthAccount } from "../types";
+import { OAuth2Token, OauthAccount } from "../types";
 import { generateCodeChallenge } from "@/utils/crypto";
 
 export default abstract class BaseProvider {
+    public abstract client: OAuthClient
+
     public abstract createAuthorizationURL(state: string, codeVerifier: string): Promise<URL>
 
-    public abstract fetchUser(code: string, codeVerifier: string): Promise<OauthAccount>
+    public abstract getAccessToken(code: string, codeVerifier: string): Promise<OAuth2Token>
+
+    public abstract fetchUser(tokenData: OAuth2Token): Promise<OauthAccount>
 
     protected createCallbackUrl(provider: string) {
         return `${getBaseUrl()}/api/auth/callback/${provider}`
@@ -56,7 +60,6 @@ export class OAuthClient {
         })
         request.headers.set('Content-Type', 'application/x-www-form-urlencoded')
         request.headers.set('Accept', 'application/json')
-        // request.headers.set('User-Agent', '')
         request.headers.set('Content-Length', bodyBytes.byteLength.toString())
         return request
     }
