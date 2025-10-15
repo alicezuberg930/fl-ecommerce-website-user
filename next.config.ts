@@ -17,6 +17,7 @@ const nextConfig: NextConfig = {
     GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
     FACEBOOK_CLIENT_ID: process.env.FACEBOOK_CLIENT_ID,
     FACEBOOK_CLIENT_SECRET: process.env.FACEBOOK_CLIENT_SECRET,
+    PRODUCTION_URL: process.env.PRODUCTION_URL
   },
   trailingSlash: false,
   /* config options here */
