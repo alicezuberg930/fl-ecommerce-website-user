@@ -7,10 +7,12 @@ import FormProvider, { RHFTextField } from '@/components/hook-form'
 import { Card, Container, Grid, Link, Stack, Typography } from '@mui/material'
 import { LoadingButton } from '@mui/lab'
 import NextLink from 'next/link'
-import { IUserCreate } from '@/@types/user'
 import { useAuthContext } from '@/auth/useAuthContext'
 
-type FormValuesProps = IUserCreate & {
+type FormValuesProps = {
+    name: string
+    email: string
+    password: string
     confirmPassword: string
 }
 

@@ -4,8 +4,8 @@ import BaseProvider, { OAuthClient } from "./base"
 export default class Facebook extends BaseProvider {
   public client: OAuthClient
 
-  private authorizationEndpoint = 'https://www.facebook.com/v23.0/dialog/oauth'
-  private tokenEndpoint = 'https://graph.facebook.com/v23.0/oauth/access_token'
+  private authorizationEndpoint = 'https://www.facebook.com/v24.0/dialog/oauth'
+  private tokenEndpoint = 'https://graph.facebook.com/v24.0/oauth/access_token'
   private apiEndpoint = 'https://graph.facebook.com/me'
 
   constructor(opts: {
@@ -21,11 +21,11 @@ export default class Facebook extends BaseProvider {
     )
   }
 
-  public override async createAuthorizationURL(state: string, codeVerifier: string): Promise<URL> {
+  public override async createAuthorizationURL(state: string, _codeVerifier: string): Promise<URL> {
     const url = this.client.createAuthorizationURL(
       this.authorizationEndpoint,
       state,
-      ['email', 'public_profile'],
+      ['public_profile', 'email'],
     )
     return url
   }
@@ -46,13 +46,12 @@ export default class Facebook extends BaseProvider {
   override async fetchUser(tokenData: OAuth2Token): Promise<OauthAccount> {
     const searchParams = new URLSearchParams()
     searchParams.set('access_token', tokenData.access_token)
-    searchParams.set('fields', ['id', 'name', 'picture', 'email'].join(','))
+    searchParams.set('fields', ['id', 'name', 'picture', 'email', 'birthday', 'gender'].join(','))
     const userResponse = await fetch(`${this.apiEndpoint}?${searchParams.toString()}`)
     if (!userResponse.ok) {
       const error = await userResponse.text().catch(() => 'Unknown error')
       throw new Error(`Facebook API error: ${error}`)
     }
-
     const userData: FacebookUserResponse = await userResponse.json()
     return {
       email: userData.email,

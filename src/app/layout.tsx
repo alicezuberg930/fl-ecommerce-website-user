@@ -30,7 +30,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
                       <ReduxProvider>
                         <Header />
                         <main>{children}</main>
-                        {/* <Footer /> */}
+                        <Footer />
                         <ChatBot />
                       </ReduxProvider>
                     </AuthProvider>

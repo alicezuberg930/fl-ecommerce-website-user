@@ -1,13 +1,21 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query"
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { useCallback } from "react"
 import { useSnackbar } from '@/components/snackbar';
 import { PATH_API } from "@/routes/paths";
-import { createOrder as createOrderAPI } from "@/utils/httpClient";
+import { createOrder as createOrderAPI, fetchOrders } from "@/utils/httpClient";
 import { IOrderNew } from "@/@types/order";
 
 export default function useOrder() {
     const { enqueueSnackbar } = useSnackbar()
     const queryClient = useQueryClient()
+
+    const getOrders = useCallback(() => {
+        return useQuery({
+            queryKey: [PATH_API.order.list],
+            queryFn: () => fetchOrders(),
+            placeholderData: (previousData, _) => previousData,
+        })
+    }, [])
 
     const createOrder = useCallback(() => {
         return useMutation({
@@ -23,6 +31,7 @@ export default function useOrder() {
     }, [])
 
     return {
+        getOrders,
         createOrder
     }
 }

@@ -1,6 +1,6 @@
 import { AxiosError } from 'axios'
 
-export const handleErrorResponse = (error: any) => {
+export const handleErrorResponse = (error: any): void => {
     if (error instanceof AxiosError) {
         const message = error.response?.data.message || error.message
         if (Array.isArray(message)) {
@@ -24,7 +24,7 @@ export const slugify = (str: string): string => {
         .replace(/-+/g, '-') // Collapse multiple hyphens into one
 }
 
-export const createNotification = ({ title, icon, body }: { title: string, icon: string, body: string }) => {
+export const createNotification = ({ title, icon, body }: { title: string, icon: string, body: string }): Notification => {
     return new Notification(title, { body, icon })
 }
 

@@ -1,7 +1,6 @@
 'use client'
-import { useSelector } from 'react-redux'
 import NextLink from 'next/link'
-import React, { useEffect } from 'react'
+import React from 'react'
 import { Box, Container, Grid, Link, Stack, Typography } from '@mui/material'
 import { useTheme } from "@mui/material/styles"
 import Image from '@/components/image'

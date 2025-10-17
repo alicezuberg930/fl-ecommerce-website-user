@@ -128,13 +128,14 @@ export function Auth(opts: AuthOptions) {
                         const Location = new URL(redirectTo, request.url).toString()
                         const response = new Response(null, {
                             status: 302,
-                            headers: { Location },
+                            headers: { Location }
                         })
                         for (const key of Object.values(cookieKeys))
                             cookies.delete(response, key)
+                        const { exp } = jwtDecode(result.data.accessToken)
                         cookies.set(response, cookieKeys.token, result.data.accessToken, {
                             ...cookieOptions,
-                            expires: new Date(result.data.expiresIn),
+                            expires: new Date(exp * 1000)
                         })
                         return setCorsHeaders(response)
                     }

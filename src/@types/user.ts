@@ -11,7 +11,3 @@ export type IUser = {
 export type IUserDetails = IUser & {
 
 }
-
-export interface IUserCreate extends Omit<IUser, 'accountType' | 'isEmailVerified' | '_id' | 'codeId' | 'codeExpired'> {
-    password: string
-}

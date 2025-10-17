@@ -8,7 +8,6 @@ import { IBrand } from '@/@types/brand'
 import { ICategory } from '@/@types/category'
 import { IRating, QueryRating } from '@/@types/rating'
 import { ICartAdd, ICartItem } from '@/@types/cart'
-import { IUser, IUserCreate } from '@/@types/user'
 import { IDistrict, IProvince, IWard } from '@/@types/address'
 import { IOrder, IOrderNew, PaymentMethod } from '@/@types/order'
 
@@ -251,6 +250,19 @@ export const deleteDeliveryAddress = async ({ id }: { id: string }): Promise<API
         const response = await axiosInstance<APIResponse<undefined>>({
             url: PATH_API.user.address.delete(id),
             method: 'DELETE',
+        })
+        return response.data
+    } catch (error) {
+        handleErrorResponse(error)
+        throw error
+    }
+}
+
+export const fetchOrders = async (): Promise<APIResponse<IOrder[]>> => {
+    try {
+        const response = await axiosInstance<APIResponse<IOrder[]>>({
+            url: PATH_API.order.list,
+            method: 'GET',
         })
         return response.data
     } catch (error) {

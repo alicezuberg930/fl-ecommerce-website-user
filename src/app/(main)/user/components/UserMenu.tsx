@@ -1,52 +1,35 @@
+'use client'
 import Link from "next/link"
 import '@/app/styles/css/user.menu.css'
 import { useAuthContext } from "@/auth/useAuthContext"
+import { CustomAvatar } from "@/components/custom-avatar"
+
+const menuTabs = [
+    {
+        "title": "Quản lý tài khoản",
+        "link": "/user/profile"
+    },
+    {
+        "title": "Đơn hàng của tôi",
+        "link": "/user/orders"
+    },
+    {
+        "title": "Số địa chỉ nhận hàng",
+        "link": "/user/addresses"
+    },
+    {
+        "title": "Sản phẩm yêu thích",
+        "link": "/user/favorite"
+    }
+]
 
 const UserMenu = () => {
-    const menuTabs = [
-        {
-            "title": "Quản lý tài khoản",
-            "link": "/user/account"
-        },
-        {
-            "title": "Future Life tích điểm",
-            "link": "/user/point"
-        },
-        {
-            "title": "Thông tin tài khoản",
-            "link": "/user/profile"
-        },
-        {
-            "title": "Đơn hàng của tôi",
-            "link": "/user/orders"
-        },
-        {
-            "title": "Booking của tôi",
-            "link": "/user/account"
-        },
-        {
-            "title": "Số địa chỉ nhận hàng",
-            "link": "/user/account"
-        },
-        {
-            "title": "Danh sách yêu thích",
-            "link": "/user/favorite"
-        },
-        {
-            "title": "Mua lại",
-            "link": "/user/repurchase"
-        },
-        {
-            "title": "Hỏi đáp",
-            "link": "/user/account"
-        }
-    ]
     const { user } = useAuthContext()
 
     return (
         <div className="user-menu-wrapper">
             <div className="user-info-container">
-                <img src={'/assets/shopee.png'} className="user-info-image" />
+                <CustomAvatar alt={user?.avatar ?? 'avatar'} name={user?.name} src={user?.avatar ?? undefined} />
                 <div>
                     <span className="username">Chào {user?.name ?? ""}</span>
                     <span className="title">Chỉnh sửa tài khoản của bạn</span>

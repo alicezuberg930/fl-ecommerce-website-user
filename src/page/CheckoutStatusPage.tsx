@@ -23,7 +23,7 @@ export default function CheckoutStatusPage() {
             const response = await updateOrderAPI({ id: orderId!, paymentMethod: paymentMethod! })
             console.log(response.data)
         }
-        updateOrder()
+        if (paymentMethod && orderId) updateOrder()
     }, [paymentMethod, orderId])
 
     const handleReset = () => {

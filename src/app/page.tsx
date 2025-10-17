@@ -1,7 +1,7 @@
 import createSEO from "../utils/seo"
 import HomePage from "@/page/HomePage"
 
-export const metadata = createSEO({ title: "Trang chủ - Future Life" })
+export const metadata = createSEO({ title: "Trang chủ" })
 
 export default function page() {
   // useEffect(() => {

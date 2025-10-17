@@ -1,15 +1,13 @@
 'use client'
-import { redirect, useRouter } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import { createContext, useEffect, useReducer, useCallback, useMemo, use } from 'react'
 // utils
 import localStorageAvailable from '@/utils/localStorageAvailable'
+import { setSession } from './utils'
 //
-import { isValidToken, setSession } from './utils'
 import { ActionMapType, AuthStateType, AuthUser, JWTContextType } from './types'
 import { useSnackbar } from '@/components/snackbar'
-import { PATH_AUTH, PATH_DASHBOARD } from '@/routes/paths'
-
-// ----------------------------------------------------------------------
+import { PATH_AUTH } from '@/routes/paths'
 
 enum Types {
   INITIAL = 'INITIAL',
@@ -33,8 +31,6 @@ type Payload = {
 }
 
 type ActionsType = ActionMapType<Payload>[keyof ActionMapType<Payload>]
-
-// ----------------------------------------------------------------------
 
 const initialState: AuthStateType = {
   isInitialized: false,
@@ -73,8 +69,6 @@ const reducer = (state: AuthStateType, action: ActionsType) => {
   }
   return state
 }
-
-// ----------------------------------------------------------------------
 
 export const AuthContext = createContext<JWTContextType | null>(null)
 
@@ -124,7 +118,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     initialize()
   }, [initialize])
 
-  // LOGIN
   const login = useCallback(async (email: string, password: string) => {
     try {
       const response = await fetch('/api/auth/sign-in', {
@@ -156,7 +149,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   }, [])
 
-  // REGISTER
   const register = useCallback(async (email: string, password: string, name: string) => {
     try {
       const response = await fetch('/api/auth/sign-up', {
@@ -181,7 +173,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   }, [])
 
-  // LOGOUT
   const logout = useCallback(() => {
     try {
       setSession(null)

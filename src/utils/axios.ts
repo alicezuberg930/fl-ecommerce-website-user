@@ -8,8 +8,8 @@ export const axiosInstance = axios.create({
 
 axiosInstance.interceptors.request.use(async (config) => {
   if (document !== undefined) {
-    const response = await fetch(`${document.location.origin}/api/token`, { method: 'GET' })
-    const accessToken = await response.json()
+    const response = await fetch(`/api/auth/token`)
+    const accessToken = (await response.json()).token
     if (accessToken) {
       config.headers['Authorization'] = `Bearer ${accessToken}`
     } else {

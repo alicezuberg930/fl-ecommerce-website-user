@@ -1,5 +1,5 @@
 'use client'
-import { IOrderNew } from "@/@types/order";
+import { IOrderNew, PaymentMethod } from "@/@types/order";
 import useOrder from "@/hooks/api/useOrder";
 import { applyPaymentMethod, applyShipping, resetCart } from "@/redux/slices/product";
 import { useDispatch, useSelector } from "@/redux/store";
@@ -43,7 +43,7 @@ export default function CheckoutPaymentPage() {
     }
 
     const handleApplyPaymentMethod = (value: string) => {
-        dispatch(applyPaymentMethod(value))
+        dispatch(applyPaymentMethod(value as PaymentMethod))
     }
 
     const handleGoToCart = () => {
